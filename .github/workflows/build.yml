@@ -1,0 +1,57 @@
+name: Check Next.js Build
+
+on:
+  # run on push to any branch except main
+  push:
+    branches:
+      - '*'
+      - '!main'
+  # run on pull request events
+  pull_request:
+    types: [opened, reopened]
+  # allow manual triggers
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # set-up pnpm https://github.com/pnpm/action-setup
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      # set-up node
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      # cache dependencies
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v3
+        with:
+          # pnpm stores dependencies in a 'node_modules/.pnpm' folder
+          path: |
+            ~/.pnpm-store
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      # install dependencies using pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # build the application
+      - name: Build Next.js project
+        run: pnpm run build
+
+# message from shing
+# https://tenor.com/view/cupid-arrow-sandwich-thankyou-no-gif-20331827?quality=lossless

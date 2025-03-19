@@ -1,0 +1,24 @@
+{
+    "semi": true,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "tabWidth": 4,
+    "printWidth": 120,
+    "useTabs": false,
+    "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+    "importOrder": [
+        "^(react/(.*)$)|^(react$)",
+        "^(next/(.*)$)|^(next$)",
+        "<THIRD_PARTY_MODULES>",
+        "",
+        "^types$",
+        "^@/types/(.*)$",
+        "",
+        "^@**/(.*)$",
+        "^@/(.*)$",
+        "",
+        "^[./]"
+    ],
+    "tailwindFunctions": ["tv"],
+    "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"]
+}
