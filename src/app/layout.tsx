@@ -2,17 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Geist, Geist_Mono } from "next/font/google";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
+import localFont from "next/font/local";
 
 export const metadata: Metadata = {
     title: { default: "Esports club", template: "%s | Esports club" },
@@ -28,6 +18,14 @@ export const metadata: Metadata = {
     },
 };
 
+const satoshi = localFont({
+    src: [
+        { path: "../../public/fonts/satoshi/Satoshi-Variable.woff2", style: "normal" },
+        { path: "../../public/fonts/satoshi/Satoshi-VariableItalic.woff2", style: "italic", weight: "100 900" },
+    ],
+    variable: "--font-satoshi",
+});
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -35,7 +33,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+            <body className={`${satoshi.className} antialiased`}>{children}</body>
         </html>
     );
 }
