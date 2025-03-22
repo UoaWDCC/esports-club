@@ -4,10 +4,13 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
+        "dev:db": "next dev & drizzle-kit push",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "format": "pnpm dlx prettier . --write"
+        "format": "pnpm dlx prettier . --write",
+        "db:push": "drizzle-kit push",
+        "studio": "drizzle-kit studio"
     },
     "dependencies": {
         "@auth/drizzle-adapter": "^1.8.0",
@@ -18,6 +21,7 @@
         "next": "15.2.2",
         "next-auth": "5.0.0-beta.25",
         "pg": "^8.14.1",
+        "postgres": "^3.4.5",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "server-only": "^0.0.1",
