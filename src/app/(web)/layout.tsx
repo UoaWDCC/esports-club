@@ -20,8 +20,12 @@ export const metadata: Metadata = {
 
 const satoshi = localFont({
     src: [
-        { path: "../../public/fonts/satoshi/Satoshi-Variable.woff2", style: "normal" },
-        { path: "../../public/fonts/satoshi/Satoshi-VariableItalic.woff2", style: "italic", weight: "100 900" },
+        { path: "../../../public/fonts/satoshi/Satoshi-Variable.woff2", style: "normal" },
+        {
+            path: "../../../public/fonts/satoshi/Satoshi-VariableItalic.woff2",
+            style: "italic",
+            weight: "100 900",
+        },
     ],
     variable: "--font-satoshi",
 });
