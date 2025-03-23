@@ -15,7 +15,7 @@ export default function Home() {
                     </li>
                     <li className="tracking-[-.01em]">Save and see your changes instantly.</li>
                 </ol>
-
+            
                 <div className="flex flex-col items-center gap-4 sm:flex-row">
                     <a
                         className="bg-foreground text-background flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] sm:h-12 sm:w-auto sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
@@ -65,6 +65,9 @@ export default function Home() {
                     Go to nextjs.org →
                 </a>
             </footer>
+              <div>
+                    I LOVE WDCC
+                </div>
         </div>
     );
 }
