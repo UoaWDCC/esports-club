@@ -8,7 +8,10 @@
 }
 
 @theme {
-    --color-violet: #4632ff;
+    --color-purple: #7650ff;
+    --color-purple-border: #5d3dd1;
+    --color-gray: #1e1e1e;
+    --color-gray-border: #363636;
 }
 
 @utility content-container {
@@ -21,8 +24,6 @@
     }
 }
 
-/* end of tailwind */
-
 body {
     background: var(--background);
     color: var(--foreground);
@@ -30,9 +31,17 @@ body {
 }
 
 h1 {
+    font-size: 64px;
+    letter-spacing: -0.5%;
+    line-height: 91.5%;
+    font-weight: 700;
 }
 
 h2 {
+    font-size: 48px;
+    letter-spacing: -0.5%;
+    line-height: 91.5%;
+    font-weight: 700;
 }
 
 h3 {
@@ -66,4 +75,13 @@ small.font-bold,
 small em {
     letter-spacing: -2%;
     font-weight: 500;
+}
+
+@media screen and (min-width: 1024px) {
+    p {
+        font-size: 18px;
+        letter-spacing: 4%;
+        line-height: 130%;
+        font-weight: 500;
+    }
 }
