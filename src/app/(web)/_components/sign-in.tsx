@@ -1,19 +1,18 @@
-import { signIn } from "@/auth";
+import Button from "@ui/button/Button";
 
-export default function SignIn() {
+import { signOut } from "@/auth";
+
+export default function SignOut() {
     return (
         <form
             action={async () => {
                 "use server";
-                await signIn("google");
+                await signOut();
             }}
         >
-            <button
-                className="cursor-pointer rounded-2xl border border-white px-8 py-2"
-                type="submit"
-            >
-                Signin with Google
-            </button>
+            <Button variant={{ style: "solid" }} type="submit">
+                SignOut
+            </Button>
         </form>
     );
 }

@@ -3,7 +3,12 @@ import GoogleAuthButton from "@ui/button/GoogleAuthButton";
 import Footer from "@ui/footer/Footer";
 import StandardLayout from "@ui/layout/StandardLayout";
 
+import { auth } from "@/auth";
+
+import SignOut from "./_components/sign-in";
+
 export default async function Home() {
+    const session = await auth();
     return (
         <>
             <StandardLayout>
@@ -15,13 +20,16 @@ export default async function Home() {
                     </div>
                 </div>
                 <hr />
-                <Button href="/out" variant={{ style: "cta" }}>
-                    Test
+                <Button href="/staff" variant={{ style: "cta" }}>
+                    Staff page
                 </Button>
-                <Button variant={{ style: "solid" }}>Test</Button>
-                <Button variant={{ style: "outline" }}>Test</Button>
+                <Button href="/profile" variant={{ style: "solid" }}>
+                    Profile page
+                </Button>
                 <Button variant={{ style: "google" }}>Test</Button>
+                <SignOut />
                 <GoogleAuthButton />
+                <p>{JSON.stringify(session)}</p>
             </StandardLayout>
             <Footer />
         </>

@@ -16,7 +16,6 @@
         "@auth/drizzle-adapter": "^1.8.0",
         "bcryptjs": "^3.0.2",
         "clsx": "^2.1.1",
-        "dotenv": "^16.4.7",
         "drizzle-orm": "^0.41.0",
         "motion": "^12.5.0",
         "next": "15.2.2",

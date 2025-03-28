@@ -10,7 +10,7 @@ const GoogleAuthButton = () => {
         <form
             action={async () => {
                 "use server";
-                await signIn("google", { redirectTo: "/dashboard" });
+                await signIn("google");
             }}
         >
             <Button type="submit" variant={{ style: "google" }}>

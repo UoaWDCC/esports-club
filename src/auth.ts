@@ -8,13 +8,14 @@ import NextAuth, { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-const authOptions: NextAuthConfig = {
+export const authOptions: NextAuthConfig = {
     adapter: DrizzleAdapter(db, {
         usersTable: users,
         accountsTable: accounts,
         sessionsTable: sessions,
         verificationTokensTable: verificationTokens,
     }),
+    session: { strategy: "jwt" },
     pages: {
         signIn: "/sign-in",
     },
@@ -23,7 +24,10 @@ const authOptions: NextAuthConfig = {
         GoogleProvider,
         // Credentials is very cooked at the moment so we ignore for now xdx
         Credentials({
-            credentials: { email: {}, password: {} },
+            credentials: {
+                email: { label: "email", type: "text" },
+                password: { label: "password", type: "password" },
+            },
             authorize: async (credentials) => {
                 // check for empty fields
                 if (!credentials?.email || !credentials?.password) {
@@ -38,13 +42,13 @@ const authOptions: NextAuthConfig = {
                 });
 
                 if (!user || !user.password) {
-                    throw new Error("1Invalid credentials.");
+                    throw new Error("Invalid credentials.");
                 }
 
                 const isValid = await bcrypt.compare(password ?? "", user.password);
 
                 if (!isValid) {
-                    throw new Error("2Invalid credentials.");
+                    throw new Error("Invalid credentials.");
                 }
 
                 // return user object with their profile data
