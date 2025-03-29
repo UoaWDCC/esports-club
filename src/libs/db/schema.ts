@@ -1,12 +1,4 @@
-import {
-    boolean,
-    integer,
-    pgEnum,
-    pgTable,
-    primaryKey,
-    text,
-    timestamp,
-} from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
 import { AdapterAccountType } from "next-auth/adapters";
 
 export const roleEnum = pgEnum("roles", ["user", "staff"]);
