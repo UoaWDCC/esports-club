@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 
-import { DEFAULT_LOGIN_REDIRECT, PUBLIC_ROUTES } from "@/libs/routes";
+import { DEFAULT_LOGIN_REDIRECT, PUBLIC_ROUTES, ROOT } from "@/libs/routes";
 
 import { authOptions } from "./auth";
 
@@ -16,6 +16,12 @@ export default auth((req) => {
     // redirect to the login screen
     if (!isAuthenticated && !isPublicRoute) {
         return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+
+    // if user is logged requesting a staff route
+    // redirect to the root page if the user is not staff
+    if (nextUrl.pathname.startsWith("/staff") && req.auth?.user.role !== "staff") {
+        return Response.redirect(new URL(ROOT, nextUrl));
     }
 });
 

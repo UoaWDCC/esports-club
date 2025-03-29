@@ -9,7 +9,8 @@
         "lint": "next lint",
         "format": "pnpm dlx prettier . --write",
         "db:push": "drizzle-kit push",
-        "db:studio": "drizzle-kit studio"
+        "db:studio": "drizzle-kit studio",
+        "nuke": "pnpm dlx rimraf .next && pnpm dlx rimraf node_modules"
     },
     "dependencies": {
         "@auth/drizzle-adapter": "^1.8.0",
@@ -51,6 +52,6 @@
     },
     "volta": {
         "node": "20.18.1",
-        "pnpm": "10.6.1"
+        "pnpm": "10.6.3"
     }
 }

@@ -24,7 +24,7 @@ export const authOptions: NextAuthConfig = {
                 return { role: profile.role ?? "user", ...profile };
             },
         }),
-        // Credentials is very cooked at the moment so we ignore for now xdx
+        // TODO: Credentials is very cooked at the moment so we ignore for now xdx
         Credentials({
             credentials: {
                 email: { label: "email", type: "text" },
@@ -58,6 +58,7 @@ export const authOptions: NextAuthConfig = {
             },
         }),
     ],
+    // give role property to session
     callbacks: {
         jwt({ token, user }) {
             if (user) {
