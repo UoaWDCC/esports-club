@@ -1,4 +1,5 @@
 import { DefaultSession } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
     /**
@@ -6,8 +7,7 @@ declare module "next-auth" {
      */
     interface Session {
         user: {
-            /** The user's postal address. */
-            address: string;
+            role?: string;
             /**
              * By default, TypeScript merges new interface properties and overwrites existing ones.
              * In this case, the default session user properties will be overwritten,
@@ -15,5 +15,17 @@ declare module "next-auth" {
              * you need to add them back into the newly declared interface.
              */
         } & DefaultSession["user"];
+    }
+
+    interface User {
+        role?: string;
+    }
+}
+
+declare module "next-auth/jwt" {
+    /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
+    interface JWT {
+        /** OpenID ID Token */
+        role?: string;
     }
 }

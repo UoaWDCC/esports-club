@@ -16,12 +16,14 @@ export const authOptions: NextAuthConfig = {
         verificationTokensTable: verificationTokens,
     }),
     session: { strategy: "jwt" },
-    pages: {
-        signIn: "/sign-in",
-    },
     providers: [
         // AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET are defined in .env
-        GoogleProvider,
+        GoogleProvider({
+            allowDangerousEmailAccountLinking: true,
+            profile(profile) {
+                return { role: profile.role ?? "user", ...profile };
+            },
+        }),
         // Credentials is very cooked at the moment so we ignore for now xdx
         Credentials({
             credentials: {
@@ -56,6 +58,18 @@ export const authOptions: NextAuthConfig = {
             },
         }),
     ],
+    callbacks: {
+        jwt({ token, user }) {
+            if (user) {
+                token.role = user.role;
+            }
+            return token;
+        },
+        session({ session, token }) {
+            session.user.role = token.role;
+            return session;
+        },
+    },
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);

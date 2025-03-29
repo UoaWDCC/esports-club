@@ -4,13 +4,12 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "dev:db": "next dev & drizzle-kit push",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
         "format": "pnpm dlx prettier . --write",
         "db:push": "drizzle-kit push",
-        "studio": "drizzle-kit studio"
+        "db:studio": "drizzle-kit studio"
     },
     "dependencies": {
         "@auth/drizzle-adapter": "^1.8.0",
