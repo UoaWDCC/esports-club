@@ -58,3 +58,4 @@ TBA
 | ---------------- | --------------------------- |
 | Technical Lead   | Chanasit Jitsawatpaiboon    |
 | Project Manager  | Anton Garay                 |
+| demoted to member  | Anton Garay                 |
