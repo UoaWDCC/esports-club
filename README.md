@@ -58,5 +58,6 @@ TBA
 | ---------------- | --------------------------- |
 | Technical Lead   | Chanasit Jitsawatpaiboon    |
 | Project Manager  | Anton Garay                 |
+| Dev-Designer     | Arisha Azmi                 |
 | Developer        | Abbey Martinez              |
 | Developer        | Matthew Ren                 |
