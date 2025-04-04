@@ -58,7 +58,9 @@ TBA
 | ---------------- | --------------------------- |
 | Technical Lead   | Chanasit Jitsawatpaiboon    |
 | Project Manager  | Anton Garay                 |
+| Developer        | Shazeel Ali                 |
 | Developer        | Eleanor Crellin             |
 | Developer        | Abbey Martinez              |
 | Developer        | Matthew Ren                 |
 | Developer        | Subeen Ban                  |
+
