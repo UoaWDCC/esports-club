@@ -58,11 +58,13 @@ TBA
 | ---------------- | --------------------------- |
 | Technical Lead   | Chanasit Jitsawatpaiboon    |
 | Project Manager  | Anton Garay                 |
-| Developer        | Emma Prince                 |
-| Dev-Designer     | Arisha Azmi                 |
 | Project Exec     | Jos Badenas                 |
+| Dev-Designer     | Arisha Azmi                 |
+| Dev-Designer    | Louise Wang                 |
+| Developer        | Emma Prince                 |
 | Developer        | Shazeel Ali                 |
 | Developer        | Eleanor Crellin             |
 | Developer        | Abbey Martinez              |
 | Developer        | Matthew Ren                 |
 | Developer        | Subeen Ban                  |
+
