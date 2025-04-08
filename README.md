@@ -59,6 +59,7 @@ TBA
 | Technical Lead   | Chanasit Jitsawatpaiboon    |
 | Project Manager  | Anton Garay                 |
 | Developer        | Emma Prince                 |
+| Project Exec     | Jos Badenas                 |
 | Developer        | Shazeel Ali                 |
 | Developer        | Eleanor Crellin             |
 | Developer        | Abbey Martinez              |
