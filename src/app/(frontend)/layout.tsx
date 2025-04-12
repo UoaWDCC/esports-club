@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import localFont from "next/font/local";
+import TanstackClientProvider from "@providers/query/TanstackClientProvider";
 
 export const metadata: Metadata = {
     title: { default: "Esports club", template: "%s | Esports club" },
@@ -37,7 +38,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${satoshi.className} antialiased`}>{children}</body>
+            <TanstackClientProvider>
+                <body className={`${satoshi.className} antialiased`}>{children}</body>
+            </TanstackClientProvider>
         </html>
     );
 }
