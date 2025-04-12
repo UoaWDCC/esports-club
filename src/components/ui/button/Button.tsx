@@ -7,6 +7,7 @@ import { cn } from "@/libs/utils";
 type CommonProps = {
     className?: string;
     children: ReactNode;
+    disabled?: boolean;
     variant?: VariantProps<typeof button>;
 };
 
@@ -23,7 +24,7 @@ type LinkVersion = CommonProps &
     };
 
 // full definition, switch type based on props
-type ButtonProps = (ButtonVersion | LinkVersion) & CommonProps;
+export type ButtonProps = (ButtonVersion | LinkVersion) & CommonProps;
 
 const button = tv({
     base: "relative flex cursor-pointer justify-center gap-2 rounded-xl border-2 px-6 py-3.5 font-bold transition-[filter] select-none",
@@ -60,7 +61,14 @@ export const Button = ({ ...props }: ButtonProps) => {
     }
 
     return (
-        <button {...props} className={cn(button(props.variant), props.className)}>
+        <button
+            {...props}
+            className={cn(
+                button(props.variant),
+                props.disabled && "pointer-events-none brightness-50",
+                props.className,
+            )}
+        >
             {props.children}
         </button>
     );
