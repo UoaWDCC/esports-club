@@ -48,13 +48,22 @@ export const Button = ({ ...props }: ButtonProps) => {
         const newTab = (props.href as string).startsWith("http") ? "_blank" : undefined;
 
         return (
-            <Link className={cn(button(props.variant))} target={newTab} href={props.href}>
+            <Link
+                {...props}
+                className={cn(button(props.variant))}
+                target={newTab}
+                href={props.href}
+            >
                 {props.children}
             </Link>
         );
     }
 
-    return <button className={cn(button(props.variant), props.className)}>{props.children}</button>;
+    return (
+        <button {...props} className={cn(button(props.variant), props.className)}>
+            {props.children}
+        </button>
+    );
 };
 
 export default Button;

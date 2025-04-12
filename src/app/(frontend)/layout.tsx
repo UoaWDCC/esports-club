@@ -38,9 +38,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <TanstackClientProvider>
-                <body className={`${satoshi.className} antialiased`}>{children}</body>
-            </TanstackClientProvider>
+            <body className={`${satoshi.className} antialiased`}>
+                <TanstackClientProvider>{children}</TanstackClientProvider>
+            </body>
         </html>
     );
 }
