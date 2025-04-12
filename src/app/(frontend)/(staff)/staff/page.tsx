@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import { getUsers } from "@libs/api/query/user";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Footer from "@ui/footer/Footer";
 import StandardLayout from "@ui/layout/StandardLayout";
 
 import { auth } from "@/auth";
+import { getComment } from "@/server/comments";
 
-import MockUser from "./_components/MockUser";
+import MockUser from "./_components/MockComment";
 
 export default async function StaffPage() {
     const session = await auth();
@@ -21,7 +21,7 @@ export default async function StaffPage() {
     // doesn't need client to be rendered in to start fetching
     queryClient.prefetchQuery({
         queryKey: ["user"],
-        queryFn: getUsers,
+        queryFn: getComment,
     });
 
     const dehydratedState = dehydrate(queryClient);
