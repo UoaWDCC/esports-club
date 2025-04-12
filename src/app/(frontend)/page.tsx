@@ -14,10 +14,6 @@ export default async function Home() {
             <StandardLayout>
                 <div className="flex">
                     <h1 className="max-w-[600px]">Auckland University Esports Club</h1>
-                    <div className="flex gap-4">
-                        <button>Sign in</button>
-                        <button>Sign out</button>
-                    </div>
                 </div>
                 <hr />
                 <Button href="/staff" variant={{ style: "cta" }}>
