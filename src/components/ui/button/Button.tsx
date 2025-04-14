@@ -7,9 +7,15 @@ import { cn } from "@/libs/utils";
 type CommonProps = {
     className?: string;
     children: ReactNode;
-    disabled?: boolean;
     variant?: VariantProps<typeof button>;
 };
+
+type LoadingProps =
+    | { isLoading?: never; fallback?: never }
+    | {
+          isLoading: boolean;
+          fallback?: ReactNode | string;
+      };
 
 // define types for each version
 type ButtonVersion = CommonProps &
@@ -24,10 +30,10 @@ type LinkVersion = CommonProps &
     };
 
 // full definition, switch type based on props
-export type ButtonProps = (ButtonVersion | LinkVersion) & CommonProps;
+export type ButtonProps = (ButtonVersion | LinkVersion) & CommonProps & LoadingProps;
 
 const button = tv({
-    base: "relative flex cursor-pointer justify-center gap-2 rounded-xl border-2 px-6 py-3.5 font-bold transition-[filter] select-none",
+    base: "transition-[filter relative flex cursor-pointer justify-center gap-2 rounded-xl border-2 px-6 py-3.5 font-bold brightness-100 duration-200 select-none",
     variants: {
         style: {
             cta: "bg-purple border-purple-border",
@@ -60,16 +66,18 @@ export const Button = ({ ...props }: ButtonProps) => {
         );
     }
 
+    const { isLoading, fallback, ...rest } = props;
+
     return (
         <button
-            {...props}
+            {...rest}
             className={cn(
                 button(props.variant),
-                props.disabled && "pointer-events-none brightness-50",
+                isLoading && "pointer-events-none brightness-50",
                 props.className,
             )}
         >
-            {props.children}
+            {isLoading && fallback ? fallback : props.children}
         </button>
     );
 };
