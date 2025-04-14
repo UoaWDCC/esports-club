@@ -1,6 +1,7 @@
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
 import Footer from "@ui/footer/Footer";
+import CredentialsRegister from "@ui/form/CredentialRegister";
 import CredentialsSignIn from "@ui/form/CredentialSignIn";
 import CredentialsSignOut from "@ui/form/CredentialSignOut";
 import StandardLayout from "@ui/layout/StandardLayout";
@@ -26,6 +27,7 @@ export default async function Home() {
                 <CredentialsSignOut />
                 <GoogleAuthButton />
                 <CredentialsSignIn />
+                <CredentialsRegister />
                 <p>{JSON.stringify(session)}</p>
             </StandardLayout>
             <Footer />

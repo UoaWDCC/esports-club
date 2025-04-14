@@ -38,8 +38,8 @@ const MockUser = () => {
             <Button onClick={handleCreate} isLoading={isLoading}>
                 &quot;create user&quot;
             </Button>
-            <p>{isFetching ? "loading" : JSON.stringify(data)}</p>
-            <p>{error?.message}</p>
+            <pre>{isFetching ? "loading" : JSON.stringify(data, null, 3)}</pre>
+            <pre>{error?.message}</pre>
         </div>
     );
 };

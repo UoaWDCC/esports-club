@@ -30,7 +30,7 @@ export default async function StaffPage() {
         <HydrationBoundary state={dehydratedState}>
             <StandardLayout>
                 <h1 className="max-w-[600px]">Staff page</h1>
-                <p>{JSON.stringify(session)}</p>
+                <p>{JSON.stringify(session, null, 4)}</p>
                 <Footer />
                 <MockUser />
             </StandardLayout>
