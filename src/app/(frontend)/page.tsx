@@ -35,6 +35,12 @@ export default async function Home() {
                     </div>
                 </div>
                 <h3>Authentication</h3>
+                <Button href="/sign-in" variant={{ style: "solid" }}>
+                    Login page
+                </Button>
+                <Button href="/sign-up" variant={{ style: "solid" }}>
+                    Registration page
+                </Button>
                 <GoogleAuthButton />
                 <SignOut />
                 <h3>Info</h3>
