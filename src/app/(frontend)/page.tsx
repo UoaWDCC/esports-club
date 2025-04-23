@@ -15,16 +15,29 @@ export default async function Home() {
                     <h1 className="max-w-[600px]">Auckland University Esports Club</h1>
                 </div>
                 <hr />
-                <Button href="/staff" variant={{ style: "cta" }}>
-                    Staff page
-                </Button>
-                <Button href="/profile" variant={{ style: "solid" }}>
-                    Profile page
-                </Button>
-                <Button variant={{ style: "google" }}>Test</Button>
+                <h3>Routes</h3>
+                <div className="grid grid-cols-2 gap-8">
+                    <div className="flex flex-col gap-8">
+                        <Button href="/staff" variant={{ style: "cta" }}>
+                            /staff page (role: staff)
+                        </Button>
+                        <Button href="/profile" variant={{ style: "solid" }}>
+                            /Profile page (role : user)
+                        </Button>
+                    </div>
+                    <div className="flex flex-col gap-8">
+                        <Button href="/api/staff" variant={{ style: "cta" }}>
+                            /api/staff
+                        </Button>
+                        <Button href="/api/public" variant={{ style: "solid" }}>
+                            /api/public
+                        </Button>
+                    </div>
+                </div>
+                <h3>Authentication</h3>
                 <GoogleAuthButton />
                 <SignOut />
-
+                <h3>Info</h3>
                 <pre>{JSON.stringify(session, null, 2)}</pre>
             </StandardLayout>
             <Footer />
