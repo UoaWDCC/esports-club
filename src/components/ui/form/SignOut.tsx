@@ -2,7 +2,7 @@ import Button from "@ui/button/Button";
 
 import { signOut } from "@/auth";
 
-export default function CredentialsSignOut() {
+export default function SignOut() {
     return (
         <form
             action={async () => {

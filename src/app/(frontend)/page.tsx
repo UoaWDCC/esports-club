@@ -1,9 +1,7 @@
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
 import Footer from "@ui/footer/Footer";
-import CredentialsRegister from "@ui/form/CredentialRegister";
-import CredentialsSignIn from "@ui/form/CredentialSignIn";
-import CredentialsSignOut from "@ui/form/CredentialSignOut";
+import SignOut from "@ui/form/SignOut";
 import StandardLayout from "@ui/layout/StandardLayout";
 
 import { auth } from "@/auth";
@@ -24,11 +22,10 @@ export default async function Home() {
                     Profile page
                 </Button>
                 <Button variant={{ style: "google" }}>Test</Button>
-                <CredentialsSignOut />
                 <GoogleAuthButton />
-                <CredentialsSignIn />
-                <CredentialsRegister />
-                <p>{JSON.stringify(session)}</p>
+                <SignOut />
+
+                <pre>{JSON.stringify(session, null, 2)}</pre>
             </StandardLayout>
             <Footer />
         </>

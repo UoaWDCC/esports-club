@@ -29,7 +29,6 @@ type UserRouteHandler = (
 const defaultEndpointOptions = { protected: false, admin: false };
 
 export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return async (req: NextRequest, res: NextApiResponse) => {
         try {
             // check if request is authenticated
