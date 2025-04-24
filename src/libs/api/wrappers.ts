@@ -1,4 +1,3 @@
-import { NextApiResponse } from "next";
 import type { NextRequest } from "next/server";
 import { Session } from "next-auth";
 import { z } from "zod";
@@ -14,39 +13,31 @@ type EndpointOptions = {
     staff?: boolean;
 };
 
-type Handler = (
-    req: NextRequest,
-    res: NextApiResponse,
-    session?: Session,
-) => void | Response | Promise<void | Response>;
+type Handler = (req: NextRequest, session?: Session) => Response | Promise<Response>;
 
-type UserRouteHandler = (
-    req: NextRequest,
-    res: NextApiResponse,
-    user: Session,
-) => void | Response | Promise<void | Response>;
+type UserRouteHandler = (req: NextRequest, user: Session) => Response | Promise<Response>;
 
 const defaultEndpointOptions = { protected: false, admin: false };
 
 export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
-    return async (req: NextRequest, res: NextApiResponse) => {
+    return async (req: NextRequest) => {
         try {
-            // check if request is authenticated
             const session = await auth();
 
-            if (!session) return responses.unauthorized();
+            if (!session && (options.protected || options.staff)) {
+                return responses.unauthorized();
+            }
 
-            if ((options.protected || options.staff) && !session) return responses.unauthorized();
+            if (options.staff && session?.user.role !== "staff") {
+                return responses.forbidden();
+            }
 
-            if (options.staff && session?.user.role !== "staff") return responses.forbidden();
-
-            // return the route handler
-            return await handler(req, res, session);
+            return await handler(req, session!);
         } catch (error) {
             if (error instanceof z.ZodError) {
                 return responses.badRequest();
             }
-            // catch all errors
+
             console.error("Error:", error);
             return responses.internalServerError();
         }
@@ -54,13 +45,13 @@ export function routeWrapper(handler: Handler, options: EndpointOptions = defaul
 }
 
 export function userRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, res, user) => handler(req, res, user!), {
+    return routeWrapper((req, user) => handler(req, user!), {
         protected: true,
     });
 }
 
 export function staffRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, res, user) => handler(req, res, user!), {
+    return routeWrapper((req, user) => handler(req, user!), {
         staff: true,
     });
 }

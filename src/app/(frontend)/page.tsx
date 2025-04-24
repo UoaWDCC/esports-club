@@ -29,7 +29,10 @@ export default async function Home() {
                         <Button href="/api/staff" variant={{ style: "cta" }}>
                             /api/staff
                         </Button>
-                        <Button href="/api/public" variant={{ style: "solid" }}>
+                        <Button href="/api/protected" variant={{ style: "solid" }}>
+                            /api/protected
+                        </Button>
+                        <Button href="/api/public" variant={{ style: "outline" }}>
                             /api/public
                         </Button>
                     </div>

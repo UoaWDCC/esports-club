@@ -56,7 +56,7 @@ export const Button = ({ ...props }: ButtonProps) => {
 
         return (
             <Link
-                {...props}
+                {...(props as LinkVersion)}
                 className={cn(button(props.variant))}
                 target={newTab}
                 href={props.href}
@@ -70,7 +70,7 @@ export const Button = ({ ...props }: ButtonProps) => {
 
     return (
         <button
-            {...rest}
+            {...(rest as ButtonVersion)}
             className={cn(
                 button(props.variant),
                 isLoading && "pointer-events-none brightness-50",
