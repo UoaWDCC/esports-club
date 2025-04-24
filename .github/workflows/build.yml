@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URI: ${{ secrets.DRIZZLE_DATABASE_URL }}
+      run: echo "DB URL is $DATABASE_URL" # this project doesn't need security anyways :D
     steps:
       # checkout the code
       - name: Checkout code

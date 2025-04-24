@@ -33,7 +33,7 @@ COPY . .
 
 # Build application
 RUN --mount=type=secret,id=DRIZZLE_DATABASE_URL \
-    DATABASE_URI="$(cat /run/secrets/DRIZZLE_DATABASE_URL)" \
+    DRIZZLE_DATABASE_URL="$(cat /run/secrets/DRIZZLE_DATABASE_URL)" \
     npx next build --experimental-build-mode compile
 
 # Remove development dependencies
