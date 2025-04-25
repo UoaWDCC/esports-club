@@ -15,11 +15,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DRIZZLE_DATABASE_URL: ${{ secrets.DRIZZLE_DATABASE_URL }}
+      APP_URL: ${{ secrets.APP_URL }}
+
     steps:
       # checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # print environment variables in build, this project doesn't need security anyways :D
+      - name: Echo environment variables
+        run: |
+          echo "DRIZZLE_DATABASE_URL: $DRIZZLE_DATABASE_URL"
+          echo "APP_URL: $APP_URL"
+          
       # set-up pnpm https://github.com/pnpm/action-setup
       - name: Set up pnpm
         uses: pnpm/action-setup@v4

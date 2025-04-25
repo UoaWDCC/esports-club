@@ -1,30 +1,26 @@
-import NextAuth from "next-auth";
+import { NextResponse } from "next/server";
 
-import { DEFAULT_LOGIN_REDIRECT, PUBLIC_ROUTES, ROOT } from "@/libs/routes";
-
-import { authOptions } from "./auth";
-
-const { auth } = NextAuth(authOptions);
+import { auth } from "@/auth";
 
 export default auth((req) => {
-    const { nextUrl } = req;
+    const session = req.auth;
+    const pathname = req.nextUrl.pathname;
 
-    const isAuthenticated = !!req.auth;
-    const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
+    const isAuthenticated = !!session;
 
-    // if user is not logged requesting a protected route
-    // redirect to the login screen
-    if (!isAuthenticated && !isPublicRoute) {
-        return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    // proteched routes
+    if (!isAuthenticated) {
+        return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // if user is logged requesting a staff route
-    // redirect to the root page if the user is not staff
-    if (nextUrl.pathname.startsWith("/staff") && req.auth?.user.role !== "staff") {
-        return Response.redirect(new URL(ROOT, nextUrl));
+    // staff route
+    if (pathname.startsWith("/staff") && session?.user.role !== "staff") {
+        return NextResponse.redirect(new URL("/login", req.url));
     }
+
+    return NextResponse.next();
 });
 
 export const config = {
-    matcher: ["/staff/:path*", "/profile/:path*"],
+    matcher: ["/staff/:path*", "/profile"],
 };

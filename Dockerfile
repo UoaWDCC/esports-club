@@ -32,7 +32,9 @@ RUN pnpm install --frozen-lockfile --prod=false
 COPY . .
 
 # Build application
-RUN npx next build --experimental-build-mode compile
+RUN --mount=type=secret,id=DRIZZLE_DATABASE_URL \
+    DRIZZLE_DATABASE_URL="$(cat /run/secrets/DRIZZLE_DATABASE_URL)" \
+    npx next build --experimental-build-mode compile
 
 # Remove development dependencies
 RUN pnpm prune --prod
