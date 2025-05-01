@@ -3,8 +3,9 @@ import GoogleAuthButton from "@ui/button/GoogleAuthButton";
 import Footer from "@ui/footer/Footer";
 import SignOut from "@ui/form/SignOut";
 import StandardLayout from "@ui/layout/StandardLayout";
-
+import SlideInText from "@ui/text/SlideInText";
 import { auth } from "@/auth";
+
 
 export default async function Home() {
     const session = await auth();
@@ -12,7 +13,9 @@ export default async function Home() {
         <>
             <StandardLayout>
                 <div className="flex">
-                    <h1 className="max-w-[600px]">Auckland University Esports Club</h1>
+
+                    <h1 className="max-w-[600px]">
+                        <SlideInText>Auckland University Esports Club</SlideInText></h1>
                 </div>
                 <hr />
                 <h3>Routes</h3>
@@ -49,6 +52,7 @@ export default async function Home() {
                 <h3>Info</h3>
                 <pre>{JSON.stringify(session, null, 2)}</pre>
             </StandardLayout>
+
             <Footer />
         </>
     );
