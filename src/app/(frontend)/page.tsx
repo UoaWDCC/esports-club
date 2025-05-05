@@ -4,8 +4,8 @@ import Footer from "@ui/footer/Footer";
 import SignOut from "@ui/form/SignOut";
 import StandardLayout from "@ui/layout/StandardLayout";
 import SlideInText from "@ui/text/SlideInText";
-import { auth } from "@/auth";
 
+import { auth } from "@/auth";
 
 export default async function Home() {
     const session = await auth();
@@ -13,9 +13,9 @@ export default async function Home() {
         <>
             <StandardLayout>
                 <div className="flex">
-
                     <h1 className="max-w-[600px]">
-                        <SlideInText>Auckland University Esports Club</SlideInText></h1>
+                        <SlideInText>Auckland University Esports Club</SlideInText>
+                    </h1>
                 </div>
                 <hr />
                 <h3>Routes</h3>
