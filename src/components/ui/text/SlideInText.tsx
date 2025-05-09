@@ -18,7 +18,7 @@ export const SlideInText = ({
     return (
         <motion.div
             {...props}
-            className={cn("relative", props.className)}
+            className={cn("relative whitespace-pre", props.className)}
             initial="outView"
             whileInView="inView"
         >
