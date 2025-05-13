@@ -23,6 +23,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: 5.72.2
         version: 5.72.2(@tanstack/react-query@5.72.2(react@19.0.0))(react@19.0.0)
+      '@types/papaparse':
+        specifier: ^5.3.16
+        version: 5.3.16
       bcryptjs:
         specifier: ^3.0.2
         version: 3.0.2
@@ -43,7 +46,14 @@ importers:
         version: 15.2.2(@babel/core@7.27.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next-auth:
         specifier: 5.0.0-beta.25
+<<<<<<< HEAD
         version: 5.0.0-beta.25(next@15.2.2(@babel/core@7.27.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+=======
+        version: 5.0.0-beta.25(next@15.2.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+      papaparse:
+        specifier: ^5.5.2
+        version: 5.5.2
+>>>>>>> 00852ea (feat : Uploading and Extraction from CSV)
       pg:
         specifier: ^8.15.5
         version: 8.15.5
@@ -1574,6 +1584,9 @@ packages:
 
   '@types/node@22.14.1':
     resolution: {integrity: sha512-u0HuPQwe/dHrItgHHpmw3N2fYCR6x4ivMNbPHRkBVP4CvN+kiRrKHWk3i8tXiO/joPwXLMYvF9TTF0eqgHIuOw==}
+
+  '@types/papaparse@5.3.16':
+    resolution: {integrity: sha512-T3VuKMC2H0lgsjI9buTB3uuKj3EMD2eap1MOuEQuBQ44EnDx/IkGhU6EwiTf9zG3za4SKlmwKAImdDKdNnCsXg==}
 
   '@types/pg@8.11.11':
     resolution: {integrity: sha512-kGT1qKM8wJQ5qlawUrEkXgvMSXoV213KfMGXcwfDwUIfUHXqXYXOfS1nE1LINRJVVVx5wCm70XnFlMHaIcQAfw==}
@@ -3464,9 +3477,14 @@ packages:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
 
+<<<<<<< HEAD
   p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
+=======
+  papaparse@5.5.2:
+    resolution: {integrity: sha512-PZXg8UuAc4PcVwLosEEDYjPyfWnTEhOrUfdv+3Bx+NuAb+5NhDmXzg5fHWmdCh1mP5p7JAZfFr3IMQfcntNAdA==}
+>>>>>>> 00852ea (feat : Uploading and Extraction from CSV)
 
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -5612,6 +5630,10 @@ snapshots:
   '@types/node@22.14.1':
     dependencies:
       undici-types: 6.21.0
+
+  '@types/papaparse@5.3.16':
+    dependencies:
+      '@types/node': 20.17.24
 
   '@types/pg@8.11.11':
     dependencies:
@@ -7876,7 +7898,11 @@ snapshots:
     dependencies:
       p-limit: 3.1.0
 
+<<<<<<< HEAD
   p-try@2.2.0: {}
+=======
+  papaparse@5.5.2: {}
+>>>>>>> 00852ea (feat : Uploading and Extraction from CSV)
 
   parent-module@1.0.1:
     dependencies:
