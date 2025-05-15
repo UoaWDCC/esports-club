@@ -20,7 +20,7 @@
 </div>
 
 <h1 align="center"><b>AUEC website</b></h1>
-<p align="center"><b>A WDCC project that manage membership and tournament management website for AUEC club</b></p>
+<p align="center"><b>A membership and tournament management website for Auckland University Esports Club</b></p>
 
 <p align="center">
     <a href="https://plane.so/"><b>Website</b></a> •
