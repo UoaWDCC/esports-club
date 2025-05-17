@@ -1,3 +1,4 @@
+import { desc } from "drizzle-orm";
 import {
     boolean,
     integer,
@@ -98,8 +99,7 @@ export const profiles = pgTable("profile", {
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
     userId: text("user_id")
-        .notNull()
-        .references(() => users.id, { onDelete: "cascade" }),
+        .references(() => users.id),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
     email: text("email").notNull(),
@@ -109,9 +109,34 @@ export const profiles = pgTable("profile", {
     tournamentPasses: integer("tournament_passes").default(0).notNull(),
     yearOfStudy: yearOfStudyEnum("year_of_study").notNull(),
     gender: genderEnum("gender").default("other").notNull(),
-    updateAt: timestamp().defaultNow().notNull(),
-    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
     ethnicity: text("ethnicity").default("NA"),
     currentStudy: text("current_study").default("NA").notNull(),
     currentDegree: text("current_degree").default("NA").notNull(),
+});
+
+export const memberships = pgTable("membership", {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    profileId: text("profile_id").references(()=> profiles.id).notNull(),
+    invoiceId: text("invoice_id").references(()=> invoices.id).notNull(),
+    membershipTypeId: text("membership_type_id").references(()=> membershipTypes.id).notNull(),
+    isPaid: boolean("is_paid").default(false).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const invoices = pgTable("invoice", {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+});
+
+export const membershipTypes = pgTable("membership_type", {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    name: text("name").notNull(),
+    description: text("description"),
+    startAt: timestamp("start_at").notNull(),
+    endAt: timestamp("end_at").notNull(),
+    price: integer("price").notNull(),
+    isActive: boolean("is_active").default(false).notNull(),
+    updateAt: timestamp("updated_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
 });
