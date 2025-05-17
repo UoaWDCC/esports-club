@@ -1,8 +1,18 @@
-import { integer, pgEnum, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, integer, pgEnum, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
 import { AdapterAccountType } from "next-auth/adapters";
 
+
+
+
+
 export const roleEnum = pgEnum("roles", ["user", "staff"]);
-export const genderEnum = pgEnum("gender", ["F", "M", "NA"]);
+export const genderEnum = pgEnum("gender", [
+    "male",
+    "female",
+    "non_binary",
+    "genderfluid",
+    "other",
+]);
 
 // https://authjs.dev/getting-started/database
 
@@ -68,13 +78,36 @@ export const verificationTokens = pgTable(
     ],
 );
 
+export const yearOfStudyEnum = pgEnum("year_of_study", [
+    "First year",
+    "Second year",
+    "Third year",
+    "Fourth year",
+    "Fifth year",
+    "Postgraduate",
+    "Graduated",
+    "Not at university",
+]);
+
 export const profiles = pgTable("profile", {
-    profileID: text("profile_ID").notNull().primaryKey(),
-    userID: text("user_ID").notNull(),
+    id: text("id")
+        .primaryKey()
+        .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+        .notNull()
+        .references(() => users.id, { onDelete: "cascade" }),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
     email: text("email").notNull(),
-    universityID: text("studentID").notNull(),
-    gender: genderEnum("gender").notNull(),
+    university: text("university"),
+    universityId: text("university_id"),
+    previousMember: boolean("previous_member").default(false).notNull(),
+    tournamentPasses: integer("tournament_passes").default(0).notNull(),
+    yearOfStudy: yearOfStudyEnum("year_of_study").notNull(),
+    gender: genderEnum("gender").default("other").notNull(),
+    updateAt: timestamp().defaultNow().notNull(),
     createdAt: timestamp().defaultNow().notNull(),
+    ethnicity: text("ethnicity").default("NA"),
+    currentStudy: text("current_study").default("NA").notNull(),,
+    currentDegree: text("current_degree").default("NA").notNull(),,
 });
