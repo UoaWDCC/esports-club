@@ -1,9 +1,13 @@
-import { boolean, integer, pgEnum, pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
+import {
+    boolean,
+    integer,
+    pgEnum,
+    pgTable,
+    primaryKey,
+    text,
+    timestamp,
+} from "drizzle-orm/pg-core";
 import { AdapterAccountType } from "next-auth/adapters";
-
-
-
-
 
 export const roleEnum = pgEnum("roles", ["user", "staff"]);
 export const genderEnum = pgEnum("gender", [
@@ -108,6 +112,6 @@ export const profiles = pgTable("profile", {
     updateAt: timestamp().defaultNow().notNull(),
     createdAt: timestamp().defaultNow().notNull(),
     ethnicity: text("ethnicity").default("NA"),
-    currentStudy: text("current_study").default("NA").notNull(),,
-    currentDegree: text("current_degree").default("NA").notNull(),,
+    currentStudy: text("current_study").default("NA").notNull(),
+    currentDegree: text("current_degree").default("NA").notNull(),
 });
