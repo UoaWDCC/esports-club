@@ -4,9 +4,9 @@ import Footer from "@ui/footer/Footer";
 import StandardLayout from "@ui/layout/StandardLayout";
 
 import { auth } from "@/auth";
-import { getComment } from "@/server/comments";
 
 import MockUser from "./_components/MockComment";
+import { getComment } from "@/services/comments";
 
 export default async function StaffPage() {
     const session = await auth();

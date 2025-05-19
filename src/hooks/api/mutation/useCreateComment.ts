@@ -1,6 +1,6 @@
+import CreateComment from "@/services/comments";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 
-import CreateComment from "@/server/comments";
 
 export const useCreateComment = (queryClient: QueryClient) => {
     const mutation = useMutation({
