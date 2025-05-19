@@ -1,6 +1,9 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@libs/db";
-import { accounts, sessions, users, verificationTokens } from "@libs/db/schema";
+import { accounts } from "@libs/db/schema/accounts";
+import { sessions } from "@libs/db/schema/sessions";
+import { users } from "@libs/db/schema/users";
+import { verificationTokens } from "@libs/db/schema/verificationTokens";
 import NextAuth, { NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 

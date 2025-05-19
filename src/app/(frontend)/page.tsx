@@ -1,3 +1,4 @@
+import { db } from "@libs/db";
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
 import Footer from "@ui/footer/Footer";
@@ -9,6 +10,7 @@ import { auth } from "@/auth";
 
 export default async function Home() {
     const session = await auth();
+    console.log(db.query.accounts);
     return (
         <>
             <StandardLayout>
