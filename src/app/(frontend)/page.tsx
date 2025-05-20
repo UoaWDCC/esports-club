@@ -6,14 +6,12 @@ import StandardLayout from "@ui/layout/StandardLayout";
 import SlideInText from "@ui/text/SlideInText";
 
 import { auth } from "@/auth";
-import { CSVReader } from "@/components/CSVReader";
 
 export default async function Home() {
     const session = await auth();
     return (
         <>
             <StandardLayout>
-                <CSVReader></CSVReader>
                 <div className="flex">
                     <h1 className="max-w-[600px]">
                         <SlideInText>Auckland University Esports Club</SlideInText>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Button from "@ui/button/Button";
 import Papa from "papaparse";
 
 interface memberData {
@@ -17,24 +18,27 @@ interface memberData {
 
 export const CSVReader = () => {
     const [csvData, setCSVData] = useState<memberData[]>([]);
-
+    const submitMembers = () => {
+        // csvData.map((value) => {
+        //     //db.insert(users).values()
+        // });
+    };
     const resultsFormat = (results: string[][]) => {
-        let tempMemberData: memberData[] = [];
+        const tempMemberData: memberData[] = [];
         results.map((raw, index) => {
             if (index == 0) {
                 return;
             }
-            let fullName: string = raw[6];
-            console.log(fullName);
-            var firstName = fullName.split(" ").slice(0, -1).join(" ");
-            var lastName = fullName.split(" ").slice(-1).join(" ");
-            let prevMemRaw = raw[3];
+            const fullName: string = raw[6];
+            const firstName = fullName.split(" ").slice(0, -1).join(" ");
+            const lastName = fullName.split(" ").slice(-1).join(" ");
+            const prevMemRaw = raw[3];
             let previousMember = false;
             if (prevMemRaw == "Yes") {
                 previousMember = true;
             }
 
-            let newMember: memberData = {
+            const newMember: memberData = {
                 firstName: firstName,
                 lastName: lastName,
                 email: raw[7],
@@ -49,8 +53,6 @@ export const CSVReader = () => {
         });
 
         setCSVData(tempMemberData);
-        console.log(tempMemberData);
-        console.log(results);
     };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,10 +100,8 @@ export const CSVReader = () => {
                     })}
                 </tbody>
             </table>
+
+            <Button onClick={submitMembers}>Populate Database</Button>
         </div>
     );
 };
-
-function resultsFormat(result: Papa.ParseResult<string[]>) {
-    throw new Error("Function not implemented.");
-}
