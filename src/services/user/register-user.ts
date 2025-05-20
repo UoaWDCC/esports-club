@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@libs/db";
-import { users } from "@libs/db/schema";
+import { users } from "@libs/db/schema/users";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
