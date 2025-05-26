@@ -2,14 +2,12 @@
 
 import { db } from "@libs/db";
 import { memberships, membershipTypes, profiles } from "@libs/db/schema";
-import { eq, and, gte, lte } from "drizzle-orm";
+import { eq, and} from "drizzle-orm";
 
 // a member is valid if there is a single active membership (current time is between a membership)
 // the membership must be paid for it to be valid
 // should return boolean
 export const getMembershipStatus = async (userId: string) => {
-
-
     
     // Find the user's profile
     // Selects id from profiles schema where userId matches the provided userId
@@ -58,5 +56,15 @@ export const getMembershipStatus = async (userId: string) => {
     const startAt = new Date(membershipType[0].startAt);
     const endAt = new Date(membershipType[0].endAt);
 
-    return now >= startAt && now <= endAt;
+    const isValid = now >= startAt && now <= endAt;
+
+    if (!isValid) return {
+        body: null,
+        error: "Membership is not within the start and end date"
+    };
+    return {
+        body: {/* membership + membership type */},
+        error: null
+    };
+
 }; 

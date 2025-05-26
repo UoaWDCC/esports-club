@@ -2,19 +2,17 @@
 
 import { db } from "@libs/db";
 import { memberships, membershipTypes, profiles } from "@libs/db/schema";
-import { eq, and, gte, lte } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { NextResponse, NextRequest } from "next/server";
-import { routeWrapper } from "@libs/api/wrappers";
-
 
 // a member is valid if there is a single active membership (current time is between a membership)
 // the membership must be paid for it to be valid
 // should return boolean
 export const GET = async (
     req: NextRequest,
-    { params }: { params: { userId: string } }
+    { params }: { params: Promise<{ userId: string }> }
   ) => {
-    const userId = await params.userId;
+    const {userId} = await params;
 
     console.log("userId", userId);
     
