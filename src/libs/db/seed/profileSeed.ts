@@ -1,10 +1,9 @@
 import "dotenv/config";
 
+import { profiles, users } from "@schema";
 import { eq } from "drizzle-orm";
 
 import { db } from "..";
-import { profiles } from "../schema/profiles";
-import { users } from "../schema/users";
 
 async function seedProfiles() {
     // Fetch all users
