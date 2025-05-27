@@ -10,6 +10,7 @@ export const paymentType = ["bank_transfer", "Stripe", "In_person"] as const;
  */
 
 export const ZInvoice = z.object({
+    // TODO: switch id, and profileId to uuid in the future
     id: z.uuid(),
     profileId: z.uuid(),
     type: z.enum(invoiceType),

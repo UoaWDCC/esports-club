@@ -6,7 +6,8 @@ import { z } from "zod/v4";
  */
 
 export const ZMembershipType = z.object({
-    id: z.uuid(),
+    // TODO: switch id to uuid in the future
+    id: z.string(),
     name: z.string().min(1),
     description: z.string().optional(),
     startAt: z.date(),

@@ -6,10 +6,11 @@ import { z } from "zod/v4";
  */
 
 export const ZMembership = z.object({
-    id: z.uuid(),
-    profileId: z.uuid(),
-    invoiceId: z.uuid(),
-    membershipTypeId: z.uuid(),
+    // TODO: switch id, profileId, invoiceId, and membershipTypeId to uuid in the future
+    id: z.string(),
+    profileId: z.string(),
+    invoiceId: z.string(),
+    membershipTypeId: z.string(),
     isPaid: z.boolean(),
     createdAt: z.date(),
 });

@@ -18,8 +18,9 @@ export const yearOfStudyOptions = [
  * use to validate an object
  */
 export const ZProfile = z.object({
-    id: z.uuid(),
-    userId: z.uuid(),
+    // TODO: switch to uuid in the future
+    id: z.string(),
+    userId: z.string(),
     firstName: z.string().min(1),
     lastName: z.string().min(1),
     email: z.email(),
