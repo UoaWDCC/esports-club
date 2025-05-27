@@ -1,8 +1,5 @@
+import { invoices, membershipTypes, profiles } from "@schema";
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-
-import { invoices } from "./invoices";
-import { membershipTypes } from "./membership_types";
-import { profiles } from "./profiles";
 
 export const memberships = pgTable("membership", {
     id: text("id")
