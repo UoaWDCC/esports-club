@@ -1,10 +1,9 @@
 import "dotenv/config";
 
+import { profiles, users } from "@schema";
 import { eq } from "drizzle-orm";
 
 import { db } from "..";
-import { Profile } from "../schema/profiles";
-import { users } from "../schema/users";
 
 async function seedProfiles() {
     // Fetch all users
@@ -14,8 +13,8 @@ async function seedProfiles() {
         // Check if a profile already exists for this user to avoid duplicates
         const existingProfile = await db
             .select()
-            .from(Profile)
-            .where(eq(Profile.userId, user.id))
+            .from(profiles)
+            .where(eq(profiles.userId, user.id))
             .limit(1);
 
         if (existingProfile.length > 0) {
@@ -25,7 +24,7 @@ async function seedProfiles() {
 
         // Insert profile for user with some default or dummy data
         await db
-            .insert(Profile)
+            .insert(profiles)
             .values({
                 userId: user.id,
                 firstName: user.name?.split(" ")[0] ?? "FirstName",
