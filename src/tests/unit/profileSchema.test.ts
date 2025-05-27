@@ -1,37 +1,42 @@
-import { ZProfile } from "@libs/db/types/profile";
+import { faker } from "@faker-js/faker";
+import { gendersOptions, yearOfStudyOptions, ZProfile } from "@libs/db/types/profile";
 
 const mockValidProfile = {
-    id: "abc123",
-    userId: "user456",
-    firstName: "Alex",
-    lastName: "Rivera",
-    email: "alex.rivera@example.com",
-    university: "University of Otago",
-    universityId: "UO123456",
-    previousMember: true,
-    tournamentPasses: 2,
-    yearOfStudy: "Second year",
-    gender: "non_binary",
+    id: faker.string.uuid(),
+    userId: faker.string.uuid(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    email: faker.internet.email(),
+    university: "University of Auckland",
+    universityId: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
+    previousMember: faker.datatype.boolean(),
+    tournamentPasses: 0,
+    yearOfStudy: faker.helpers.arrayElement(yearOfStudyOptions),
+    gender: faker.helpers.arrayElement(gendersOptions),
     updatedAt: new Date("2024-08-01T12:00:00Z"),
     createdAt: new Date("2023-02-15T09:30:00Z"),
-    ethnicity: "asian",
-    currentStudy: "Psychology",
-    currentDegree: "BA",
+    ethnicity: "",
+    currentStudy: "",
+    currentDegree: "",
 };
 
 const mockInvalidProfile = {
-    id: "abc123",
-    userId: "user456",
-    firstName: "Alex",
-    lastName: "Rivera",
-    email: "alex.rivera@example.com",
-    university: "University of Otago",
-    universityId: "UO123456",
-    previousMember: true,
-    tournamentPasses: 2,
-    ethnicity: "asian",
-    currentStudy: "Psychology",
-    currentDegree: "BA",
+    id: faker.string.uuid(),
+    userId: faker.string.uuid(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    email: faker.internet.email(),
+    university: "University of Auckland",
+    universityId: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
+    previousMember: faker.datatype.boolean(),
+    tournamentPasses: 0,
+    yearOfStudy: faker.helpers.arrayElement(yearOfStudyOptions),
+    gender: faker.helpers.arrayElement(gendersOptions),
+    updatedAt: new Date("2024-08-01T12:00:00Z"),
+    createdAt: new Date("2023-02-15T09:30:00Z"),
+    ethnicity: 1, // invalid type
+    currentStudy: 2, // invalid type
+    currentDegree: 3, // invalid type
 };
 
 describe("Profile Schema", () => {

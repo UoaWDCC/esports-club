@@ -72,6 +72,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.0
+      '@faker-js/faker':
+        specifier: ^9.8.0
+        version: 9.8.0
       '@flydotio/dockerfile':
         specifier: ^0.7.8
         version: 0.7.8(@types/node@20.17.24)
@@ -880,6 +883,10 @@ packages:
   '@eslint/plugin-kit@0.2.7':
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@faker-js/faker@9.8.0':
+    resolution: {integrity: sha512-U9wpuSrJC93jZBxx/Qq2wPjCuYISBueyVUGK7qqdmj7r/nxaxwW8AQDCLeRO7wZnjj94sh3p246cAYjUKuqgfg==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
 
   '@flydotio/dockerfile@0.7.8':
     resolution: {integrity: sha512-FmVlJAV+Y8wW6FJa5kLgFNbcuMdryIDXpiFs/d275A4MWbKssJVEk6Fo1A8V1dQYeD0VhORpse6vSc4N0yvBGw==}
@@ -4870,6 +4877,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.12.0
       levn: 0.4.1
+
+  '@faker-js/faker@9.8.0': {}
 
   '@flydotio/dockerfile@0.7.8(@types/node@20.17.24)':
     dependencies:
