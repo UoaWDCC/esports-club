@@ -17,3 +17,5 @@ export const ZMembershipType = z.object({
     updateAt: z.date(),
     createdAt: z.date(),
 });
+
+export type MembershipTypeType = z.infer<typeof ZMembershipType>;

@@ -36,3 +36,5 @@ export const ZProfile = z.object({
     currentStudy: z.string().default("NA"),
     currentDegree: z.string().default("NA"),
 });
+
+export type ProfileType = z.infer<typeof ZProfile>;

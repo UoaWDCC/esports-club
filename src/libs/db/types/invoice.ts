@@ -21,3 +21,5 @@ export const ZInvoice = z.object({
     price: z.number(),
     createdAt: z.date(),
 });
+
+export type InvoiceType = z.infer<typeof ZInvoice>;
