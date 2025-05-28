@@ -25,8 +25,8 @@ const ZMembershipDTO = z.object({
     isPaid: z.boolean(),
 });
 
-type MembershipType = z.infer<typeof ZMembership>;
-type MembershipDTOType = z.infer<typeof ZMembershipDTO>;
+type Membership = z.infer<typeof ZMembership>;
+type MembershipDTO = z.infer<typeof ZMembershipDTO>;
 
 export { ZMembership, ZMembershipDTO };
-export type { MembershipType, MembershipDTOType };
+export type { Membership, MembershipDTO };

@@ -1,6 +1,6 @@
-import { ProfileDTO, ZProfileDTO } from "@libs/db/types/profile";
+import { ZProfileDTO } from "@libs/types/profile";
 
-export async function validateProfile<T extends {}>(member: T) {
+export async function validateProfile<T extends object>(member: T) {
     const parsed = ZProfileDTO.safeParse(member);
     if (!parsed.success) {
         return { error: "Invalid input", details: parsed.error.flatten() };

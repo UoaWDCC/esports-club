@@ -1,57 +1,49 @@
 import "dotenv/config";
 
-import { profiles, users } from "@schema";
-import { eq } from "drizzle-orm";
+import { InvoiceDTO } from "@libs/types/invoice";
+import { MembershipDTO } from "@libs/types/membership";
+import { invoices, memberships } from "@schema";
 
 import { db } from "..";
 
-async function seedProfiles() {
-    // Fetch all users
-    const allUsers = await db.select().from(users);
+/**
+ * seeds membershipType
+ * usage tsx '.\src\libs\db\seed\membership.seed.ts'
+ */
+async function seedMembership() {
+    const existingProfileId = "16d722a8-fc8b-4cc6-a816-2abfbe67151b";
+    const existingMembershipTypeId = "9670729f-95e5-4145-99e1-d368378191f2";
 
-    for (const user of allUsers) {
-        // Check if a profile already exists for this user to avoid duplicates
-        const existingProfile = await db
-            .select()
-            .from(profiles)
-            .where(eq(profiles.userId, user.id))
-            .limit(1);
+    const newInvoice: InvoiceDTO = {
+        profileId: existingProfileId,
+        type: "membership",
+        paymentMethod: "Stripe",
+        description: "a membership wowow",
+        status: "paid",
+        price: 9999,
+        paidDate: new Date(),
+    };
 
-        if (existingProfile.length > 0) {
-            console.log(`Profile already exists for user ${user.id}, skipping...`);
-            continue;
-        }
+    const invoiceId = (await db.insert(invoices).values(newInvoice).returning().execute())[0].id;
 
-        // Insert profile for user with some default or dummy data
-        await db
-            .insert(profiles)
-            .values({
-                userId: user.id,
-                firstName: user.name?.split(" ")[0] ?? "FirstName",
-                lastName: user.name?.split(" ")[1] ?? "LastName",
-                email: user.email!,
-                university: "Unknown University",
-                universityId: "", // empty string if not nullable, or update schema to nullable
-                previousMember: false,
-                tournamentPasses: 0,
-                yearOfStudy: "Not at university",
-                gender: "other",
-                ethnicity: "NA",
-                currentStudy: "NA",
-                currentDegree: "NA",
-            })
-            .execute();
+    const newMembership: MembershipDTO = {
+        profileId: existingProfileId,
+        invoiceId: invoiceId,
+        membershipTypeId: existingMembershipTypeId,
+        isPaid: true,
+    };
 
-        console.log(`Inserted profile for user ${user.id}`);
-    }
+    const result = await db.insert(memberships).values(newMembership).returning().execute();
+
+    console.log(`Inserted a new membership of id: ${result[0].id}`);
 }
 
-seedProfiles()
+seedMembership()
     .then(() => {
-        console.log("Seeding profiles completed!");
+        console.log("Seeding a membership completed!");
         process.exit(0);
     })
     .catch((err) => {
-        console.error("Error seeding profiles:", err);
+        console.error("Error seeding a membership:", err);
         process.exit(1);
     });
