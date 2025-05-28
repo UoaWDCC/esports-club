@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { GendersOptions, ProfileDTOType, YearOfStudyOptions } from "@libs/db/types/profile";
+import { GendersOptions, ProfileDTO, YearOfStudyOptions } from "@libs/db/types/profile";
 import Button from "@ui/button/Button";
 import Papa from "papaparse";
 
@@ -11,8 +11,8 @@ import { validateProfile } from "@/services/profile/validateProfile";
 import { parseProfile } from "../utils/parseProfile";
 
 export const CSVReader = () => {
-    const [csvData, setCSVData] = useState<ProfileDTOType[]>([]);
-    const [malformedcsvData, setMalformedCSVData] = useState<ProfileDTOType[]>([]);
+    const [csvData, setCSVData] = useState<ProfileDTO[]>([]);
+    const [malformedcsvData, setMalformedCSVData] = useState<ProfileDTO[]>([]);
 
     const submitMembers = () => {
         csvData.map((member) => {
@@ -21,8 +21,8 @@ export const CSVReader = () => {
     };
 
     async function resultsParse(results: string[][]) {
-        const tempMemberData: ProfileDTOType[] = [];
-        const tempMalformedData: ProfileDTOType[] = [];
+        const tempMemberData: ProfileDTO[] = [];
+        const tempMalformedData: ProfileDTO[] = [];
         await Promise.all(
             results.map(async (raw, index) => {
                 // Input sanitation to avoid errors

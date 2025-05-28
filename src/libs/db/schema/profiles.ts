@@ -1,10 +1,10 @@
 import { users } from "@schema";
 import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-import { gendersOptions, yearOfStudyOptions } from "../types/profile";
+import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "../types/profile";
 
-export const genderEnum = pgEnum("gender", gendersOptions);
-export const yearOfStudyEnum = pgEnum("year_of_study", yearOfStudyOptions);
+export const genderEnum = pgEnum("gender", GENDER_OPTIONS);
+export const yearOfStudyEnum = pgEnum("year_of_study", YEAR_OF_STUDY_OPTIONS);
 
 /**
  * profile is the main schema for user account
