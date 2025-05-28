@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { gendersOptions, yearOfStudyOptions } from "@libs/db/types/profile";
+import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile";
 
 export const createValidProfile = () => ({
     id: faker.string.uuid(),
@@ -11,8 +11,8 @@ export const createValidProfile = () => ({
     universityId: faker.number.int({ min: 100000000, max: 999999999 }).toString(),
     previousMember: faker.datatype.boolean(),
     tournamentPasses: 0,
-    yearOfStudy: faker.helpers.arrayElement(yearOfStudyOptions),
-    gender: faker.helpers.arrayElement(gendersOptions),
+    yearOfStudy: faker.helpers.arrayElement(YEAR_OF_STUDY_OPTIONS),
+    gender: faker.helpers.arrayElement(GENDER_OPTIONS),
     updatedAt: new Date("2024-08-01T12:00:00Z"),
     createdAt: new Date("2023-02-15T09:30:00Z"),
     ethnicity: "",

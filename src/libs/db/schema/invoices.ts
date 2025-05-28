@@ -1,11 +1,11 @@
+import { INVOICE_TYPES, PAYMENT_METHODS, PAYMENT_STATUSES } from "@libs/types/invoice";
 import { doublePrecision, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { profiles } from ".";
-import { invoiceType, paymentType, statusType } from "../types/invoice";
 
-export const invoiceTypeEnum = pgEnum("invoice_type", invoiceType);
-export const statusTypeEnum = pgEnum("status_type", statusType);
-export const paymentTypeEnum = pgEnum("payment_type", paymentType);
+export const invoiceTypeEnum = pgEnum("invoice_type", INVOICE_TYPES);
+export const statusTypeEnum = pgEnum("status_type", PAYMENT_STATUSES);
+export const paymentTypeEnum = pgEnum("payment_type", PAYMENT_METHODS);
 
 /**
  * invoice is a record of any payment made by a user

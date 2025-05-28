@@ -1,9 +1,7 @@
 import { z } from "zod/v4";
 
-const gendersOptions = ["male", "female", "non_binary", "genderfluid", "other"] as const;
-type GendersOptions = (typeof gendersOptions)[number];
-
-const yearOfStudyOptions = [
+const GENDER_OPTIONS = ["male", "female", "non_binary", "genderfluid", "other"] as const;
+const YEAR_OF_STUDY_OPTIONS = [
     "First year",
     "Second year",
     "Third year",
@@ -13,7 +11,9 @@ const yearOfStudyOptions = [
     "Graduated",
     "Not at university",
 ] as const;
-type YearOfStudyOptions = (typeof yearOfStudyOptions)[number];
+
+type GendersOptions = (typeof GENDER_OPTIONS)[number];
+type YearOfStudyOptions = (typeof YEAR_OF_STUDY_OPTIONS)[number];
 
 /**
  * Zod schema for the `profiles` table
@@ -30,8 +30,8 @@ const ZProfile = z.object({
     universityId: z.string().nullable(),
     previousMember: z.boolean().default(false),
     tournamentPasses: z.number().int().default(0),
-    yearOfStudy: z.enum(yearOfStudyOptions),
-    gender: z.enum(gendersOptions),
+    yearOfStudy: z.enum(YEAR_OF_STUDY_OPTIONS),
+    gender: z.enum(GENDER_OPTIONS),
     updatedAt: z.date(),
     createdAt: z.date(),
     ethnicity: z.string().default("NA"),
@@ -48,14 +48,14 @@ const ZProfileDTO = z.object({
     email: z.string(),
     universityId: z.string(),
     previousMember: z.boolean(),
-    yearOfStudy: z.enum(yearOfStudyOptions),
-    gender: z.enum(gendersOptions),
+    yearOfStudy: z.enum(YEAR_OF_STUDY_OPTIONS),
+    gender: z.enum(GENDER_OPTIONS),
     ethnicity: z.string(),
     currentStudy: z.string(),
 });
 
-type ProfileType = z.infer<typeof ZProfile>;
-type ProfileDTOType = z.infer<typeof ZProfileDTO>;
+type Profile = z.infer<typeof ZProfile>;
+type ProfileDTO = z.infer<typeof ZProfileDTO>;
 
-export { ZProfile, ZProfileDTO, gendersOptions, yearOfStudyOptions };
-export type { ProfileDTOType, ProfileType, GendersOptions, YearOfStudyOptions };
+export { ZProfile, ZProfileDTO, GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS };
+export type { ProfileDTO, Profile, GendersOptions, YearOfStudyOptions };

@@ -1,4 +1,4 @@
-import { GendersOptions, ProfileDTOType, YearOfStudyOptions } from "@libs/db/types/profile";
+import { GendersOptions, ProfileDTO, YearOfStudyOptions } from "@libs/types/profile";
 
 export const parseProfile = (raw: string[]) => {
     const fullName: string = raw[6];
@@ -19,7 +19,7 @@ export const parseProfile = (raw: string[]) => {
 
     const gender = raw[10]?.toLowerCase() as GendersOptions;
 
-    const newMember: ProfileDTOType = {
+    const newMember: ProfileDTO = {
         firstName: firstName,
         lastName: lastName,
         email: raw[7],
