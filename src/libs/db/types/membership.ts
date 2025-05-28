@@ -14,3 +14,5 @@ export const ZMembership = z.object({
     isPaid: z.boolean(),
     createdAt: z.date(),
 });
+
+export type MembershipType = z.infer<typeof ZMembership>;
