@@ -13,14 +13,28 @@ type EndpointOptions = {
     staff?: boolean;
 };
 
-type Handler = (req: NextRequest, session?: Session) => Response | Promise<Response>;
+export type RouteContext<P extends string = string> = {
+    params: Promise<{
+        [key in P]: string | string[];
+    }>;
+};
 
-type UserRouteHandler = (req: NextRequest, user: Session) => Response | Promise<Response>;
+type Handler = (
+    req: NextRequest,
+    session: Session | null,
+    context: RouteContext,
+) => Response | Promise<Response>;
+
+type UserRouteHandler = (
+    req: NextRequest,
+    user: Session | null,
+    context: RouteContext,
+) => Response | Promise<Response>;
 
 const defaultEndpointOptions = { protected: false, admin: false };
 
 export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
-    return async (req: NextRequest) => {
+    return async (req: NextRequest, context: RouteContext) => {
         try {
             const session = await auth();
 
@@ -32,26 +46,25 @@ export function routeWrapper(handler: Handler, options: EndpointOptions = defaul
                 return responses.forbidden();
             }
 
-            return await handler(req, session!);
+            return await handler(req, session, context);
         } catch (error) {
             if (error instanceof z.ZodError) {
                 return responses.badRequest();
             }
 
-            console.error("Error:", error);
             return responses.internalServerError();
         }
     };
 }
 
 export function userRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user) => handler(req, user!), {
+    return routeWrapper((req, user, context) => handler(req, user, context), {
         protected: true,
     });
 }
 
 export function staffRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user) => handler(req, user!), {
+    return routeWrapper((req, user, context) => handler(req, user, context), {
         staff: true,
     });
 }
