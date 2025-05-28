@@ -1,4 +1,4 @@
-import { INVOICE_TYPES, PAYMENT_METHODS, PAYMENT_STATUSES } from "@libs/types/invoice";
+import { INVOICE_TYPES, PAYMENT_METHODS, PAYMENT_STATUSES } from "@libs/types/invoice.type";
 import { doublePrecision, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { profiles } from ".";

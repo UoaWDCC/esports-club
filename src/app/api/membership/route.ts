@@ -1,5 +1,5 @@
 import { db } from "@libs/db";
-import { ZMembership } from "@libs/types/membership";
+import { ZMembership } from "@libs/types/membership.type";
 import { invoices, memberships, membershipTypes, profiles, users } from "@schema";
 import { eq } from "drizzle-orm";
 

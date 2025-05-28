@@ -1,4 +1,4 @@
-import { ZProfileDTO } from "@libs/types/profile";
+import { ZProfileDTO } from "@libs/types/profile.type";
 
 export async function validateProfile<T extends object>(member: T) {
     const parsed = ZProfileDTO.safeParse(member);

@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-import { MembershipTypeDTO } from "@libs/types/membershipType";
+import { MembershipTypeDTO } from "@libs/types/membershipType.type";
 import { membershipTypes } from "@schema";
 
 import { db } from "..";

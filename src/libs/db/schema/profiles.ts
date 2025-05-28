@@ -1,4 +1,4 @@
-import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile";
+import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile.type";
 import { users } from "@schema";
 import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 

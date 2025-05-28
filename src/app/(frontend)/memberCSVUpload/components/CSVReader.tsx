@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ProfileDTO } from "@libs/types/profile";
+import { ProfileDTO } from "@libs/types/profile.type";
 import Button from "@ui/button/Button";
 import Papa from "papaparse";
 

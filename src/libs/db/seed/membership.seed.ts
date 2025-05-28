@@ -1,7 +1,7 @@
 import "dotenv/config";
 
-import { InvoiceDTO } from "@libs/types/invoice";
-import { MembershipDTO } from "@libs/types/membership";
+import { InvoiceDTO } from "@libs/types/invoice.type";
+import { MembershipDTO } from "@libs/types/membership.type";
 import { invoices, memberships } from "@schema";
 
 import { db } from "..";

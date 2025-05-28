@@ -1,4 +1,4 @@
-import { GendersOptions, ProfileDTO, YearOfStudyOptions } from "@libs/types/profile";
+import { GendersOptions, ProfileDTO, YearOfStudyOptions } from "@libs/types/profile.type";
 
 export const parseProfile = (raw: string[]) => {
     const fullName: string = raw[6];

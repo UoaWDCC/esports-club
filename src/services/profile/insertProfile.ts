@@ -3,7 +3,7 @@
 
 import { db } from "@libs/db";
 import { profiles } from "@libs/db/schema/profiles";
-import { ProfileDTO } from "@libs/types/profile";
+import { ProfileDTO } from "@libs/types/profile.type";
 
 import { validateProfile } from "./validateProfile";
 
