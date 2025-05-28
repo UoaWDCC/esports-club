@@ -1,16 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { GendersOptions, ProfileDTOType, YearOfStudyOptions } from "@libs/db/types/profile";
 import Button from "@ui/button/Button";
 import Papa from "papaparse";
 
-import { profileInsertData, validateProfile } from "@/services/profile/validateProfile";
+import { insertMember } from "@/services/profile/insertProfile";
+import { validateProfile } from "@/services/profile/validateProfile";
 
-import { insertMember } from "../services/profile/insertProfile";
+import { parseProfile } from "../utils/parseProfile";
 
 export const CSVReader = () => {
-    const [csvData, setCSVData] = useState<profileInsertData[]>([]);
-    const [malformedcsvData, setMalformedCSVData] = useState<profileInsertData[]>([]);
+    const [csvData, setCSVData] = useState<ProfileDTOType[]>([]);
+    const [malformedcsvData, setMalformedCSVData] = useState<ProfileDTOType[]>([]);
 
     const submitMembers = () => {
         csvData.map((member) => {
@@ -19,67 +21,26 @@ export const CSVReader = () => {
     };
 
     async function resultsParse(results: string[][]) {
-        const tempMemberData: profileInsertData[] = [];
-        const tempMalformedData: profileInsertData[] = [];
+        const tempMemberData: ProfileDTOType[] = [];
+        const tempMalformedData: ProfileDTOType[] = [];
         await Promise.all(
             results.map(async (raw, index) => {
                 // Input sanitation to avoid errors
-                if (index == 0) {
-                    return;
-                }
+                if (index == 0) return;
 
-                const fullName: string = raw[6];
-                if (fullName == null) {
-                    return;
-                }
+                const newProfile = parseProfile(raw);
+                if (!newProfile) return;
 
-                const firstName = fullName.split(" ").slice(0, -1).join(" ");
-                const lastName = fullName.split(" ").slice(-1).join(" ");
-
-                const prevMemRaw = raw[3];
-                let previousMember = false;
-                if (prevMemRaw == "Yes") {
-                    previousMember = true;
-                }
-
-                const yearOfStudy = raw[12] as
-                    | "First year"
-                    | "Second year"
-                    | "Third year"
-                    | "Fourth year"
-                    | "Fifth year"
-                    | "Postgraduate"
-                    | "Graduated"
-                    | "Not at university";
-
-                const gender = raw[10]?.toLowerCase() as
-                    | "male"
-                    | "female"
-                    | "non_binary"
-                    | "genderfluid"
-                    | "other";
-
-                const newMember: profileInsertData = {
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: raw[7],
-                    universityId: String(raw[8]),
-                    previousMember: previousMember,
-                    yearOfStudy: yearOfStudy,
-                    gender: gender,
-                    ethnicity: raw[11],
-                    currentStudy: raw[13],
-                };
                 // Input sanitation ends and ask Server to Validate the profile
-                const valid = await validateProfile(newMember);
+                const valid = await validateProfile(newProfile);
                 if (valid.error) {
                     console.log("MALFORMED ROW:");
                     console.log(valid.details);
-                    tempMalformedData.push(newMember);
+                    tempMalformedData.push(newProfile);
                 }
 
                 if (valid.success) {
-                    tempMemberData.push(newMember);
+                    tempMemberData.push(newProfile);
                 }
             }),
         );

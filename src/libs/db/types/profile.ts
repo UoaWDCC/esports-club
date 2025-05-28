@@ -1,8 +1,9 @@
 import { z } from "zod/v4";
 
-export const gendersOptions = ["male", "female", "non_binary", "genderfluid", "other"] as const;
+const gendersOptions = ["male", "female", "non_binary", "genderfluid", "other"] as const;
+type GendersOptions = (typeof gendersOptions)[number];
 
-export const yearOfStudyOptions = [
+const yearOfStudyOptions = [
     "First year",
     "Second year",
     "Third year",
@@ -12,12 +13,13 @@ export const yearOfStudyOptions = [
     "Graduated",
     "Not at university",
 ] as const;
+type YearOfStudyOptions = (typeof yearOfStudyOptions)[number];
 
 /**
  * Zod schema for the `profiles` table
  * use to validate an object
  */
-export const ZProfile = z.object({
+const ZProfile = z.object({
     // TODO: switch to uuid in the future
     id: z.string(),
     userId: z.string(),
@@ -37,4 +39,23 @@ export const ZProfile = z.object({
     currentDegree: z.string().default("NA"),
 });
 
-export type ProfileType = z.infer<typeof ZProfile>;
+/**
+ * data transfer object for the `profiles` table
+ */
+const ZProfileDTO = z.object({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string(),
+    universityId: z.string(),
+    previousMember: z.boolean(),
+    yearOfStudy: z.enum(yearOfStudyOptions),
+    gender: z.enum(gendersOptions),
+    ethnicity: z.string(),
+    currentStudy: z.string(),
+});
+
+type ProfileType = z.infer<typeof ZProfile>;
+type ProfileDTOType = z.infer<typeof ZProfileDTO>;
+
+export { ZProfile, ZProfileDTO, gendersOptions, yearOfStudyOptions };
+export type { ProfileDTOType, ProfileType, GendersOptions, YearOfStudyOptions };
