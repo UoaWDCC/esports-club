@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/db/types/profile";
+import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile";
 
 export const createValidProfile = () => ({
     id: faker.string.uuid(),

@@ -3,10 +3,11 @@
 
 import { db } from "@libs/db";
 import { profiles } from "@libs/db/schema/profiles";
+import { ProfileDTO } from "@libs/types/profile";
 
-import { profileInsertData, validateProfile } from "./validateProfile";
+import { validateProfile } from "./validateProfile";
 
-export async function insertMember(member: profileInsertData) {
+export async function insertMember(member: ProfileDTO) {
     try {
         const valid = await validateProfile(member);
         if (valid.error) {

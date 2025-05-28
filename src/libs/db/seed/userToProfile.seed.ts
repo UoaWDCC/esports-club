@@ -5,6 +5,10 @@ import { eq } from "drizzle-orm";
 
 import { db } from "..";
 
+/**
+ * seeds profiles
+ * usage tsx '.\src\libs\db\seed\userToProfile.seed.ts'
+ */
 async function seedProfiles() {
     // Fetch all users
     const allUsers = await db.select().from(users);

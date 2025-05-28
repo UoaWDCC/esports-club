@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { GendersOptions, ProfileDTO, YearOfStudyOptions } from "@libs/db/types/profile";
+import { ProfileDTO } from "@libs/types/profile";
 import Button from "@ui/button/Button";
 import Papa from "papaparse";
 

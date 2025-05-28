@@ -1,7 +1,6 @@
+import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile";
 import { users } from "@schema";
 import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-
-import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "../types/profile";
 
 export const genderEnum = pgEnum("gender", GENDER_OPTIONS);
 export const yearOfStudyEnum = pgEnum("year_of_study", YEAR_OF_STUDY_OPTIONS);
