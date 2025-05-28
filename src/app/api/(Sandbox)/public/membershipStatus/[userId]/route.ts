@@ -1,21 +1,21 @@
 "use server";
 
+import { NextRequest, NextResponse } from "next/server";
 import { db } from "@libs/db";
 import { memberships, membershipTypes, profiles } from "@libs/db/schema";
-import { eq, and } from "drizzle-orm";
-import { NextResponse, NextRequest } from "next/server";
+import { and, eq } from "drizzle-orm";
 
 // a member is valid if there is a single active membership (current time is between a membership)
 // the membership must be paid for it to be valid
 // should return boolean
 export const GET = async (
     req: NextRequest,
-    { params }: { params: Promise<{ userId: string }> }
-  ) => {
-    const {userId} = await params;
+    { params }: { params: Promise<{ userId: string }> },
+) => {
+    const { userId } = await params;
 
     console.log("userId", userId);
-    
+
     // Find the user's profile
     // Selects id from profiles schema where userId matches the provided userId
     // To get profileId, which is just called id in the profiles schema
@@ -28,7 +28,7 @@ export const GET = async (
     console.log("profile", profile);
 
     if (!profile[0]) return NextResponse.json({ body: false });
-    
+
     // const profileIda = await db.select().from(profiles).where(eq(profiles.userId, userId))
     // .innerjoin(profiles, eq(users.id, profiles.id))
 
@@ -40,12 +40,7 @@ export const GET = async (
             membershipTypeId: memberships.membershipTypeId,
         })
         .from(memberships)
-        .where(
-            and(
-                eq(memberships.profileId, profile[0].id),
-                eq(memberships.isPaid, true)
-            )
-        );
+        .where(and(eq(memberships.profileId, profile[0].id), eq(memberships.isPaid, true)));
 
     console.log("membership", membership);
     if (!membership[0]) return NextResponse.json({ body: false });
@@ -68,6 +63,6 @@ export const GET = async (
     const startAt = new Date(membershipType[0].startAt);
     const endAt = new Date(membershipType[0].endAt);
 
-    const isMember =  now >= startAt && now <= endAt;
+    const isMember = now >= startAt && now <= endAt;
     return NextResponse.json({ body: isMember });
-}
+};
