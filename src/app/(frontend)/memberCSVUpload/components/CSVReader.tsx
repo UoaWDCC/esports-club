@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { InvoiceDTO, PaymentMethod } from "@libs/types/invoice.type";
+import { PaymentMethod } from "@libs/types/invoice.type";
 import { ProfileDTO } from "@libs/types/profile.type";
 import Button from "@ui/button/Button";
 import Papa from "papaparse";
 
-import { insertMember } from "@/services/profile/insertProfile";
 import { validateProfile } from "@/services/profile/validateProfile";
 
+import { generateMemberProfile } from "../services/tempGenerateMemberProfile";
 import { parseMembership } from "../utils/parseMembership";
 import { parseProfile } from "../utils/parseProfile";
 
-type MemberData = {
+export type MemberData = {
     profile: ProfileDTO;
     membership: {
         paymentMethod: PaymentMethod;
@@ -26,19 +26,9 @@ export const CSVReader = () => {
     const [malformedcsvData, setMalformedCSVData] = useState<ProfileDTO[]>([]);
 
     const submitMembers = () => {
+        console.log(csvData);
         csvData.map((member) => {
-            insertMember(member.profile);
-
-            const newInvoice: InvoiceDTO = {
-                profileId: member.membership.membershipTypeId,
-                type: "membership",
-                paymentMethod: member.membership.paymentMethod,
-                description: "a membership wowow",
-                status: "paid",
-                price: 9999,
-                paidDate: new Date(),
-            };
-            const newMembership = {};
+            generateMemberProfile(member);
         });
     };
 

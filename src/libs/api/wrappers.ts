@@ -15,7 +15,7 @@ type EndpointOptions = {
 
 export type RouteContext<P extends string = string> = {
     params: Promise<{
-        [key in P]: string | string[];
+        [key in P]: string;
     }>;
 };
 
@@ -33,10 +33,7 @@ type UserRouteHandler = (
 
 const defaultEndpointOptions = { protected: false, admin: false };
 
-export function routeWrapper<T>(
-    handler: Handler,
-    options: EndpointOptions = defaultEndpointOptions,
-) {
+export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
     return async (req: NextRequest, context: RouteContext) => {
         try {
             const session = await auth();

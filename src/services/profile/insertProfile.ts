@@ -9,13 +9,12 @@ import { validateProfile } from "./validateProfile";
 
 export async function insertMember(member: ProfileDTO) {
     try {
-        const valid = await validateProfile(member);
-        if (valid.error) {
-            console.error("Error inserting user:", valid.error);
-            return valid;
+        const result = await validateProfile(member);
+        if (result.error) {
+            throw new Error(result.error);
         }
-        await db.insert(profiles).values(member);
-        return true;
+
+        return await db.insert(profiles).values(member).returning().execute();
     } catch (error) {
         console.error("Error inserting user:", error);
         return error;

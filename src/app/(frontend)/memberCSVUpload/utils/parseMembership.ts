@@ -9,31 +9,25 @@ export const parseMembership = (
 ): { paymentMethod: PaymentMethod; membershipTypeId: string; hasPaid: boolean } => {
     let paymentMethod = raw[1];
     let membership = raw[2];
+    console.log(membership);
     // there is two column in the csv for has paid??
     // const hasPaid = raw[4] === "Yes";
 
     const oneSemesterMemberhsipTypeId = "1082919f-18db-4fcf-b8d5-f62617c84945";
     const fullYearMemberhsipTypeId = "84814ab3-5201-467d-becd-ed96f8162427";
 
-    switch (paymentMethod) {
-        case "Online Banking": {
-            paymentMethod = "bank_transfer" as PaymentMethod;
-        }
-        case "IRL": {
-            paymentMethod = "In_person" as PaymentMethod;
-        }
+    if (paymentMethod === "Online Banking") {
+        paymentMethod = "bank_transfer" as PaymentMethod;
+    } else if (paymentMethod === "IRL") {
+        paymentMethod = "In_person" as PaymentMethod;
     }
 
-    switch (membership) {
-        case "Full Year": {
-            membership = fullYearMemberhsipTypeId;
-        }
-        case "One Semester": {
-            membership = oneSemesterMemberhsipTypeId;
-        }
-        default: {
-            membership = "null";
-        }
+    if (membership.trim() === "Full Year") {
+        membership = fullYearMemberhsipTypeId;
+    } else if (membership.trim() === "One Semester") {
+        membership = oneSemesterMemberhsipTypeId;
+    } else {
+        membership = "null";
     }
 
     return {
