@@ -1,74 +1,61 @@
 import { NextResponse } from "next/server";
 import { ZodIssue } from "zod";
 
-// Credits to David Zhu
+import {
+    errorsStatuses,
+    ErrorStatuses,
+    standardApiResponse,
+    successfulStatues,
+    SuccessStatuses,
+} from "./statuses";
 
-export type ApiResponse = ApiSuccessResponse | ApiErrorResponse;
+// API response stanard base out of JSend
+// https://github.com/omniti-labs/jsend
 
-interface ApiSuccessResponse<T = { [key: string]: unknown }> {
-    data: T;
-}
-
-type DetailType =
+type DetailType<T extends string = string> =
     | {
-          [key: string]: string | string[];
+          [key in T]: string | string[];
       }
     | ZodIssue[];
 
+interface ApiResponse<T = { [key: string]: unknown }> {
+    status: SuccessStatuses;
+    data: T;
+}
 interface ApiErrorResponse {
-    code: string;
+    status: ErrorStatuses;
     message: string;
     details: DetailType;
 }
 
-const unauthorized = () =>
+type AnyApiResponse = ApiResponse | ApiErrorResponse;
+
+const ApiResponse = <T>(status: SuccessStatuses, data: T) =>
     NextResponse.json(
         {
-            code: "UNAUTHORIZED",
-            message: "You are not authorized to access this resource",
-        } as ApiErrorResponse,
+            status: status,
+            data: data,
+        } as ApiResponse<T>,
         {
-            status: 401,
+            status: successfulStatues[status],
         },
     );
 
-const forbidden = () =>
+const ApiErrorResponse = (
+    status: ErrorStatuses,
+    message: string | null = "",
+    details: DetailType = {},
+) =>
     NextResponse.json(
         {
-            code: "FORBIDDEN",
-            message:
-                "You are forbidden from accessing this resource. Please contact the admin if you think this is a mistake",
+            status: status,
+            message: message || standardApiResponse[status],
+            details,
         } as ApiErrorResponse,
         {
-            status: 403,
+            status: errorsStatuses[status],
         },
     );
 
-const badRequest = () =>
-    NextResponse.json(
-        {
-            code: "BAD_REQUEST",
-            message: "The server could not understand the request sent.",
-        } as ApiErrorResponse,
-        {
-            status: 403,
-        },
-    );
-
-const internalServerError = () =>
-    NextResponse.json(
-        {
-            code: "INTERNAL_SERVER_ERROR",
-            message: "Something went wrong.",
-        } as ApiErrorResponse,
-        {
-            status: 403,
-        },
-    );
-
-export const responses = {
-    unauthorized,
-    forbidden,
-    badRequest,
-    internalServerError,
-};
+export { ApiResponse, ApiErrorResponse };
+export type { SuccessStatuses, AnyApiResponse };
