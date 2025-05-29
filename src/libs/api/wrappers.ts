@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { auth } from "@/auth";
 
-import { responses } from "./responses";
+import { ApiErrorResponse } from "./responses";
 
 // Credits to David Zhu
 
@@ -15,7 +15,7 @@ type EndpointOptions = {
 
 export type RouteContext<P extends string = string> = {
     params: Promise<{
-        [key in P]: string | string[];
+        [key in P]: string;
     }>;
 };
 
@@ -39,20 +39,20 @@ export function routeWrapper(handler: Handler, options: EndpointOptions = defaul
             const session = await auth();
 
             if (!session && (options.protected || options.staff)) {
-                return responses.unauthorized();
+                return ApiErrorResponse("unauthorized");
             }
 
             if (options.staff && session?.user.role !== "staff") {
-                return responses.forbidden();
+                return ApiErrorResponse("forbidden");
             }
 
             return await handler(req, session, context);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                return responses.badRequest();
+                return ApiErrorResponse("bad_request", error.message, error.issues);
             }
 
-            return responses.internalServerError();
+            return ApiErrorResponse("internal_server_error");
         }
     };
 }
