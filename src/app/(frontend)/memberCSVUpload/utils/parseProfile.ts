@@ -9,11 +9,7 @@ export const parseProfile = (raw: string[]) => {
     const firstName = fullName.split(" ").slice(0, -1).join(" ");
     const lastName = fullName.split(" ").slice(-1).join(" ");
 
-    const prevMemRaw = raw[3];
-    let previousMember = false;
-    if (prevMemRaw == "Yes") {
-        previousMember = true;
-    }
+    const previousMember = raw[3] === "Yes";
 
     const yearOfStudy = raw[12] as YearOfStudyOptions;
 

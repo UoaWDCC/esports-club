@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { InvoiceDTO, PaymentMethod } from "@libs/types/invoice.type";
 import { ProfileDTO } from "@libs/types/profile.type";
 import Button from "@ui/button/Button";
 import Papa from "papaparse";
@@ -8,20 +9,41 @@ import Papa from "papaparse";
 import { insertMember } from "@/services/profile/insertProfile";
 import { validateProfile } from "@/services/profile/validateProfile";
 
+import { parseMembership } from "../utils/parseMembership";
 import { parseProfile } from "../utils/parseProfile";
 
+type MemberData = {
+    profile: ProfileDTO;
+    membership: {
+        paymentMethod: PaymentMethod;
+        membershipTypeId: string;
+        hasPaid: boolean;
+    };
+};
+
 export const CSVReader = () => {
-    const [csvData, setCSVData] = useState<ProfileDTO[]>([]);
+    const [csvData, setCSVData] = useState<MemberData[]>([]);
     const [malformedcsvData, setMalformedCSVData] = useState<ProfileDTO[]>([]);
 
     const submitMembers = () => {
         csvData.map((member) => {
-            insertMember(member);
+            insertMember(member.profile);
+
+            const newInvoice: InvoiceDTO = {
+                profileId: member.membership.membershipTypeId,
+                type: "membership",
+                paymentMethod: member.membership.paymentMethod,
+                description: "a membership wowow",
+                status: "paid",
+                price: 9999,
+                paidDate: new Date(),
+            };
+            const newMembership = {};
         });
     };
 
     async function resultsParse(results: string[][]) {
-        const tempMemberData: ProfileDTO[] = [];
+        const tempMemberData: MemberData[] = [];
         const tempMalformedData: ProfileDTO[] = [];
         await Promise.all(
             results.map(async (raw, index) => {
@@ -30,6 +52,9 @@ export const CSVReader = () => {
 
                 const newProfile = parseProfile(raw);
                 if (!newProfile) return;
+
+                const Newmembership = parseMembership(raw);
+                if (!Newmembership) return;
 
                 // Input sanitation ends and ask Server to Validate the profile
                 const valid = await validateProfile(newProfile);
@@ -40,7 +65,7 @@ export const CSVReader = () => {
                 }
 
                 if (valid.success) {
-                    tempMemberData.push(newProfile);
+                    tempMemberData.push({ profile: newProfile, membership: Newmembership });
                 }
             }),
         );
@@ -127,15 +152,15 @@ export const CSVReader = () => {
                     {csvData.map((member, index) => {
                         return (
                             <tr key={index}>
-                                <td>{member.firstName}</td>
-                                <td>{member.lastName}</td>
-                                <td>{member.email}</td>
-                                <td>{member.previousMember?.toString()}</td>
-                                <td>{member.universityId}</td>
-                                <td>{member.yearOfStudy?.toString()}</td>
-                                <td>{member.gender?.toString()}</td>
-                                <td>{member.ethnicity}</td>
-                                <td>{member.currentStudy}</td>
+                                <td>{member.profile.firstName}</td>
+                                <td>{member.profile.lastName}</td>
+                                <td>{member.profile.email}</td>
+                                <td>{member.profile.previousMember?.toString()}</td>
+                                <td>{member.profile.universityId}</td>
+                                <td>{member.profile.yearOfStudy?.toString()}</td>
+                                <td>{member.profile.gender?.toString()}</td>
+                                <td>{member.profile.ethnicity}</td>
+                                <td>{member.profile.currentStudy}</td>
                             </tr>
                         );
                     })}
