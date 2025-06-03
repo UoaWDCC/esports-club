@@ -40,6 +40,7 @@ const button = tv({
             solid: "bg-gray-border border-none",
             outline: "border-gray-border",
             google: "bg-white text-black",
+            home_grey: "border-[#424242] bg-[#1D1D1D] px-[24px] py-[8px] text-[16px]",
         },
     },
     defaultVariants: {},
