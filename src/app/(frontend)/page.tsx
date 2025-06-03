@@ -1,7 +1,7 @@
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
-import { Carousel } from "@ui/carousel/carousel";
-import { CarouselEvent } from "@ui/carousel/event";
+import Carousel from "@ui/carousel/Carousel";
+import CarouselEvent from "@ui/carousel/CarouselEvent";
 import Footer from "@ui/footer/Footer";
 import SignOut from "@ui/form/SignOut";
 import StandardLayout from "@ui/layout/StandardLayout";
@@ -54,14 +54,14 @@ export default async function Home() {
                 <h3>Info</h3>
 
                 <Carousel>
-                    <CarouselEvent title="Event 1" imageSrc="/images/events/Event1.png">
-                        Event Description
+                    <CarouselEvent day="Today" imageSrc="/images/events/Event1.png">
+                        LoL RANK RESTRICTED TOURNAMENT
                     </CarouselEvent>
-                    <CarouselEvent title="Event 2" imageSrc="/images/events/Event2.png">
-                        Event Description
+                    <CarouselEvent day="4 June" imageSrc="/images/events/Event2.png">
+                        AUEC X VUWG Showmatch
                     </CarouselEvent>
-                    <CarouselEvent title="Event 3" imageSrc="/images/events/Event3.png">
-                        Event Description
+                    <CarouselEvent day="18 June" imageSrc="/images/events/Event3.png">
+                        Teamfight Tactics tournament
                     </CarouselEvent>
                 </Carousel>
 
