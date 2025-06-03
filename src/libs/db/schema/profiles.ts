@@ -1,25 +1,14 @@
+import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile.type";
+import { users } from "@schema";
 import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-import { users } from "./users";
+export const genderEnum = pgEnum("gender", GENDER_OPTIONS);
+export const yearOfStudyEnum = pgEnum("year_of_study", YEAR_OF_STUDY_OPTIONS);
 
-export const genderEnum = pgEnum("gender", [
-    "male",
-    "female",
-    "non_binary",
-    "genderfluid",
-    "other",
-]);
-
-export const yearOfStudyEnum = pgEnum("year_of_study", [
-    "First year",
-    "Second year",
-    "Third year",
-    "Fourth year",
-    "Fifth year",
-    "Postgraduate",
-    "Graduated",
-    "Not at university",
-]);
+/**
+ * profile is the main schema for user account
+ * it is seperate from the user schema to allow in person members register by the staff
+ */
 
 export const profiles = pgTable("profile", {
     id: text("id")

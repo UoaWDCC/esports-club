@@ -2,9 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@libs/db";
-import { membershipTypes } from "@libs/db/schema/membership_types";
-import { memberships } from "@libs/db/schema/memberships";
-import { profiles } from "@libs/db/schema/profiles";
+import { memberships, membershipTypes, profiles } from "@libs/db/schema";
 import { and, eq } from "drizzle-orm";
 
 // a member is valid if there is a single active membership (current time is between a membership)
