@@ -1,6 +1,6 @@
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
-import Carousel from "@ui/carousel/Carousel";
+import Carousel from "@ui/carousel/carousel";
 import CarouselEvent from "@ui/carousel/CarouselEvent";
 import Footer from "@ui/footer/Footer";
 import SignOut from "@ui/form/SignOut";
