@@ -1,6 +1,7 @@
 import { getSession } from "@libs/auth/auth";
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
+import TriggerVerificationButton from "@ui/button/TestSendVerification";
 import Footer from "@ui/footer/Footer";
 import SignOut from "@ui/form/SignOut";
 import StandardLayout from "@ui/layout/StandardLayout";
@@ -48,6 +49,7 @@ export default async function Home() {
                     Registration page
                 </Button>
                 <GoogleAuthButton />
+                <TriggerVerificationButton />
                 <SignOut />
                 <h3>Info</h3>
                 <pre>{JSON.stringify(session, null, 2)}</pre>

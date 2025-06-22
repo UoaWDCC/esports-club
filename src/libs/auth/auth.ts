@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { db } from "@libs/db";
+import { sendVerificationEmail as sendEmail } from "@libs/email/verification-email";
 import { env } from "@libs/env";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -13,6 +14,7 @@ export const auth = betterAuth({
     }),
     emailAndPassword: {
         enabled: true,
+        requireEmailVerification: true,
     },
     plugins: [
         adminPlugin({
@@ -25,6 +27,17 @@ export const auth = betterAuth({
             },
         }),
     ],
+    emailVerification: {
+        sendOnSignUp: true,
+        sendVerificationEmail: async ({ user, url, token }, request) => {
+            await sendEmail({
+                to: user.email,
+                subject: "Verify your email address",
+                url: url,
+            });
+        },
+    },
+
     socialProviders: {
         google: {
             clientId: env.AUTH_GOOGLE_ID,
