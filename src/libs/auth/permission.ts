@@ -12,7 +12,7 @@ const statement = {
 
 export const ac = createAccessControl(statement);
 
-export const member = ac.newRole({
+export const user = ac.newRole({
     project: ["create"],
 });
 

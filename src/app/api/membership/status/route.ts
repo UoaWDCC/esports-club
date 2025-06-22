@@ -1,9 +1,9 @@
-import { auth } from "@libs/auth/auth";
+import { getSession } from "@libs/auth/auth";
 
 import { getMembershipStatus } from "@/services/membership/getMembershipStatus";
 
 export async function GET() {
-    const session = await auth();
+    const session = await getSession();
     if (!session?.user?.id) {
         return new Response("Unauthorized", { status: 401 });
     }

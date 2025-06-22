@@ -33,8 +33,15 @@ export const auth = betterAuth({
     },
 });
 
-export const useSession = async () => {
-    return auth.api.getSession({
+export const getSession = async () => {
+    const result = await auth.api.getSession({
         headers: await headers(),
     });
+
+    return result as AuthSession;
+};
+
+export type AuthSession = {
+    user: typeof auth.$Infer.Session.user;
+    session: typeof auth.$Infer.Session.session;
 };

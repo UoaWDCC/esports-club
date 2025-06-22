@@ -1,4 +1,4 @@
-import { ZProfile } from "@libs/db/types/profile";
+import { ZProfile } from "@libs/types/profile.type";
 
 import { createValidProfile } from "../utils/mockProfile";
 

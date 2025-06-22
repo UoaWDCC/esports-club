@@ -1,5 +1,8 @@
-import { createAuthClient } from "better-auth/react";
+import { createAuthClient } from "better-auth/client";
+import { organizationClient } from "better-auth/client/plugins";
 
-export const authClient = createAuthClient();
+export const authClient = createAuthClient({
+    plugins: [organizationClient()],
+});
 
 export const { signIn, signOut, useSession } = authClient;

@@ -1,6 +1,5 @@
 import type { NextRequest } from "next/server";
-import { auth } from "@libs/auth/auth";
-import { Session } from "next-auth";
+import { AuthSession, getSession } from "@libs/auth/auth";
 import { z } from "zod";
 
 import { ApiErrorResponse } from "./responses";
@@ -20,13 +19,13 @@ export type RouteContext<P extends string = string> = {
 
 type Handler = (
     req: NextRequest,
-    session: Session | null,
+    session: AuthSession,
     context: RouteContext,
 ) => Response | Promise<Response>;
 
 type UserRouteHandler = (
     req: NextRequest,
-    user: Session | null,
+    user: AuthSession,
     context: RouteContext,
 ) => Response | Promise<Response>;
 
@@ -35,7 +34,7 @@ const defaultEndpointOptions = { protected: false, admin: false };
 export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
     return async (req: NextRequest, context: RouteContext) => {
         try {
-            const session = await auth();
+            const session = await getSession();
 
             if (!session && (options.protected || options.staff)) {
                 return ApiErrorResponse("unauthorized");

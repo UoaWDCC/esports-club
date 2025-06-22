@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    if (!session) {
+    if (!isAuthenticated) {
         console.log("not authenticated");
         return NextResponse.redirect(new URL("/sign-in", request.url));
     }

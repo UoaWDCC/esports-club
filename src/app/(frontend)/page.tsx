@@ -1,5 +1,4 @@
-import { auth, useSession } from "@libs/auth/auth";
-import { authClient } from "@libs/auth/auth-client";
+import { getSession } from "@libs/auth/auth";
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
 import Footer from "@ui/footer/Footer";
@@ -8,7 +7,7 @@ import StandardLayout from "@ui/layout/StandardLayout";
 import SlideInText from "@ui/text/SlideInText";
 
 export default async function Home() {
-    const session = await useSession();
+    const session = await getSession();
 
     return (
         <>
