@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
+import { getSession } from "@libs/auth/auth";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Footer from "@ui/footer/Footer";
 import StandardLayout from "@ui/layout/StandardLayout";
 
-import { auth } from "@/auth";
-
-import MockUser from "./_components/MockComment";
 import { getComment } from "@/services/comments";
 
+import MockUser from "./_components/MockComment";
+
 export default async function StaffPage() {
-    const session = await auth();
+    const session = await getSession();
 
     if (session?.user.role !== "staff") {
         redirect("/login");

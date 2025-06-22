@@ -1,13 +1,13 @@
-import Button from "@ui/button/Button";
+"use client";
 
-import { signOut } from "@/auth";
+import { authClient } from "@libs/auth/auth-client";
+import Button from "@ui/button/Button";
 
 export default function SignOut() {
     return (
         <form
             action={async () => {
-                "use server";
-                await signOut();
+                await authClient.signOut();
             }}
         >
             <Button variant={{ style: "solid" }} type="submit">

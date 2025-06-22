@@ -1,12 +1,11 @@
+import { getSession } from "@libs/auth/auth";
 import { db } from "@libs/db";
 import { ZMembership } from "@libs/types/membership.type";
-import { invoices, memberships, membershipTypes, profiles, users } from "@schema";
+import { invoices, memberships, membershipTypes, profiles, user } from "@schema";
 import { eq } from "drizzle-orm";
 
-import { auth } from "@/auth";
-
 export const GET = async () => {
-    const session = await auth();
+    const session = await getSession();
     const userId = session?.user?.id;
 
     if (!userId) {
@@ -15,12 +14,12 @@ export const GET = async () => {
 
     const userData = await db
         .select()
-        .from(users)
-        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .from(user)
+        .innerJoin(profiles, eq(user.id, profiles.userId))
         .innerJoin(memberships, eq(profiles.id, memberships.profileId))
         .innerJoin(membershipTypes, eq(memberships.membershipTypeId, membershipTypes.id))
         .innerJoin(invoices, eq(memberships.invoiceId, invoices.id))
-        .where(eq(users.id, userId))
+        .where(eq(user.id, userId))
         .limit(1);
 
     const { data, error } = ZMembership.safeParse(userData[0].membership);

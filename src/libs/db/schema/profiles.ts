@@ -1,5 +1,5 @@
 import { GENDER_OPTIONS, YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile.type";
-import { users } from "@schema";
+import { user } from "@schema";
 import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const genderEnum = pgEnum("gender", GENDER_OPTIONS);
@@ -14,7 +14,7 @@ export const profiles = pgTable("profile", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
-    userId: text("user_id").references(() => users.id),
+    userId: text("user_id").references(() => user.id),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
     email: text("email").notNull(),

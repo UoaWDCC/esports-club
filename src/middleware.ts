@@ -1,25 +1,29 @@
-import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@libs/auth/auth";
 
-import { auth } from "@/auth";
+export async function middleware(request: NextRequest) {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
-export default auth((req) => {
-    const session = req.auth;
-    const pathname = req.nextUrl.pathname;
-
+    const pathname = request.nextUrl.pathname;
     const isAuthenticated = !!session;
-
-    // proteched routes
-    if (!isAuthenticated) {
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
 
     // staff route
     if (pathname.startsWith("/staff") && session?.user.role !== "staff") {
-        return NextResponse.redirect(new URL("/login", req.url));
+        console.log("entering staff route");
+        return NextResponse.redirect(new URL("/login", request.url));
     }
 
+    if (!isAuthenticated) {
+        console.log("not authenticated");
+        return NextResponse.redirect(new URL("/sign-in", request.url));
+    }
+
+    console.log("passing");
     return NextResponse.next();
-});
+}
 
 export const config = {
     matcher: ["/staff/:path*", "/profile"],
