@@ -1,4 +1,5 @@
-import { auth } from "@/auth";
+import { auth } from "@libs/auth/auth";
+
 import { getMembershipStatus } from "@/services/membership/getMembershipStatus";
 
 export async function GET() {

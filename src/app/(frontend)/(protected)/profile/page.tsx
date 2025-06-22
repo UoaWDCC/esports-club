@@ -1,7 +1,6 @@
+import { auth } from "@libs/auth/auth";
 import Footer from "@ui/footer/Footer";
 import StandardLayout from "@ui/layout/StandardLayout";
-
-import { auth } from "@/auth";
 
 export default async function ProfilePage() {
     const session = await auth();

@@ -1,8 +1,7 @@
 import type { NextRequest } from "next/server";
+import { auth } from "@libs/auth/auth";
 import { Session } from "next-auth";
 import { z } from "zod";
-
-import { auth } from "@/auth";
 
 import { ApiErrorResponse } from "./responses";
 

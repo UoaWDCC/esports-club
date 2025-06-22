@@ -1,9 +1,8 @@
+import { auth } from "@libs/auth/auth";
 import { db } from "@libs/db";
 import { ZMembership } from "@libs/types/membership.type";
 import { invoices, memberships, membershipTypes, profiles, users } from "@schema";
 import { eq } from "drizzle-orm";
-
-import { auth } from "@/auth";
 
 export const GET = async () => {
     const session = await auth();
