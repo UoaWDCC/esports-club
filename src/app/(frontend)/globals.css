@@ -30,6 +30,15 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+h1,
+h2,
+h3 {
+    letter-spacing: -0.5%;
+    line-height: 91.5%;
+    font-weight: 500;
+}
+
+/* 
 h1 {
     font-size: 64px;
     letter-spacing: -0.5%;
@@ -74,8 +83,8 @@ small {
 small.font-bold,
 small em {
     letter-spacing: -2%;
-    font-weight: 500;
-}
+    font-weight: 500; 
+}*/
 
 @media screen and (min-width: 1024px) {
     p {
