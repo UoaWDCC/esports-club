@@ -1,13 +1,13 @@
-import StandardLayout from "@ui/layout/StandardLayout";
+import PageLayout from "@ui/layout/PageLayout";
 
 import { CSVReader } from "./components/CSVReader";
 
 export default async function SignInPage() {
     return (
-        <StandardLayout>
+        <PageLayout>
             <div className="w-full">
                 <CSVReader />
             </div>
-        </StandardLayout>
+        </PageLayout>
     );
 }

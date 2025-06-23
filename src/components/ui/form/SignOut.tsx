@@ -8,6 +8,7 @@ export default function SignOut() {
         <form
             action={async () => {
                 await authClient.signOut();
+                location.reload();
             }}
         >
             <Button variant={{ style: "solid" }} type="submit">

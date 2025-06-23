@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@libs/auth/auth";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Footer from "@ui/footer/Footer";
-import StandardLayout from "@ui/layout/StandardLayout";
+import PageLayout from "@ui/layout/PageLayout";
 
 import { getComment } from "@/services/comments";
 
@@ -27,12 +27,12 @@ export default async function StaffPage() {
 
     return (
         <HydrationBoundary state={dehydratedState}>
-            <StandardLayout>
+            <PageLayout>
                 <h1 className="max-w-[600px]">Staff page</h1>
                 <p>{JSON.stringify(session, null, 4)}</p>
                 <Footer />
                 <MockUser />
-            </StandardLayout>
+            </PageLayout>
         </HydrationBoundary>
     );
 }

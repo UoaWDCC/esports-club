@@ -10,6 +10,7 @@ import { db } from "..";
  * seeds membershipType
  * usage tsx '.\src\libs\db\seed\membership.seed.ts'
  */
+
 async function seedMembership() {
     const existingProfileId = "16d722a8-fc8b-4cc6-a816-2abfbe67151b";
     const existingMembershipTypeId = "9670729f-95e5-4145-99e1-d368378191f2";
