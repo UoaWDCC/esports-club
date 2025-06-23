@@ -2,7 +2,7 @@
 
 @layer utilities {
     :root {
-        --background: linear-gradient(#2f2b30, #0d0d0d);
+        --background: #0d0d0d;
         --foreground: #ffffff;
     }
 }

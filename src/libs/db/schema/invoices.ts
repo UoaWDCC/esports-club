@@ -16,9 +16,7 @@ export const invoices = pgTable("invoice", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
-    profileId: text("profile_id")
-        .references(() => profiles.id, { onDelete: "no action" })
-        .notNull(),
+    profileId: text("profile_id").references(() => profiles.id, { onDelete: "set null" }),
     type: invoiceTypeEnum("type").notNull(),
     description: text("description"),
     status: statusTypeEnum("status_type").notNull(),

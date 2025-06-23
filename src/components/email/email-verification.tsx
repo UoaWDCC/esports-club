@@ -1,11 +1,16 @@
+import { ReactNode } from "react";
 import {
     Body,
     Button,
+    Column,
     Container,
     Head,
     Heading,
+    Hr,
     Html,
+    Link,
     Preview,
+    Row,
     Section,
 } from "@react-email/components";
 
@@ -16,19 +21,62 @@ interface TapVerifyProps {
 export const EsportsLinkVerification = ({ url }: TapVerifyProps) => (
     <Html>
         <Head />
-        <Body style={main}>
+        <Body style={main} className="mx-auto max-w-[560px] bg-[#ffffff] pt-5 pb-12">
             <Preview>Your login code for Esports</Preview>
-            <Container style={container}>
-                <Heading style={heading}>Verify your Esports account!</Heading>
-                <Section style={buttonContainer}>
+            <Container className="mx-auto max-w-[560px]">
+                <Hr style={{ margin: "40px 0 40px" }} />
+                <Heading style={heading}>Hi there,</Heading>
+                <p
+                    style={{
+                        fontSize: "16px",
+                        fontWeight: "400",
+                        color: "#484848",
+                        letterSpacing: "-0.25px",
+                    }}
+                >
+                    Click below to verify that we have the right email for you.
+                </p>
+                <Section className="mt-6">
                     <Button style={button} href={url}>
-                        Click here to verify your account
+                        Verify your account
                     </Button>
                 </Section>
+                <Hr style={{ margin: "40px 0 40px" }} />
+                <Row className="mt-[24px]">
+                    <Column align="center">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <FooterLinks url="https://esports.wdcc.co.nz/">
+                                        Auckland University Esports Club
+                                    </FooterLinks>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </Column>
+                </Row>
             </Container>
         </Body>
     </Html>
 );
+
+const FooterLinks = ({ children, url }: { url?: string; children?: ReactNode }) => {
+    return (
+        <td className="px-[8px]">
+            <Link
+                style={{
+                    textDecoration: "underline",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    color: "#484848",
+                }}
+                href={url}
+            >
+                {children}
+            </Link>
+        </td>
+    );
+};
 
 const main = {
     backgroundColor: "#ffffff",
@@ -36,30 +84,12 @@ const main = {
         '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
 };
 
-const container = {
-    margin: "0 auto",
-    padding: "20px 0 48px",
-    maxWidth: "560px",
-};
-
 const heading = {
     fontSize: "24px",
-    letterSpacing: "-0.5px",
+    letterSpacing: "-0.25px",
     lineHeight: "1.3",
     fontWeight: "400",
     color: "#484848",
-    padding: "17px 0 0",
-};
-
-const paragraph = {
-    margin: "0 0 15px",
-    fontSize: "15px",
-    lineHeight: "1.4",
-    color: "#3c4149",
-};
-
-const buttonContainer = {
-    padding: "27px 0 27px",
 };
 
 const button = {
@@ -72,25 +102,4 @@ const button = {
     textAlign: "center" as const,
     display: "block",
     padding: "11px 23px",
-};
-
-const reportLink = {
-    fontSize: "14px",
-    color: "#b4becc",
-};
-
-const hr = {
-    borderColor: "#dfe1e4",
-    margin: "42px 0 26px",
-};
-
-const code = {
-    fontFamily: "monospace",
-    fontWeight: "700",
-    padding: "1px 4px",
-    backgroundColor: "#dfe1e4",
-    letterSpacing: "-0.3px",
-    fontSize: "21px",
-    borderRadius: "4px",
-    color: "#3c4149",
 };

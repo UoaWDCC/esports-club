@@ -1,4 +1,3 @@
-import { env } from "@libs/env";
 import {
     Body,
     Button,
@@ -7,7 +6,6 @@ import {
     Heading,
     Hr,
     Html,
-    Img,
     Link,
     Preview,
     Section,
@@ -17,8 +15,6 @@ import {
 interface CodeEmailProps {
     validationCode?: string;
 }
-
-const baseUrl = env.APP_URL ? `https://${env.APP_URL}` : "";
 
 export const EsportsLoginCodeEmail = ({ validationCode }: CodeEmailProps) => (
     <Html>
