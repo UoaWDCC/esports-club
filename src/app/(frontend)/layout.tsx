@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import localFont from "next/font/local";
+import RoutingDevTools from "@providers/devtools/DevToolsProvider";
 import TanstackClientProvider from "@providers/query/TanstackClientProvider";
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${satoshi.className} antialiased`}>
+                <RoutingDevTools />
                 <TanstackClientProvider>{children}</TanstackClientProvider>
             </body>
         </html>

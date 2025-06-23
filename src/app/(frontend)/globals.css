@@ -38,10 +38,6 @@ h3 {
     font-weight: 500;
 }
 
-a {
-    text-decoration: underline;
-}
-
 /* 
 h1 {
     font-size: 64px;
@@ -94,6 +90,5 @@ small em {
     p {
         letter-spacing: 4%;
         line-height: 130%;
-        font-weight: 500;
     }
 }

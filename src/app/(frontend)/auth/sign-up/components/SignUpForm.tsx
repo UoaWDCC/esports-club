@@ -32,7 +32,12 @@ export default function SignUpForm() {
         }
 
         console.log("signup", email, password);
-        authClient.signUp.email({ email, password, name: "", callbackURL: "/" });
+        authClient.signUp.email({
+            email,
+            password,
+            name: "",
+            callbackURL: "/auth/sign-in",
+        });
     };
 
     return (

@@ -1,27 +1,15 @@
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@libs/auth/auth";
+import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(request: NextRequest) {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+    // optimistically redirect users that are not signed in
+    // auth handling should be check per page/route
+    const sessionCookie = getSessionCookie(request);
 
-    const pathname = request.nextUrl.pathname;
-    const isAuthenticated = !!session;
-
-    // staff route
-    if (pathname.startsWith("/staff") && session?.user.role !== "staff") {
-        console.log("entering staff route");
-        return NextResponse.redirect(new URL("/login", request.url));
+    if (!sessionCookie) {
+        return NextResponse.redirect(new URL("/auth/sign-in", request.url));
     }
 
-    if (!isAuthenticated) {
-        console.log("not authenticated");
-        return NextResponse.redirect(new URL("/sign-in", request.url));
-    }
-
-    console.log("passing");
     return NextResponse.next();
 }
 

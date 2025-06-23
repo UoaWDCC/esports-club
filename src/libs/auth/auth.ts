@@ -4,7 +4,7 @@ import { sendVerificationEmail as sendEmail } from "@libs/email/verification-ema
 import { env } from "@libs/env";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin as adminPlugin } from "better-auth/plugins";
+import { admin as adminPlugin, openAPI } from "better-auth/plugins";
 
 import { ac, admin, staff, user } from "./permission";
 
@@ -17,6 +17,7 @@ export const auth = betterAuth({
         requireEmailVerification: true,
     },
     plugins: [
+        openAPI(), // http://localhost:3000/api/auth/reference
         adminPlugin({
             ac,
             defaultRole: "user",

@@ -6,7 +6,6 @@ import SignUpForm from "../sign-up/components/SignUpForm";
 
 export default async function SignInPage() {
     const session = await getSession();
-    console.log("session", session);
 
     return (
         <div className="grid min-h-screen grid-cols-2 place-items-center">
