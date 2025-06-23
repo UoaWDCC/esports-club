@@ -1,9 +1,10 @@
 import { getSession } from "@libs/auth/auth";
 import Button from "@ui/button/Button";
 import GoogleAuthButton from "@ui/button/GoogleAuthButton";
+import TriggerVerificationButton from "@ui/button/TestSendVerification";
 import Footer from "@ui/footer/Footer";
 import SignOut from "@ui/form/SignOut";
-import StandardLayout from "@ui/layout/StandardLayout";
+import PageLayout from "@ui/layout/PageLayout";
 import SlideInText from "@ui/text/SlideInText";
 
 export default async function Home() {
@@ -11,7 +12,7 @@ export default async function Home() {
 
     return (
         <>
-            <StandardLayout>
+            <PageLayout>
                 <div className="flex">
                     <h1 className="max-w-[600px]">
                         <SlideInText>Auckland University Esports Club</SlideInText>
@@ -48,10 +49,11 @@ export default async function Home() {
                     Registration page
                 </Button>
                 <GoogleAuthButton />
+                <TriggerVerificationButton />
                 <SignOut />
                 <h3>Info</h3>
                 <pre>{JSON.stringify(session, null, 2)}</pre>
-            </StandardLayout>
+            </PageLayout>
 
             <Footer />
         </>

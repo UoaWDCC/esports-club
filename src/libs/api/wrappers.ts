@@ -34,7 +34,7 @@ const defaultEndpointOptions = { protected: false, admin: false };
 export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
     return async (req: NextRequest, context: RouteContext) => {
         try {
-            const session = await getSession();
+            const session = await getSession(req);
 
             if (!session && (options.protected || options.staff)) {
                 return ApiErrorResponse("unauthorized");

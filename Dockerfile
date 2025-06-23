@@ -11,6 +11,7 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
+ENV ENVIRONMENT="production"
 
 # Install pnpm
 ARG PNPM_VERSION=10.6.3
