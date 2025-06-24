@@ -3,8 +3,10 @@ import { z } from "zod";
 
 export const env = createEnv({
     server: {
-        ENVIRONMENT: z.enum(["development", "test", "production"]).default("development"),
-        APP_URL: z.string().min(1),
+        ENVIRONMENT: z.enum(["development", "test", "production"]).default("production"),
+        APP_URL: z.string().url().default("https://esports.wdcc.co.nz"),
+        BETTER_AUTH_URL: z.string().url().default("https://esports.wdcc.co.nz"),
+        BETTER_AUTH_SECRET: z.string().min(32),
         DRIZZLE_DATABASE_URL: z.string().min(1),
         AUTH_GOOGLE_ID: z.string().min(1),
         AUTH_GOOGLE_SECRET: z.string().min(1),
@@ -12,10 +14,12 @@ export const env = createEnv({
         MAIL_PORT: z.coerce.number().min(1),
         MAIL_USER: z.string().min(1),
         MAIL_PASSWORD: z.string().min(1),
-        TEST_EMAIL: z.string().min(1),
+        TEST_EMAIL: z.string().optional(),
     },
     runtimeEnv: {
         APP_URL: process.env.APP_URL,
+        BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+        BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
         ENVIRONMENT: process.env.ENVIRONMENT,
         DRIZZLE_DATABASE_URL: process.env.DRIZZLE_DATABASE_URL,
         AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,

@@ -11,6 +11,11 @@ export default async function StaffLayout({
 
     console.log("fetching on staff layout");
 
+    if (!session) {
+        redirect(DEFAULT_LOGIN_REDIRECT);
+    }
+
+    // TODO change to unauthorized
     if (session?.user.role !== "staff") {
         redirect(DEFAULT_LOGIN_REDIRECT);
     }

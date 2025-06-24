@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import Button from "@ui/button/Button";
 import { Loader2 } from "lucide-react";
 
 import { isEmailVerified } from "@/services/email/is-email-verified";

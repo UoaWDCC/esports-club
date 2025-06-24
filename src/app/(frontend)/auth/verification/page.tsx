@@ -3,8 +3,6 @@ import { cookies } from "next/headers";
 import { getSession } from "@libs/auth/auth";
 import AuthLayout from "@ui/layout/AuthLayout";
 
-import { isEmailVerified } from "@/services/email/is-email-verified";
-
 import VerificationDisplay from "./components/VerificationDisplay";
 
 export default async function Verification() {

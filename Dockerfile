@@ -11,7 +11,6 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
-ENV ENVIRONMENT="production"
 
 # Install pnpm
 ARG PNPM_VERSION=10.6.3
@@ -33,8 +32,24 @@ RUN pnpm install --frozen-lockfile --prod=false
 COPY . .
 
 # Build application
-RUN --mount=type=secret,id=DRIZZLE_DATABASE_URL \
+RUN --mount=type=secret,id=BETTER_AUTH_SECRET \
+    --mount=type=secret,id=DRIZZLE_DATABASE_URL \
+    --mount=type=secret,id=AUTH_GOOGLE_ID \
+    --mount=type=secret,id=AUTH_GOOGLE_SECRET \
+    --mount=type=secret,id=MAIL_HOST \
+    --mount=type=secret,id=MAIL_PORT \
+    --mount=type=secret,id=MAIL_USER \
+    --mount=type=secret,id=MAIL_PASSWORD \
+    --mount=type=secret,id=TEST_EMAIL \
+    BETTER_AUTH_SECRET="$(cat /run/secrets/BETTER_AUTH_SECRET)" \
     DRIZZLE_DATABASE_URL="$(cat /run/secrets/DRIZZLE_DATABASE_URL)" \
+    AUTH_GOOGLE_ID="$(cat /run/secrets/AUTH_GOOGLE_ID)" \
+    AUTH_GOOGLE_SECRET="$(cat /run/secrets/AUTH_GOOGLE_SECRET)" \
+    MAIL_HOST="$(cat /run/secrets/MAIL_HOST)" \
+    MAIL_PORT="$(cat /run/secrets/MAIL_PORT)" \
+    MAIL_USER="$(cat /run/secrets/MAIL_USER)" \
+    MAIL_PASSWORD="$(cat /run/secrets/MAIL_PASSWORD)" \
+    TEST_EMAIL="$(cat /run/secrets/TEST_EMAIL)" \
     npx next build --experimental-build-mode compile
 
 # Remove development dependencies
