@@ -3,14 +3,14 @@
 import { createContext, Fragment, useContext, useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { easeOutExpo } from "@libs/motion/ease";
+import { ROUTE_SYSTEM } from "@libs/routes";
+import { Route } from "@libs/routes/index.generated";
 import { cn } from "@libs/utils";
 import { GitBranch } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";
 
 import useLocalStorage from "@/hooks/useLocalStoage";
-
-import { Route, routeSystem } from "./routes.data";
 
 type DevRouteSetting = {
     open: boolean;
@@ -96,7 +96,7 @@ const RouteSheet = () => {
             className="fixed top-0 left-0 z-50 flex h-dvh w-[450px] flex-col border-r border-neutral-900 bg-black font-[Geist] font-light text-white"
         >
             <DevRouteSetting />
-            {routeSystem.map((section) => (
+            {ROUTE_SYSTEM.map((section) => (
                 <Fragment key={section.name}>
                     <RouteSection>{section.name}</RouteSection>
                     {section.routes.map((route) => (

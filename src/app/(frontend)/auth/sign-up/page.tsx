@@ -2,7 +2,7 @@ import AuthLayout from "@ui/layout/AuthLayout";
 
 import SignUpForm from "./components/SignUpForm";
 
-export default async function SignInPage() {
+export default async function SignUpPage() {
     return (
         <AuthLayout>
             <SignUpForm />
