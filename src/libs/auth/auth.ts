@@ -1,10 +1,11 @@
 import { headers } from "next/headers";
 import { db } from "@libs/db";
-import { sendVerificationEmail as sendEmail } from "@libs/email/verification-email";
 import { env } from "@libs/env";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin as adminPlugin, openAPI } from "better-auth/plugins";
+
+import { sendVerificationEmail as sendEmail } from "@/services/email/verification-email";
 
 import { ac, admin, staff, user } from "./permission";
 
@@ -12,6 +13,12 @@ export const auth = betterAuth({
     database: drizzleAdapter(db, {
         provider: "pg",
     }),
+    session: {
+        cookieCache: {
+            enabled: true, // enable in production
+            maxAge: 5 * 60,
+        },
+    },
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
@@ -38,7 +45,6 @@ export const auth = betterAuth({
             });
         },
     },
-
     socialProviders: {
         google: {
             clientId: env.AUTH_GOOGLE_ID,

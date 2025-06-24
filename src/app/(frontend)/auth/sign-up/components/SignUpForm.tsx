@@ -3,13 +3,18 @@
 
 import { forwardRef, InputHTMLAttributes, useId, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { authClient } from "@libs/auth/auth-client";
+import { DEFAULT_VERIFICATION_REDIRECT } from "@libs/routes";
+import Button from "@ui/button/Button";
 import Google from "@ui/svg/google";
+import { ArrowLeft } from "lucide-react";
 
 // AI generated, replace with actual UI soon
 // TODO replace with form component
 
 export default function SignUpForm() {
+    const router = useRouter();
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -31,19 +36,30 @@ export default function SignUpForm() {
             return;
         }
 
-        console.log("signup", email, password);
-        authClient.signUp.email({
-            email,
-            password,
-            name: "",
-            callbackURL: "/auth/sign-in",
-        });
+        authClient.signUp.email(
+            {
+                email,
+                password,
+                name: "",
+                callbackURL: DEFAULT_VERIFICATION_REDIRECT,
+            },
+            {
+                onSuccess: () => {
+                    document.cookie = `verification-email=${encodeURIComponent(email)}; max-age=900; path=/; secure; samesite=lax`;
+                    router.push(DEFAULT_VERIFICATION_REDIRECT);
+                },
+            },
+        );
     };
 
     return (
         <div className="w-full max-w-md space-y-6">
             <div>
-                <h1 className="text-3xl font-bold">Sign up to AUEC</h1>
+                <Link href="/" className="flex items-center gap-2 text-blue-600">
+                    <ArrowLeft size={16} />
+                    <span>Back to home</span>
+                </Link>
+                <h1 className="mt-3 text-3xl font-bold">Sign up to AUEC</h1>
                 <p className="mt-3 text-neutral-300">
                     Set-up your profile ready for event participation!
                 </p>
@@ -60,15 +76,12 @@ export default function SignUpForm() {
                 <p className="text-center text-sm">
                     Already have an account?{" "}
                     <Link href="/auth/sign-in" className="text-blue-600">
-                        Log in
+                        Sign in!
                     </Link>
                 </p>
-                <button
-                    type="submit"
-                    className="w-full rounded-md bg-violet-600 py-2 text-white transition hover:bg-violet-700"
-                >
+                <Button type="submit" className="w-full">
                     Sign Up
-                </button>
+                </Button>
             </form>
             <Divide text="or" />
             <button className="flex w-full items-center justify-center gap-2 rounded-md border border-neutral-300 py-2 hover:bg-neutral-100">
