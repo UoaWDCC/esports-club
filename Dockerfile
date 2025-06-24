@@ -40,7 +40,6 @@ RUN --mount=type=secret,id=BETTER_AUTH_SECRET \
     --mount=type=secret,id=MAIL_PORT \
     --mount=type=secret,id=MAIL_USER \
     --mount=type=secret,id=MAIL_PASSWORD \
-    --mount=type=secret,id=TEST_EMAIL \
     BETTER_AUTH_SECRET="$(cat /run/secrets/BETTER_AUTH_SECRET)" \
     DRIZZLE_DATABASE_URL="$(cat /run/secrets/DRIZZLE_DATABASE_URL)" \
     AUTH_GOOGLE_ID="$(cat /run/secrets/AUTH_GOOGLE_ID)" \
@@ -49,7 +48,6 @@ RUN --mount=type=secret,id=BETTER_AUTH_SECRET \
     MAIL_PORT="$(cat /run/secrets/MAIL_PORT)" \
     MAIL_USER="$(cat /run/secrets/MAIL_USER)" \
     MAIL_PASSWORD="$(cat /run/secrets/MAIL_PASSWORD)" \
-    TEST_EMAIL="$(cat /run/secrets/TEST_EMAIL)" \
     npx next build --experimental-build-mode compile
 
 # Remove development dependencies
