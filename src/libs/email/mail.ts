@@ -5,7 +5,7 @@ import Mail from "nodemailer/lib/mailer";
 
 export const standardMailOption = (body: Mail.Options) => {
     const isProduction = env.ENVIRONMENT !== "development";
-    const endUserAddress = isProduction ? body.to : env.TEST_EMAIL;
+    const endUserAddress = isProduction ? body.to : env.TEST_EMAIL || "";
 
     return {
         ...body,

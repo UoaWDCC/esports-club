@@ -33,16 +33,17 @@ type LinkVersion = CommonProps &
 export type ButtonProps = (ButtonVersion | LinkVersion) & CommonProps & LoadingProps;
 
 const button = tv({
-    base: "transition-[filter relative flex cursor-pointer justify-center gap-2 rounded-md border-2 px-6 py-3.5 font-bold brightness-100 duration-200 select-none",
+    base: "transition-[filter relative flex cursor-pointer items-center justify-center gap-2 rounded-md px-6 py-2 brightness-100 duration-200 select-none disabled:cursor-default disabled:bg-neutral-900 disabled:text-white/50",
     variants: {
         style: {
-            cta: "bg-purple border-purple-border",
-            solid: "bg-gray-border border-none",
-            outline: "border-gray-border",
+            cta: "bg-violet-600 hover:bg-violet-800",
+            solid: "bg-gray-border",
             google: "bg-white text-black",
         },
     },
-    defaultVariants: {},
+    defaultVariants: {
+        style: "cta",
+    },
 });
 
 // is link if has href

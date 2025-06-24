@@ -36,7 +36,7 @@ export default async function HomePage() {
                         <Button href="/api/protected" variant={{ style: "solid" }}>
                             /api/protected
                         </Button>
-                        <Button href="/api/public" variant={{ style: "outline" }}>
+                        <Button href="/api/public" variant={{ style: "solid" }}>
                             /api/public
                         </Button>
                     </div>

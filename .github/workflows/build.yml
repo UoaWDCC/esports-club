@@ -18,18 +18,19 @@ jobs:
     env:
       DRIZZLE_DATABASE_URL: ${{ secrets.DRIZZLE_DATABASE_URL }}
       APP_URL: ${{ secrets.APP_URL }}
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      AUTH_GOOGLE_ID: ${{ secrets.AUTH_GOOGLE_ID }}
+      AUTH_GOOGLE_SECRET: ${{ secrets.AUTH_GOOGLE_SECRET }}
+      MAIL_HOST: ${{ secrets.MAIL_HOST }}
+      MAIL_PORT: ${{ secrets.MAIL_PORT }}
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
 
     steps:
       # checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # print environment variables in build, this project doesn't need security anyways :D
-      - name: Echo environment variables
-        run: |
-          echo "DRIZZLE_DATABASE_URL: $DRIZZLE_DATABASE_URL"
-          echo "APP_URL: $APP_URL"
-          
       # set-up pnpm https://github.com/pnpm/action-setup
       - name: Set up pnpm
         uses: pnpm/action-setup@v4

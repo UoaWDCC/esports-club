@@ -4,7 +4,9 @@
 import { forwardRef, InputHTMLAttributes, useId, useRef } from "react";
 import Link from "next/link";
 import { authClient } from "@libs/auth/auth-client";
+import Button from "@ui/button/Button";
 import Google from "@ui/svg/google";
+import { ArrowLeft } from "lucide-react";
 
 // AI generated, replace with actual UI soon
 // TODO replace with form component
@@ -24,14 +26,17 @@ export default function SignInForm() {
             return;
         }
 
-        console.log("signin", email, password);
         authClient.signIn.email({ email, password, callbackURL: "/" });
     };
 
     return (
         <div className="w-full max-w-md space-y-6">
             <div>
-                <h1 className="text-3xl font-bold">Sign in to AUEC</h1>
+                <Link href="/" className="flex items-center gap-2 text-blue-600">
+                    <ArrowLeft size={16} />
+                    <span>Back to home</span>
+                </Link>
+                <h1 className="mt-3 text-3xl font-bold">Sign in to AUEC</h1>
                 <p className="mt-3 text-neutral-300">
                     Welcome back! Please sign in to access your account.
                 </p>
@@ -46,12 +51,9 @@ export default function SignInForm() {
                         Sign up!
                     </Link>
                 </p>
-                <button
-                    type="submit"
-                    className="w-full rounded-md bg-violet-600 py-2 text-white transition hover:bg-violet-700"
-                >
+                <Button type="submit" className="w-full">
                     Sign In
-                </button>
+                </Button>
             </form>
             <Divide text="or" />
             <button className="flex w-full items-center justify-center gap-2 rounded-md border border-neutral-300 py-2 hover:bg-neutral-100">

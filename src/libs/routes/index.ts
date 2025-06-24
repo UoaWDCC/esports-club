@@ -8,7 +8,7 @@ import {
 
 export const ROOT = "/";
 export const DEFAULT_LOGIN_REDIRECT = "/auth/sign-in/";
-export const DEFAULT_VERIFICATION_REDIRECT = "/auth/veriftication/";
+export const DEFAULT_VERIFICATION_REDIRECT = "/auth/verification/";
 export const DEFAULT_UNAUTHORIZED_REDIRECT = "/unauthorized";
 
 export const ROUTE_SYSTEM = [

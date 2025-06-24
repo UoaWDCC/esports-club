@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 const fs = require("fs");
 const path = require("path");
 
@@ -22,7 +24,7 @@ if (!appDirectory) {
 }
 
 const fileContentsCache = new Map();
-let currentFilePath = null;
+// let currentFilePath = null;
 let currentFileContent = null;
 
 function setCurrentFile(filePath) {

@@ -13,10 +13,6 @@ export const PUBLIC_ROUTES: RouteSection = {
   "name": "Public Routes",
   "routes": [
     {
-      "url": "/memberCSVUpload/",
-      "name": "CSVUploadPage"
-    },
-    {
       "url": "/",
       "name": "HomePage"
     }
@@ -33,6 +29,10 @@ export const AUTH_ROUTES: RouteSection = {
     {
       "url": "/auth/sign-up/",
       "name": "SignUpPage"
+    },
+    {
+      "url": "/auth/verification/",
+      "name": "Verification"
     }
   ]
 };
@@ -50,6 +50,10 @@ export const PROTECTED_ROUTES: RouteSection = {
 export const STAFF_ROUTES: RouteSection = {
   "name": "Staff Routes",
   "routes": [
+    {
+      "url": "/staff/memberCSVUpload/",
+      "name": "CSVUploadPage"
+    },
     {
       "url": "/staff/",
       "name": "StaffPage"
