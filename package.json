@@ -12,7 +12,8 @@
         "format": "pnpm dlx prettier . --write",
         "db:push": "drizzle-kit push",
         "db:studio": "drizzle-kit studio",
-        "nuke": "pnpm dlx rimraf .next && pnpm dlx rimraf node_modules"
+        "nuke": "pnpm dlx rimraf .next && pnpm dlx rimraf node_modules",
+        "generate:route": "node ./src/libs/routes/generate-index.js"
     },
     "dependencies": {
         "@neondatabase/serverless": "^1.0.0",

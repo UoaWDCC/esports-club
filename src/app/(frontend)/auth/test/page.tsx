@@ -4,7 +4,7 @@ import SignOut from "@ui/form/SignOut";
 import SignInForm from "../sign-in/components/SignInForm";
 import SignUpForm from "../sign-up/components/SignUpForm";
 
-export default async function SignInPage() {
+export default async function TestAuthDataPage() {
     const session = await getSession();
 
     return (

@@ -7,7 +7,7 @@ import SignOut from "@ui/form/SignOut";
 import PageLayout from "@ui/layout/PageLayout";
 import SlideInText from "@ui/text/SlideInText";
 
-export default async function Home() {
+export default async function HomePage() {
     const session = await getSession();
 
     return (
