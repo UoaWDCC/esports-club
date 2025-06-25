@@ -2,16 +2,24 @@
 
 @layer utilities {
     :root {
-        --background: linear-gradient(#2f2b30, #0d0d0d);
+        /* --background: linear-gradient(#2f2b30, #0d0d0d); */
+        --background: #0d0d0d;
         --foreground: #ffffff;
     }
 }
 
 @theme {
     --color-purple: #7650ff;
-    --color-purple-border: #5d3dd1;
+    /* --color-purple-border: #5d3dd1; */
+    --color-purple-border: #4B63FF;
+    --color-purple-button: #4B63FF99;
     --color-gray: #1e1e1e;
     --color-gray-border: #363636;
+    --color-pink: #FF4B9966;
+    --color-pink-border: #FF4B99;
+
+    --font-tomorrow: "tomorrow", sans-serif;
+    --font-satoshi: "satoshi", sans-serif;
 }
 
 @utility content-container {
@@ -27,35 +35,30 @@
 body {
     background: var(--background);
     color: var(--foreground);
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
-    font-size: 64px;
     letter-spacing: -0.5%;
     line-height: 91.5%;
     font-weight: 700;
 }
 
 h2 {
-    font-size: 48px;
     letter-spacing: -0.5%;
     line-height: 91.5%;
     font-weight: 700;
 }
 
 h3 {
-    font-size: 32px;
     letter-spacing: -0.5%;
     line-height: 91.5%;
     font-weight: 500;
 }
 
 p {
-    font-size: 16px;
     letter-spacing: 4%;
-    line-height: 130%;
-    font-weight: 500;
+    /* line-height: 130%; */
+    /* font-weight: 500; */
 }
 
 p.font-bold,
