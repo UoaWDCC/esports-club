@@ -20,7 +20,7 @@ const GoogleAuthButton = () => {
                 await signInGoogle();
             }}
         >
-            <Button type="submit" variant={{ style: "google" }}>
+            <Button type="submit" variant={{ style: "google" }} className="w-full">
                 <Google />
                 <span>Continue with Google</span>
             </Button>

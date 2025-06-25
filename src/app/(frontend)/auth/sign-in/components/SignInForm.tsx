@@ -5,6 +5,7 @@ import { forwardRef, InputHTMLAttributes, useId, useRef } from "react";
 import Link from "next/link";
 import { authClient } from "@libs/auth/auth-client";
 import Button from "@ui/button/Button";
+import GoogleAuthButton from "@ui/button/GoogleAuthButton";
 import Google from "@ui/svg/google";
 import { ArrowLeft } from "lucide-react";
 
@@ -56,10 +57,7 @@ export default function SignInForm() {
                 </Button>
             </form>
             <Divide text="or" />
-            <button className="flex w-full items-center justify-center gap-2 rounded-md border border-neutral-300 py-2 hover:bg-neutral-100">
-                <Google />
-                Continue with Google
-            </button>
+            <GoogleAuthButton />
             <div className="text-neetral-300 text-center text-sm">
                 <p>
                     By continuing, you agree to AUEC’s{" "}
