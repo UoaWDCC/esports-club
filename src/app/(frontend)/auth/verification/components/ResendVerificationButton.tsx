@@ -4,8 +4,9 @@ import { useState } from "react";
 import { authClient } from "@libs/auth/auth-client";
 import { DEFAULT_VERIFICATION_REDIRECT } from "@libs/routes";
 import { QueryState } from "@libs/types/queryState";
-import Button from "@ui/button/Button";
 import { Loader2 } from "lucide-react";
+
+import Button from "@/components/button/Button";
 
 const ResendVerificationButton = ({ email }: { email: string }) => {
     const [state, setState] = useState<QueryState>("idle");

@@ -1,11 +1,12 @@
 import { getSession } from "@libs/auth/auth";
-import Button from "@ui/button/Button";
-import GoogleAuthButton from "@ui/button/GoogleAuthButton";
-import TriggerVerificationButton from "@ui/button/TestSendVerification";
-import Footer from "@ui/footer/Footer";
-import SignOut from "@ui/form/SignOut";
-import PageLayout from "@ui/layout/PageLayout";
-import SlideInText from "@ui/text/SlideInText";
+
+import Button from "@/components/button/Button";
+import GoogleAuthButton from "@/components/button/GoogleAuthButton";
+import SignOut from "@/components/button/SignOut";
+import TriggerVerificationButton from "@/components/button/TestSendVerification";
+import Footer from "@/components/footer/Footer";
+import PageLayout from "@/components/layout/PageLayout";
+import SlideInText from "@/components/text/SlideInText";
 
 export default async function HomePage() {
     const session = await getSession();

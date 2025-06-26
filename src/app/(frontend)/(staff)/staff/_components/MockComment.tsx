@@ -3,8 +3,8 @@
 import React from "react";
 import { CommentDTO } from "@libs/types/CommentDTO";
 import { useQueryClient } from "@tanstack/react-query";
-import Button from "@ui/button/Button";
 
+import Button from "@/components/button/Button";
 import { useCreateComment } from "@/hooks/api/mutation/useCreateComment";
 import { useGetComment } from "@/hooks/api/query/useCommentDemo";
 

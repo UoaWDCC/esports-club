@@ -1,4 +1,4 @@
-import PageLayout from "@ui/layout/PageLayout";
+import PageLayout from "@/components/layout/PageLayout";
 
 import { CSVReader } from "./components/CSVReader";
 

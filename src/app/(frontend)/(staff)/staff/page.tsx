@@ -1,8 +1,8 @@
 import { getSession } from "@libs/auth/auth";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Footer from "@ui/footer/Footer";
-import PageLayout from "@ui/layout/PageLayout";
 
+import PageLayout from "@/components/layout/PageLayout";
 import { getComment } from "@/services/comments";
 
 import MockUser from "./_components/MockComment";

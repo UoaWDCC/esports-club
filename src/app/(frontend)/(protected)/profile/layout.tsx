@@ -7,6 +7,8 @@ import { validateUserProfile } from "@/services/profile/validateUserProfile";
 
 import { ProfileProvider } from "./components/ProfileProvider";
 
+// requires user to be logged in
+// requires user to have a profile
 export default async function ProfileLayout({
     children,
 }: Readonly<{

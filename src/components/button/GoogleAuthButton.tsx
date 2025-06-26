@@ -2,8 +2,8 @@
 
 import React from "react";
 import { signIn } from "@libs/auth/auth-client";
-import Google from "@ui/svg/google";
 
+import Google from "../assets/svg/google";
 import Button from "./Button";
 
 export const signInGoogle = async () => {

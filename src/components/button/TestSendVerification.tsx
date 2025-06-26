@@ -1,6 +1,5 @@
 import React from "react";
 import { authClient } from "@libs/auth/auth-client";
-import Google from "@ui/svg/google";
 
 import Button from "./Button";
 
@@ -20,7 +19,6 @@ const TriggerVerificationButton = () => {
             }}
         >
             <Button type="submit" variant={{ style: "google" }}>
-                <Google />
                 <span>Test verification button</span>
             </Button>
         </form>
