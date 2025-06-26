@@ -1,6 +1,6 @@
 
 // automatically generated with generate-index.js, 
-// last generated: 24/06/2025
+// last generated: 25/06/2025
 
 export type RouteSection = {
     name: string;
@@ -40,6 +40,10 @@ export const AUTH_ROUTES: RouteSection = {
 export const PROTECTED_ROUTES: RouteSection = {
   "name": "Protected Routes",
   "routes": [
+    {
+      "url": "/create-profile/",
+      "name": "ProfileCreationPage"
+    },
     {
       "url": "/profile/",
       "name": "ProfilePage"

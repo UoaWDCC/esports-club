@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import { cookies } from "next/headers";
 import { getSession } from "@libs/auth/auth";
-import AuthLayout from "@ui/layout/AuthLayout";
+
+import { FormLayout } from "@/components/layout/FormLayout";
 
 import VerificationDisplay from "./components/VerificationDisplay";
 
@@ -12,25 +13,25 @@ export default async function Verification() {
 
     if (session) {
         return (
-            <AuthLayout>
+            <FormLayout>
                 <h3 className="text-3xl font-medium">You are already logged in</h3>
-            </AuthLayout>
+            </FormLayout>
         );
     }
 
     if (email) {
         return (
-            <AuthLayout>
+            <FormLayout>
                 <Suspense fallback={<div>Loading...</div>}>
                     <VerificationDisplay email={email} />
                 </Suspense>
-            </AuthLayout>
+            </FormLayout>
         );
     }
 
     return (
-        <AuthLayout>
+        <FormLayout>
             <h3 className="text-3xl font-medium">Email not found</h3>
-        </AuthLayout>
+        </FormLayout>
     );
 }

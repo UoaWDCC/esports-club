@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import localFont from "next/font/local";
-import RoutingDevTools from "@providers/devtools/DevToolsProvider";
-import TanstackClientProvider from "@providers/query/TanstackClientProvider";
+import { RoutingDevTools } from "@providers/devtools/DevToolsProvider";
+import { TanstackClientProvider } from "@providers/query/TanstackClientProvider";
 
 export const metadata: Metadata = {
     title: { default: "Esports club", template: "%s | Esports club" },

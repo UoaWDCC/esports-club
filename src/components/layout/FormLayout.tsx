@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export default function AuthLayout({ children }: { children: ReactNode }) {
+export function FormLayout({ children }: { children: ReactNode }) {
     return (
         <div className="grid min-h-screen grid-cols-5">
             <div className="col-span-3 flex items-center justify-center">{children}</div>

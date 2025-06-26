@@ -21,5 +21,3 @@ export const CreateComment = async (comment: CommentDTO) => {
     }
     console.log("Data:", res.data);
 };
-
-export default CreateComment;

@@ -51,5 +51,3 @@ export const SlideInText = ({
         </motion.div>
     );
 };
-
-export default SlideInText;

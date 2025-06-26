@@ -1,9 +1,10 @@
 "use client";
 
 import { authClient } from "@libs/auth/auth-client";
-import Button from "@ui/button/Button";
 
-export default function SignOut() {
+import { Button } from "@/components/button/Button";
+
+export function SignOut() {
     return (
         <form
             action={async () => {

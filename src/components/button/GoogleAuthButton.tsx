@@ -2,30 +2,30 @@
 
 import React from "react";
 import { signIn } from "@libs/auth/auth-client";
-import Google from "@ui/svg/google";
+import { DEFAULT_PROFILE_REDIRECT } from "@libs/routes";
 
-import Button from "./Button";
+import { Google } from "../assets/svg/google";
+import { Button } from "./Button";
 
-export const signInGoogle = async () => {
+const signInGoogle = async () => {
     const data = await signIn.social({
         provider: "google",
+        callbackURL: DEFAULT_PROFILE_REDIRECT,
     });
     return data;
 };
 
-const GoogleAuthButton = () => {
+export const GoogleAuthButton = () => {
     return (
         <form
             action={async () => {
                 await signInGoogle();
             }}
         >
-            <Button type="submit" variant={{ style: "google" }}>
+            <Button type="submit" variant={{ style: "google" }} className="w-full">
                 <Google />
                 <span>Continue with Google</span>
             </Button>
         </form>
     );
 };
-
-export default GoogleAuthButton;

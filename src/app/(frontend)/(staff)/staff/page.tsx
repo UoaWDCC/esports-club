@@ -1,11 +1,9 @@
 import { getSession } from "@libs/auth/auth";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import Footer from "@ui/footer/Footer";
-import PageLayout from "@ui/layout/PageLayout";
 
+import { Footer } from "@/components/footer/Footer";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { getComment } from "@/services/comments";
-
-import MockUser from "./_components/MockComment";
 
 export default async function StaffPage() {
     const session = await getSession();
@@ -27,7 +25,6 @@ export default async function StaffPage() {
                 <h1 className="max-w-[600px]">Staff page</h1>
                 <p>{JSON.stringify(session, null, 4)}</p>
                 <Footer />
-                <MockUser />
             </PageLayout>
         </HydrationBoundary>
     );

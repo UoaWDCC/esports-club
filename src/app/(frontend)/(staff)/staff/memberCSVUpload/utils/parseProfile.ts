@@ -19,12 +19,14 @@ export const parseProfile = (raw: string[]) => {
         firstName: firstName,
         lastName: lastName,
         email: raw[7],
+        university: "null",
         universityId: String(raw[8]),
         previousMember: previousMember,
         yearOfStudy: yearOfStudy,
         gender: gender,
         ethnicity: raw[11],
         currentStudy: raw[13],
+        tournamentPasses: 0,
     };
 
     return newMember;
