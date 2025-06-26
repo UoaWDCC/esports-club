@@ -1,17 +1,18 @@
-import Button from "@ui/button/Button";
-import GoogleAuthButton from "@ui/button/GoogleAuthButton";
-import Footer from "@ui/footer/Footer";
-import SignOut from "@ui/form/SignOut";
-import StandardLayout from "@ui/layout/StandardLayout";
-import SlideInText from "@ui/text/SlideInText";
+import { getSession } from "@libs/auth/auth";
 
-import { auth } from "@/auth";
+import { Button } from "@/components/button/Button";
+import { GoogleAuthButton } from "@/components/button/GoogleAuthButton";
+import { SignOut } from "@/components/button/SignOut";
+import { Footer } from "@/components/footer/Footer";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { SlideInText } from "@/components/text/SlideInText";
 
-export default async function Home() {
-    const session = await auth();
+export default async function HomePage() {
+    const session = await getSession();
+
     return (
         <>
-            <StandardLayout>
+            <PageLayout>
                 <div className="flex">
                     <h1 className="max-w-[600px]">
                         <SlideInText>Auckland University Esports Club</SlideInText>
@@ -35,7 +36,7 @@ export default async function Home() {
                         <Button href="/api/protected" variant={{ style: "solid" }}>
                             /api/protected
                         </Button>
-                        <Button href="/api/public" variant={{ style: "outline" }}>
+                        <Button href="/api/public" variant={{ style: "solid" }}>
                             /api/public
                         </Button>
                     </div>
@@ -51,7 +52,7 @@ export default async function Home() {
                 <SignOut />
                 <h3>Info</h3>
                 <pre>{JSON.stringify(session, null, 2)}</pre>
-            </StandardLayout>
+            </PageLayout>
 
             <Footer />
         </>

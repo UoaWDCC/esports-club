@@ -1,25 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
-import { auth } from "@/auth";
+export async function middleware(request: NextRequest) {
+    // optimistically redirect users that are not signed in
+    // auth handling should be check per page/route
+    const sessionCookie = getSessionCookie(request);
 
-export default auth((req) => {
-    const session = req.auth;
-    const pathname = req.nextUrl.pathname;
-
-    const isAuthenticated = !!session;
-
-    // proteched routes
-    if (!isAuthenticated) {
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    // staff route
-    if (pathname.startsWith("/staff") && session?.user.role !== "staff") {
-        return NextResponse.redirect(new URL("/login", req.url));
+    if (!sessionCookie) {
+        return NextResponse.redirect(new URL("/auth/sign-in", request.url));
     }
 
     return NextResponse.next();
-});
+}
 
 export const config = {
     matcher: ["/staff/:path*", "/profile"],

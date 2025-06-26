@@ -4,6 +4,9 @@ name: Fly Deploy Staging
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:

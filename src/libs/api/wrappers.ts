@@ -1,10 +1,8 @@
 import type { NextRequest } from "next/server";
-import { Session } from "next-auth";
+import { AuthSession, getSession } from "@libs/auth/auth";
 import { z } from "zod";
 
-import { auth } from "@/auth";
-
-import { responses } from "./responses";
+import { ApiErrorResponse } from "./responses";
 
 // Credits to David Zhu
 
@@ -13,45 +11,58 @@ type EndpointOptions = {
     staff?: boolean;
 };
 
-type Handler = (req: NextRequest, session?: Session) => Response | Promise<Response>;
+export type RouteContext<P extends string = string> = {
+    params: Promise<{
+        [key in P]: string;
+    }>;
+};
 
-type UserRouteHandler = (req: NextRequest, user: Session) => Response | Promise<Response>;
+type Handler = (
+    req: NextRequest,
+    session: AuthSession,
+    context: RouteContext,
+) => Response | Promise<Response>;
+
+type UserRouteHandler = (
+    req: NextRequest,
+    user: AuthSession,
+    context: RouteContext,
+) => Response | Promise<Response>;
 
 const defaultEndpointOptions = { protected: false, admin: false };
 
 export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
-    return async (req: NextRequest) => {
+    return async (req: NextRequest, context: RouteContext) => {
         try {
-            const session = await auth();
+            const session = await getSession(req);
 
             if (!session && (options.protected || options.staff)) {
-                return responses.unauthorized();
+                return ApiErrorResponse("unauthorized");
             }
 
             if (options.staff && session?.user.role !== "staff") {
-                return responses.forbidden();
+                return ApiErrorResponse("forbidden");
             }
 
-            return await handler(req, session!);
+            return await handler(req, session, context);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                return responses.badRequest();
+                return ApiErrorResponse("bad_request", error.message, error.issues);
             }
 
-            console.error("Error:", error);
-            return responses.internalServerError();
+            return ApiErrorResponse("internal_server_error");
         }
     };
 }
 
 export function userRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user) => handler(req, user!), {
+    return routeWrapper((req, user, context) => handler(req, user, context), {
         protected: true,
     });
 }
 
 export function staffRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user) => handler(req, user!), {
+    return routeWrapper((req, user, context) => handler(req, user, context), {
         staff: true,
     });
 }

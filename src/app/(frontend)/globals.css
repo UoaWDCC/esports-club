@@ -2,7 +2,6 @@
 
 @layer utilities {
     :root {
-        /* --background: linear-gradient(#2f2b30, #0d0d0d); */
         --background: #0d0d0d;
         --foreground: #ffffff;
     }
@@ -37,6 +36,15 @@ body {
     color: var(--foreground);
 }
 
+h1,
+h2,
+h3 {
+    letter-spacing: -0.5%;
+    line-height: 91.5%;
+    font-weight: 500;
+}
+
+/* 
 h1 {
     letter-spacing: -0.5%;
     line-height: 91.5%;
@@ -77,14 +85,12 @@ small {
 small.font-bold,
 small em {
     letter-spacing: -2%;
-    font-weight: 500;
-}
+    font-weight: 500; 
+}*/
 
 @media screen and (min-width: 1024px) {
     p {
-        font-size: 18px;
         letter-spacing: 4%;
         line-height: 130%;
-        font-weight: 500;
     }
 }

@@ -20,6 +20,7 @@
         ],
         "paths": {
             "@ui/*": ["./src/components/ui/*"],
+            "@schema": ["./src/libs/db/schema/index.ts"],
             "@providers/*": ["./src/components/providers/*"],
             "@libs/*": ["./src/libs/*"],
             "@/*": ["./src/*"]
