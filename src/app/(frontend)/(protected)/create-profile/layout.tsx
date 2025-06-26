@@ -6,7 +6,7 @@ import { DEFAULT_LOGIN_REDIRECT, DEFAULT_PROFILE_REDIRECT } from "@libs/routes";
 import { validateUserProfile } from "@/services/profile/validateUserProfile";
 
 // requires user to be logged in
-// requires user to have a profile
+// requires user to NOT have a profile
 export default async function CreateProfileLayout({
     children,
 }: Readonly<{

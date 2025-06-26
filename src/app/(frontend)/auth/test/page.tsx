@@ -1,5 +1,6 @@
 import { getSession } from "@libs/auth/auth";
-import SignOut from "@ui/form/SignOut";
+
+import SignOut from "@/components/button/SignOut";
 
 import SignInForm from "../sign-in/components/SignInForm";
 import SignUpForm from "../sign-up/components/SignUpForm";

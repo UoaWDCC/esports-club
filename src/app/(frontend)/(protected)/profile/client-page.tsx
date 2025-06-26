@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import PageLayout from "@ui/layout/PageLayout";
+
+import PageLayout from "@/components/layout/PageLayout";
 
 import { useProfile } from "./components/ProfileProvider";
 

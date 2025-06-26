@@ -1,11 +1,11 @@
-import AuthLayout from "@ui/layout/AuthLayout";
+import FormLayout from "@/components/layout/FormLayout";
 
 import SignUpForm from "./components/SignUpForm";
 
 export default async function SignUpPage() {
     return (
-        <AuthLayout>
+        <FormLayout>
             <SignUpForm />
-        </AuthLayout>
+        </FormLayout>
     );
 }
