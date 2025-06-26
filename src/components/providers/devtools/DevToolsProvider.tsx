@@ -96,14 +96,16 @@ const RouteSheet = () => {
             className="fixed top-0 left-0 z-50 flex h-dvh w-[450px] flex-col border-r border-neutral-900 bg-black font-[Geist] font-light text-white"
         >
             <DevRouteSetting />
-            {ROUTE_SYSTEM.map((section) => (
-                <Fragment key={section.name}>
-                    <RouteSection>{section.name}</RouteSection>
-                    {section.routes.map((route) => (
-                        <RouteNavigation key={route.url} {...route} />
-                    ))}
-                </Fragment>
-            ))}
+            <div className="flex h-full flex-col overflow-y-auto">
+                {ROUTE_SYSTEM.map((section) => (
+                    <Fragment key={section.name}>
+                        <RouteSection>{section.name}</RouteSection>
+                        {section.routes.map((route) => (
+                            <RouteNavigation key={route.url} {...route} />
+                        ))}
+                    </Fragment>
+                ))}
+            </div>
         </motion.div>
     );
 };
