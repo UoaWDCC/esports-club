@@ -23,6 +23,8 @@ export default async function ProfileLayout({
 
     // validate and pass profile
     const profile = await validateUserProfile(session.user.id);
+
+    console.log(profile.error);
     if (!profile.success) {
         console.log("no profile");
         redirect(DEFAULT_PROFILE_CREATION_REDIRECT);

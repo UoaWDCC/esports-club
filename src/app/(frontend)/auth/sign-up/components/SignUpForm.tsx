@@ -1,7 +1,7 @@
 // components/forms/SignupForm.tsx
 "use client";
 
-import { forwardRef, InputHTMLAttributes, useId, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@libs/auth/auth-client";
@@ -11,6 +11,7 @@ import { ArrowLeft } from "lucide-react";
 import Button from "@/components/button/Button";
 import GoogleAuthButton from "@/components/button/GoogleAuthButton";
 import { InputField } from "@/components/form/InputField";
+import { TosAndPolicy } from "@/components/text/TosAndPolicy";
 
 // AI generated, replace with actual UI soon
 // TODO replace with form component
@@ -87,15 +88,7 @@ export default function SignUpForm() {
             </form>
             <Divide text="or" />
             <GoogleAuthButton />
-            <div className="text-neetral-300 text-center text-sm">
-                <p>
-                    By continuing, you agree to AUEC’s{" "}
-                    <Link href="/policies/terms-of-service">Terms of Service</Link>
-                </p>
-                <p>
-                    Read our <Link href="/policies/privacy-policy">Privacy Policy</Link>
-                </p>
-            </div>
+            <TosAndPolicy />
         </div>
     );
 }
