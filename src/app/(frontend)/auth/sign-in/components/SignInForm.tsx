@@ -1,9 +1,11 @@
 // components/forms/SignupForm.tsx
 "use client";
 
-import { useRef } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@libs/auth/auth-client";
 import { DEFAULT_PROFILE_REDIRECT } from "@libs/routes";
+import { SignInSchema } from "@libs/zod";
+import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/button/Button";
 import { GoogleAuthButton } from "@/components/button/GoogleAuthButton";
@@ -14,34 +16,47 @@ import { TosAndPolicy } from "@/components/text/TosAndPolicy";
 import { SignInHeading } from "./SignInHeading";
 import { SignUpIndicator } from "./SignUpIndicator";
 
-// AI generated, replace with actual UI soon
-// TODO replace with form component
-
 export function SignInForm() {
-    const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors },
+    } = useForm({
+        resolver: zodResolver(SignInSchema),
+    });
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = handleSubmit((data) => {
+        const { email, password } = data;
+        authClient.signIn.email(
+            { email, password, callbackURL: DEFAULT_PROFILE_REDIRECT },
 
-        const email = emailRef.current?.value;
-        const password = passwordRef.current?.value;
-
-        if (!email || !password) {
-            alert("Please fill in all fields");
-            return;
-        }
-
-        authClient.signIn.email({ email, password, callbackURL: DEFAULT_PROFILE_REDIRECT });
-    };
+            {
+                onError() {
+                    setError("email", { message: " " });
+                    setError("password", { message: "Invlid email or password" });
+                },
+            },
+        );
+    });
 
     return (
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-md space-y-3">
             <SignInHeading />
-            <form className="space-y-4" onSubmit={handleSubmit}>
-                <InputField label="Email" type="email" ref={emailRef} required />
-                <InputField label="Password" type="password" ref={passwordRef} required />
-                <SignUpIndicator />
+            <form className="flex flex-col gap-3" onSubmit={onSubmit}>
+                <InputField
+                    label="Email"
+                    type="text"
+                    {...register("email")}
+                    error={errors.email?.message}
+                />
+                <InputField
+                    label="Password"
+                    type="password"
+                    {...register("password")}
+                    error={errors.password?.message}
+                />
+                <SignUpIndicator className="mt-3" />
                 <Button type="submit" className="w-full">
                     Sign In
                 </Button>

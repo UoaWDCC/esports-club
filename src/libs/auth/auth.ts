@@ -22,6 +22,8 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
+        minPasswordLength: 8,
+        maxPasswordLength: 128,
     },
     plugins: [
         openAPI(), // http://localhost:3000/api/auth/reference

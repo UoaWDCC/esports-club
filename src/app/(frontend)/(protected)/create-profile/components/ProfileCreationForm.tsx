@@ -46,11 +46,11 @@ export function ProfileCreationForm() {
 
     return (
         <form onSubmit={onSubmit}>
-            <div className="w-full max-w-md space-y-6">
+            <div className="w-full max-w-md space-y-3">
                 <ProfileCreationHeading />
-                <div className="space-y-4">
-                    <InputField {...register("firstName")} label="First Name" />
-                    <InputField {...register("lastName")} label="Last Name" />
+                <div className="space-y-3">
+                    <InputField {...register("firstName")} label="First Name" required />
+                    <InputField {...register("lastName")} label="Last Name" required />
                     <Button
                         type="submit"
                         className="mt-12 w-full"

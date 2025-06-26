@@ -9,6 +9,8 @@ import ResendVerificationButton from "./ResendVerificationButton";
 const VerificationDisplay = async ({ email }: { email: string }) => {
     const emailVerified = await isEmailVerified(email);
 
+    console.log(emailVerified);
+
     if (!emailVerified) {
         return (
             <VerificaitonContainer>

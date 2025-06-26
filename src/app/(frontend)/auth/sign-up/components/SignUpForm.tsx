@@ -1,10 +1,12 @@
-// components/forms/SignupForm.tsx
+// components/forms/SignUpForm.tsx
 "use client";
 
-import { useRef } from "react";
 import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@libs/auth/auth-client";
 import { DEFAULT_VERIFICATION_REDIRECT } from "@libs/routes";
+import { SignUpSchema } from "@libs/zod";
+import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/button/Button";
 import { GoogleAuthButton } from "@/components/button/GoogleAuthButton";
@@ -15,32 +17,19 @@ import { TosAndPolicy } from "@/components/text/TosAndPolicy";
 import { SignInIndicator } from "./SignInIndicator";
 import { SignUpHeading } from "./SignUpHeading";
 
-// AI generated, replace with actual UI soon
-// TODO replace with form component
-
 export function SignUpForm() {
     const router = useRouter();
-    const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
-    const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: zodResolver(SignUpSchema),
+    });
 
-        const email = emailRef.current?.value;
-        const password = passwordRef.current?.value;
-        const confirmPassword = confirmPasswordRef.current?.value;
-
-        if (!email || !password || !confirmPassword) {
-            alert("Please fill in all fields");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            alert("Passwords do not match, TBA error state UI");
-            return;
-        }
-
+    const onSubmit = handleSubmit((data) => {
+        const { email, password } = data;
         authClient.signUp.email(
             {
                 email,
@@ -55,21 +44,31 @@ export function SignUpForm() {
                 },
             },
         );
-    };
+    });
 
     return (
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-md space-y-3">
             <SignUpHeading />
-            <form className="space-y-4" onSubmit={handleSubmit}>
-                <InputField label="Email" type="email" ref={emailRef} required />
-                <InputField label="Password" type="password" ref={passwordRef} required />
+            <form className="flex flex-col gap-3" onSubmit={onSubmit}>
+                <InputField
+                    label="Email"
+                    type="text"
+                    {...register("email")}
+                    error={errors.email?.message}
+                />
+                <InputField
+                    label="Password"
+                    type="password"
+                    {...register("password")}
+                    error={errors.password?.message}
+                />
                 <InputField
                     label="Confirm Password"
                     type="password"
-                    ref={confirmPasswordRef}
-                    required
+                    {...register("confirmPassword")}
+                    error={errors.confirmPassword?.message}
                 />
-                <SignInIndicator />
+                <SignInIndicator className="mt-3" />
                 <Button type="submit" className="w-full">
                     Sign Up
                 </Button>
