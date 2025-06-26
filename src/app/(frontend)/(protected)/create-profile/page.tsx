@@ -1,6 +1,6 @@
-import FormLayout from "@/components/layout/FormLayout";
+import { FormLayout } from "@/components/layout/FormLayout";
 
-import ProfileCreationForm from "./components/ProfileCreationForm";
+import { ProfileCreationForm } from "./components/ProfileCreationForm";
 
 // requires user to be logged in
 // requires user to NOT have a profile

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { cookies } from "next/headers";
 import { getSession } from "@libs/auth/auth";
 
-import FormLayout from "@/components/layout/FormLayout";
+import { FormLayout } from "@/components/layout/FormLayout";
 
 import VerificationDisplay from "./components/VerificationDisplay";
 

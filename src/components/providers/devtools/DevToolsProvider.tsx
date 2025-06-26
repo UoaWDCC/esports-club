@@ -10,7 +10,7 @@ import { GitBranch } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";
 
-import useLocalStorage from "@/hooks/useLocalStoage";
+import { useLocalStorage } from "@/hooks/useLocalStoage";
 
 type DevRouteSetting = {
     open: boolean;
@@ -31,7 +31,7 @@ const useDevSetting = () => {
     return context;
 };
 
-export default function RoutingDevTools() {
+export function RoutingDevTools() {
     const [autoClose, setAutoClose] = useLocalStorage("DEV-AUTOCLOSE", true);
     const [initialOpen, setInitialOpen] = useLocalStorage("DEV-INITIALOPEN", false);
 

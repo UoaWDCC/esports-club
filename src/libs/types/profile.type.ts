@@ -27,6 +27,7 @@ export const ZProfile = z.object({
     lastName: z.string().min(1),
     email: z.email(),
     university: z.string(),
+    universityId: z.string().optional(),
     previousMember: z.boolean().default(false),
     tournamentPasses: z.number().int().default(0),
     yearOfStudy: z.enum(YEAR_OF_STUDY_OPTIONS),

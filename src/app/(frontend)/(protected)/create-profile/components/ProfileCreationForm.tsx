@@ -6,13 +6,13 @@ import { ProfileCreationDTO, ZProfileCreationDTO } from "@libs/types/profile.typ
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-import Button from "@/components/button/Button";
+import { Button } from "@/components/button/Button";
 import { InputField } from "@/components/form/InputField";
 import { TosAndPolicy } from "@/components/text/TosAndPolicy";
 
 import { ProfileCreationHeading } from "./ProfileCreationHeading";
 
-export default function ProfileCreationForm() {
+export function ProfileCreationForm() {
     const router = useRouter();
 
     const { register, handleSubmit } = useForm({

@@ -5,7 +5,7 @@ import { PaymentMethod } from "@libs/types/invoice.type";
 import { ProfileDTO } from "@libs/types/profile.type";
 import Papa from "papaparse";
 
-import Button from "@/components/button/Button";
+import { Button } from "@/components/button/Button";
 import { validateProfile } from "@/services/profile/validateProfile";
 
 import { generateMemberProfile } from "../services/tempGenerateMemberProfile";

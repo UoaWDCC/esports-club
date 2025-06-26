@@ -1,12 +1,11 @@
 import { getSession } from "@libs/auth/auth";
 
-import Button from "@/components/button/Button";
-import GoogleAuthButton from "@/components/button/GoogleAuthButton";
-import SignOut from "@/components/button/SignOut";
-import TriggerVerificationButton from "@/components/button/TestSendVerification";
-import Footer from "@/components/footer/Footer";
-import PageLayout from "@/components/layout/PageLayout";
-import SlideInText from "@/components/text/SlideInText";
+import { Button } from "@/components/button/Button";
+import { GoogleAuthButton } from "@/components/button/GoogleAuthButton";
+import { SignOut } from "@/components/button/SignOut";
+import { Footer } from "@/components/footer/Footer";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { SlideInText } from "@/components/text/SlideInText";
 
 export default async function HomePage() {
     const session = await getSession();
@@ -50,7 +49,6 @@ export default async function HomePage() {
                     Registration page
                 </Button>
                 <GoogleAuthButton />
-                <TriggerVerificationButton />
                 <SignOut />
                 <h3>Info</h3>
                 <pre>{JSON.stringify(session, null, 2)}</pre>

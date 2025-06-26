@@ -1,9 +1,9 @@
 import { getSession } from "@libs/auth/auth";
 
-import SignOut from "@/components/button/SignOut";
+import { SignOut } from "@/components/button/SignOut";
 
-import SignInForm from "../sign-in/components/SignInForm";
-import SignUpForm from "../sign-up/components/SignUpForm";
+import { SignInForm } from "../sign-in/components/SignInForm";
+import { SignUpForm } from "../sign-up/components/SignUpForm";
 
 export default async function TestAuthDataPage() {
     const session = await getSession();

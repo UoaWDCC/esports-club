@@ -1,6 +1,6 @@
 import React from "react";
 
-const Google = () => {
+export const Google = () => {
     return (
         <svg
             width="25"
@@ -48,5 +48,3 @@ const Google = () => {
         </svg>
     );
 };
-
-export default Google;

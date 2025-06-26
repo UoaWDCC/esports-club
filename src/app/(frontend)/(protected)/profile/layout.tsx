@@ -17,16 +17,14 @@ export default async function ProfileLayout({
     // get session
     const session = await getSession();
     if (!session) {
-        console.log("no session");
         redirect(DEFAULT_LOGIN_REDIRECT);
     }
 
     // validate and pass profile
     const profile = await validateUserProfile(session.user.id);
 
-    console.log(profile.error);
+    // user does not have a profile
     if (!profile.success) {
-        console.log("no profile");
         redirect(DEFAULT_PROFILE_CREATION_REDIRECT);
     }
 

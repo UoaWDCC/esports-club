@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { DEFAULT_LOGIN_REDIRECT } from "@libs/routes";
 import { ArrowLeft } from "lucide-react";

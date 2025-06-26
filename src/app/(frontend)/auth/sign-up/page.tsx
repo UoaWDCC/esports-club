@@ -1,6 +1,6 @@
-import FormLayout from "@/components/layout/FormLayout";
+import { FormLayout } from "@/components/layout/FormLayout";
 
-import SignUpForm from "./components/SignUpForm";
+import { SignUpForm } from "./components/SignUpForm";
 
 export default async function SignUpPage() {
     return (

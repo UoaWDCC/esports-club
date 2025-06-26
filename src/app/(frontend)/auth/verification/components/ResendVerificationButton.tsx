@@ -6,7 +6,7 @@ import { DEFAULT_VERIFICATION_REDIRECT } from "@libs/routes";
 import { QueryState } from "@libs/types/queryState";
 import { Loader2 } from "lucide-react";
 
-import Button from "@/components/button/Button";
+import { Button } from "@/components/button/Button";
 
 const ResendVerificationButton = ({ email }: { email: string }) => {
     const [state, setState] = useState<QueryState>("idle");
