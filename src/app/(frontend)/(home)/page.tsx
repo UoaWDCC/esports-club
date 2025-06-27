@@ -1,8 +1,9 @@
-import Button from "@ui/button/Button";
-import { Facebook, Instagram, Twitch } from "lucide-react";
+import Link from "next/link";
 
-import InformationPanel from "./_component/InformationPanel";
-import { socialLinks } from "./social.data";
+import { Button } from "@/components/button/Button";
+
+import { InformationPanel } from "./components/InformationPanel";
+import { socialLinks } from "./data/social.data";
 
 export default function landing() {
     const about = {
@@ -21,8 +22,7 @@ export default function landing() {
 
     return (
         <>
-            <div className="font-tomorrow bg- flex flex-col items-center gap-24">
-                <div className="h-20 w-full border-b-1 border-b-gray-500 bg-black"></div>
+            <div className="font-tomorrow flex flex-col items-center gap-24">
                 <div className="font-tomorrow flex flex-col items-center gap-12">
                     <h3 className="font-tomorrow text-6xl font-light">
                         Auckland University Esport Club
@@ -31,15 +31,7 @@ export default function landing() {
                         University of Auckland student-led club bringing students together to
                         socialise and compete
                     </p>
-                    <div className="flex gap-3">
-                        {socialLinks.map((item) => (
-                            <a href={item.url}>
-                                <div className="bg-white p-1">
-                                    <item.icon />
-                                </div>
-                            </a>
-                        ))}
-                    </div>
+                    <SocialsSubheading />
                 </div>
 
                 <div className="flex flex-row gap-55">
@@ -73,3 +65,18 @@ export default function landing() {
     );
 }
 
+const SocialsSubheading = () => {
+    return (
+        <div className="flex gap-3">
+            {socialLinks.map((item) => (
+                <Link
+                    key={item.url}
+                    href={item.url}
+                    className="grid aspect-square place-items-center bg-white p-1"
+                >
+                    <item.icon />
+                </Link>
+            ))}
+        </div>
+    );
+};

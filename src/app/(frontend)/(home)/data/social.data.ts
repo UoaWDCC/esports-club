@@ -5,7 +5,7 @@ import {
     TiktokIcon,
     TwitchIcon,
     XIcon,
-} from "./_component/icons/index";
+} from "@/components/assets/icon";
 
 export const socialLinks = [
     {
