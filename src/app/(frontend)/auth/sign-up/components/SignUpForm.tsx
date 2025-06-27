@@ -30,6 +30,7 @@ export function SignUpForm() {
 
     const onSubmit = handleSubmit((data) => {
         const { email, password } = data;
+        authClient.signOut();
         authClient.signUp.email(
             {
                 email,

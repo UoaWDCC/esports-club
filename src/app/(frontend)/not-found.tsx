@@ -5,7 +5,7 @@ export default function NotFound() {
         <div className="flex min-h-screen items-center justify-center bg-black text-lg text-white">
             <div className="flex flex-col items-center justify-center gap-10">
                 <h3>404 - Page Not Found</h3>
-                <Button href="/" variant={{ style: "solid" }}>
+                <Button href="/" variant={{ style: "cta" }}>
                     Return Home
                 </Button>
             </div>

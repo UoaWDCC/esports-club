@@ -37,7 +37,6 @@ const button = tv({
     variants: {
         style: {
             cta: "bg-violet-600 hover:bg-violet-800",
-            solid: "bg-gray-border",
             google: "bg-white text-black hover:bg-neutral-200",
             primary: "border-pink-border bg-pink text-white",
             secondary: "border-purple-border bg-purple-button text-white",

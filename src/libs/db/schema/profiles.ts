@@ -14,7 +14,7 @@ export const profiles = pgTable("profile", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
-    userId: text("user_id").references(() => user.id),
+    userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
     email: text("email").notNull(),
