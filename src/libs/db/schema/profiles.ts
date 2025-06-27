@@ -27,6 +27,6 @@ export const profiles = pgTable("profile", {
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     ethnicity: text("ethnicity").default("NA"),
-    currentStudy: text("current_study").default("NA").notNull(),
-    currentDegree: text("current_degree").default("NA").notNull(),
+    currentStudy: text("current_study").default("NA"),
+    currentDegree: text("current_degree").default("NA"),
 });

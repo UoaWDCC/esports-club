@@ -21,7 +21,7 @@ const membership: InformationPanelProps = {
         "We run tournament through out the year, by becoming a member you participate in our events for free!",
 };
 
-export default function landing() {
+export default function LandingPage() {
     return (
         <PageLayout>
             <div className="font-tomorrow flex flex-col items-center gap-24">
@@ -31,7 +31,7 @@ export default function landing() {
                         <InformationPanel {...about} />
                         <InformationPanel {...membership} variant={{ headerColour: "pink" }} />
                         <div className="flex gap-3">
-                            <Button href="/member" variant={{ style: "primary" }}>
+                            <Button href="/auth/sign-in" variant={{ style: "secondary" }}>
                                 Become a member!
                             </Button>
                             <Button href="/events" variant={{ style: "cta" }}>

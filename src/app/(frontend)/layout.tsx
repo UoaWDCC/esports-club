@@ -11,14 +11,6 @@ export const metadata: Metadata = {
     title: { default: "Esports club", template: "%s | Esports club" },
     description:
         "Esports club is dedicated to cultivating a friendly community where individuals can come together through their passion for gaming. We host tournaments for various games, game-themed events, and casual nights to cater for every kind of player.",
-    icons: {
-        // icon: [
-        //     {
-        //         url: "/images/icon.svg",
-        //         href: "/svgs/favicon.svg",
-        //     },
-        // ],
-    },
 };
 
 const satoshi = localFont({

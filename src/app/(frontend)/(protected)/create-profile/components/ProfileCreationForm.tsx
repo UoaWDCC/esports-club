@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { handleResponse } from "@libs/api/utils";
 import { ProfileCreationDTO, ZProfileCreationDTO } from "@libs/types/profile.type";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -15,7 +16,12 @@ import { ProfileCreationHeading } from "./ProfileCreationHeading";
 export function ProfileCreationForm() {
     const router = useRouter();
 
-    const { register, handleSubmit } = useForm({
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors },
+    } = useForm({
         // intial form state
         defaultValues: {
             firstName: "",
@@ -29,14 +35,20 @@ export function ProfileCreationForm() {
     });
 
     const mutation = useMutation({
-        mutationFn: (newProfile: ProfileCreationDTO) => {
-            return fetch("/api/user/createProfile", {
+        mutationFn: async (newProfile: ProfileCreationDTO) => {
+            const response = await fetch("/api/user/createProfile", {
                 method: "POST",
                 body: JSON.stringify(newProfile),
             });
+
+            return handleResponse(response);
         },
         onSuccess: () => {
-            router.push("/profile");
+            router.refresh();
+        },
+        onError: (e) => {
+            setError("firstName", { message: " " });
+            setError("lastName", { message: e.message });
         },
     });
 
@@ -49,8 +61,16 @@ export function ProfileCreationForm() {
             <div className="w-full max-w-md space-y-3">
                 <ProfileCreationHeading />
                 <div className="space-y-3">
-                    <InputField {...register("firstName")} label="First Name" required />
-                    <InputField {...register("lastName")} label="Last Name" required />
+                    <InputField
+                        {...register("firstName")}
+                        error={errors.firstName?.message}
+                        label="First Name"
+                    />
+                    <InputField
+                        {...register("lastName")}
+                        error={errors.lastName?.message}
+                        label="Last Name"
+                    />
                     <Button
                         type="submit"
                         className="mt-12 w-full"

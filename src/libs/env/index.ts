@@ -16,6 +16,7 @@ export const env = createEnv({
         MAIL_USER: z.string().min(1),
         MAIL_PASSWORD: z.string().min(1),
         TEST_EMAIL: z.string().optional(),
+        ROUTE_PROTECTION_BYPASS: z.enum(["enabled", "disabled"]).default("disabled"),
     },
     runtimeEnv: {
         APP_URL: process.env.APP_URL,
@@ -30,5 +31,6 @@ export const env = createEnv({
         MAIL_USER: process.env.MAIL_USER,
         MAIL_PASSWORD: process.env.MAIL_PASSWORD,
         TEST_EMAIL: process.env.TEST_EMAIL,
+        ROUTE_PROTECTION_BYPASS: process.env.ROUTE_PROTECTION_BYPASS,
     },
 });
