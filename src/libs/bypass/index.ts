@@ -1,4 +1,3 @@
-import { __next_app__ } from "next/dist/build/templates/app-page";
 import { env } from "@libs/env";
 
 const message = `\x1b[33;1m
