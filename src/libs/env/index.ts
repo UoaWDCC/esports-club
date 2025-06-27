@@ -16,6 +16,10 @@ export const env = createEnv({
         MAIL_USER: z.string().min(1),
         MAIL_PASSWORD: z.string().min(1),
         TEST_EMAIL: z.string().optional(),
+        STRIPE_SECRET_KEY: z.string().min(1),
+    },
+    client: {
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
     },
     runtimeEnv: {
         APP_URL: process.env.APP_URL,
@@ -30,5 +34,7 @@ export const env = createEnv({
         MAIL_USER: process.env.MAIL_USER,
         MAIL_PASSWORD: process.env.MAIL_PASSWORD,
         TEST_EMAIL: process.env.TEST_EMAIL,
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+        STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     },
 });
