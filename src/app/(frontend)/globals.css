@@ -9,13 +9,9 @@
 
 @theme {
     --color-purple: #7650ff;
-    /* --color-purple-border: #5d3dd1; */
-    --color-purple-border: #4b63ff;
-    --color-purple-button: #4b63ff99;
+    --color-purple: #4b63ff;
     --color-gray: #1e1e1e;
-    --color-gray-border: #363636;
-    --color-pink: #ff4b9966;
-    --color-pink-border: #ff4b99;
+    --color-pink: #ff4b99;
 
     --font-tomorrow: "tomorrow", sans-serif;
     --font-satoshi: "satoshi", sans-serif;
@@ -38,9 +34,11 @@ body {
 
 h1,
 h2,
-h3 {
-    letter-spacing: -0.5%;
-    line-height: 91.5%;
+h3,
+h4,
+h5 {
+    letter-spacing: -0.25%;
+    line-height: 95%;
     font-weight: 500;
 }
 

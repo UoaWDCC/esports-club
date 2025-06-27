@@ -46,7 +46,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${satoshi.className} ${tomorrow.style} antialiased`}>
+            <body className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
                 <RoutingDevTools />
                 <TanstackClientProvider>{children}</TanstackClientProvider>
             </body>

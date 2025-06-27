@@ -1,14 +1,11 @@
-// import { satoshi } from "../../layout";
 import { tv, VariantProps } from "tailwind-variants";
-
-import { cn } from "@/libs/utils";
 
 const informationPanel = tv({
     base: "font-tomorrow text-xl",
     variants: {
         headerColour: {
-            purple: "text-purple-border",
-            pink: "text-pink-border",
+            purple: "text-purple",
+            pink: "text-pink",
         },
     },
     defaultVariants: {
@@ -16,22 +13,19 @@ const informationPanel = tv({
     },
 });
 
-type InformationPanelProps = {
-    title: String;
-    subtitle: String;
-    description: String;
+export type InformationPanelProps = {
+    title: string;
+    subtitle: string;
+    description: string;
     variant?: VariantProps<typeof informationPanel>;
 };
 
 export function InformationPanel({ title, subtitle, description, variant }: InformationPanelProps) {
     return (
         <div className="flex w-106 flex-col gap-4">
-            <h1 className={cn(informationPanel(variant))}>{title}</h1>
-            <h3 className="font-tomorrow text-3xl font-normal">{subtitle}</h3>
+            <h3 className={informationPanel(variant)}>{title}</h3>
+            <h5 className="font-tomorrow text-3xl font-normal">{subtitle}</h5>
             <p className="font-satoshi font-light">{description}</p>
         </div>
     );
 }
-
-//how do I use the satoshi font
-//am I setting font sizing right
