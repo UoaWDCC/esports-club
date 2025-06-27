@@ -33,12 +33,14 @@ type LinkVersion = CommonProps &
 export type ButtonProps = (ButtonVersion | LinkVersion) & CommonProps & LoadingProps;
 
 const button = tv({
-    base: "transition-[filter relative flex cursor-pointer items-center justify-center gap-2 rounded-md px-6 py-2 brightness-100 duration-200 select-none disabled:cursor-default disabled:bg-neutral-900 disabled:text-white/50",
+    base: "relative flex cursor-pointer items-center justify-center gap-2 rounded-md px-6 py-2 whitespace-nowrap brightness-100 transition duration-200 select-none disabled:cursor-default disabled:bg-neutral-900 disabled:text-white/50",
     variants: {
         style: {
             cta: "bg-violet-600 hover:bg-violet-800",
             solid: "bg-gray-border",
             google: "bg-white text-black hover:bg-neutral-200",
+            primary: "border-pink-border bg-pink text-white",
+            secondary: "border-purple-border bg-purple-button text-white",
         },
     },
     defaultVariants: {

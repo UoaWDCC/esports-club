@@ -9,9 +9,12 @@
 
 @theme {
     --color-purple: #7650ff;
-    --color-purple-border: #5d3dd1;
+    --color-purple: #4b63ff;
     --color-gray: #1e1e1e;
-    --color-gray-border: #363636;
+    --color-pink: #ff4b99;
+
+    --font-tomorrow: "tomorrow", sans-serif;
+    --font-satoshi: "satoshi", sans-serif;
 }
 
 @utility content-container {
@@ -27,45 +30,38 @@
 body {
     background: var(--background);
     color: var(--foreground);
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1,
 h2,
-h3 {
-    letter-spacing: -0.5%;
-    line-height: 91.5%;
+h3,
+h4,
+h5 {
+    letter-spacing: -0.25%;
+    line-height: 95%;
     font-weight: 500;
 }
 
 /* 
 h1 {
-    font-size: 64px;
     letter-spacing: -0.5%;
     line-height: 91.5%;
     font-weight: 700;
 }
 
 h2 {
-    font-size: 48px;
     letter-spacing: -0.5%;
     line-height: 91.5%;
     font-weight: 700;
 }
 
 h3 {
-    font-size: 32px;
     letter-spacing: -0.5%;
     line-height: 91.5%;
     font-weight: 500;
 }
-
-p {
-    font-size: 16px;
-    letter-spacing: 4%;
-    line-height: 130%;
-    font-weight: 500;
-}
+    
+*/
 
 p.font-bold,
 p em {
@@ -83,8 +79,8 @@ small {
 small.font-bold,
 small em {
     letter-spacing: -2%;
-    font-weight: 500; 
-}*/
+    font-weight: 500;
+}
 
 @media screen and (min-width: 1024px) {
     p {

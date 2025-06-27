@@ -1,6 +1,6 @@
 
 // automatically generated with generate-index.js, 
-// last generated: 25/06/2025
+// last generated: 27/06/2025
 
 export type RouteSection = {
     name: string;
@@ -14,7 +14,7 @@ export const PUBLIC_ROUTES: RouteSection = {
   "routes": [
     {
       "url": "/",
-      "name": "HomePage"
+      "name": "landing"
     }
   ]
 };

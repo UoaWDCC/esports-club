@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
+import { Tomorrow } from "next/font/google";
 import localFont from "next/font/local";
 import { RoutingDevTools } from "@providers/devtools/DevToolsProvider";
 import { TanstackClientProvider } from "@providers/query/TanstackClientProvider";
@@ -32,6 +33,12 @@ const satoshi = localFont({
     variable: "--font-satoshi",
 });
 
+const tomorrow = Tomorrow({
+    subsets: ["latin"],
+    weight: "400",
+    variable: "--font-tomorrow",
+});
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -39,7 +46,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${satoshi.className} antialiased`}>
+            <body className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
                 <RoutingDevTools />
                 <TanstackClientProvider>{children}</TanstackClientProvider>
             </body>
