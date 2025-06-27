@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@libs/auth/auth";
+import { isBypassingRouteProtection } from "@libs/bypass";
 import { DEFAULT_LOGIN_REDIRECT } from "@libs/routes";
 
 export default async function StaffLayout({
@@ -7,9 +8,11 @@ export default async function StaffLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const session = await getSession();
+    if (isBypassingRouteProtection()) {
+        return children;
+    }
 
-    console.log("fetching on staff layout");
+    const session = await getSession();
 
     if (!session) {
         redirect(DEFAULT_LOGIN_REDIRECT);

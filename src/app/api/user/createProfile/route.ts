@@ -15,11 +15,11 @@ export const POST = routeWrapper(async (req, session) => {
 
     // check is request body is valid
     if (!success) {
-        return ApiErrorResponse("bad_request", "data missing or malformed");
+        return ApiErrorResponse("bad_request", "Data is missing or malformed");
     }
 
     if (!emailVerified) {
-        return ApiErrorResponse("unauthorized", "email not verified");
+        return ApiErrorResponse("unauthorized", "Email is not verified");
     }
 
     const existingProfile = await db
@@ -28,8 +28,11 @@ export const POST = routeWrapper(async (req, session) => {
         .where(eq(profiles.userId, userId))
         .limit(1);
 
-    if (!existingProfile) {
-        return ApiErrorResponse("bad_request", "data missing or malformed");
+    if (existingProfile.length != 0) {
+        return ApiErrorResponse(
+            "bad_request",
+            "A profile linked to this email already exists, please refresh",
+        );
     }
 
     // create profile
@@ -42,5 +45,5 @@ export const POST = routeWrapper(async (req, session) => {
 
     await db.insert(profiles).values(profileInsertion);
 
-    return ApiResponse("created", "profile created successfully");
+    return ApiResponse("created", "Profile created successfully");
 });

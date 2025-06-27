@@ -22,6 +22,7 @@ export function SignUpForm() {
 
     const {
         register,
+        setError,
         handleSubmit,
         formState: { errors },
     } = useForm({
@@ -30,7 +31,6 @@ export function SignUpForm() {
 
     const onSubmit = handleSubmit((data) => {
         const { email, password } = data;
-        authClient.signOut();
         authClient.signUp.email(
             {
                 email,
@@ -40,8 +40,12 @@ export function SignUpForm() {
             },
             {
                 onSuccess: () => {
+                    authClient.signOut();
                     document.cookie = `verification-email=${encodeURIComponent(email)}; max-age=900; path=/; secure; samesite=lax`;
                     router.push(DEFAULT_VERIFICATION_REDIRECT);
+                },
+                onError: (ctx) => {
+                    setError("email", { message: ctx.error.message });
                 },
             },
         );

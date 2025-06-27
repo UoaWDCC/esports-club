@@ -31,7 +31,7 @@ export default function landing() {
                         <InformationPanel {...about} />
                         <InformationPanel {...membership} variant={{ headerColour: "pink" }} />
                         <div className="flex gap-3">
-                            <Button href="/member" variant={{ style: "primary" }}>
+                            <Button href="/auth/sign-in" variant={{ style: "primary" }}>
                                 Become a member!
                             </Button>
                             <Button href="/events" variant={{ style: "cta" }}>
