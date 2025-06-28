@@ -28,6 +28,9 @@ export default async function HomePage() {
                         <Button href="/profile" variant={{ style: "solid" }}>
                             /Profile page (role : user)
                         </Button>
+                        <Button href="/pricing" variant={{ style: "solid" }}>
+                            /Pricing page (membership plans)
+                        </Button>
                     </div>
                     <div className="flex flex-col gap-8">
                         <Button href="/api/staff" variant={{ style: "cta" }}>

@@ -17,6 +17,7 @@ export const env = createEnv({
         MAIL_PASSWORD: z.string().min(1),
         TEST_EMAIL: z.string().optional(),
         STRIPE_SECRET_KEY: z.string().min(1),
+        STRIPE_WEBHOOK_SECRET: z.string().min(1),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
@@ -36,5 +37,6 @@ export const env = createEnv({
         TEST_EMAIL: process.env.TEST_EMAIL,
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+        STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     },
 });
