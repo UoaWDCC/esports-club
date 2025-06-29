@@ -1,8 +1,14 @@
-const Stripe = require("stripe");
+import Stripe from "stripe";
+
+import "dotenv/config";
 
 // Initialize Stripe with your secret key
+if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY environment variable is required");
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2025-04-30.basil",
+    apiVersion: "2025-05-28.basil",
 });
 
 async function setupStripeProducts() {
@@ -24,7 +30,7 @@ async function setupStripeProducts() {
         // Create price for 1 Semester Plan
         const oneSemesterPrice = await stripe.prices.create({
             product: oneSemesterProduct.id,
-            unit_amount: 5000, // $50.00 in cents
+            unit_amount: 1000, // $10.00 in cents
             currency: "nzd",
             metadata: {
                 type: "membership",
@@ -49,7 +55,7 @@ async function setupStripeProducts() {
         // Create price for 2 Semester Plan
         const twoSemesterPrice = await stripe.prices.create({
             product: twoSemesterProduct.id,
-            unit_amount: 9000, // $90.00 in cents
+            unit_amount: 1500, // $15.00 in cents
             currency: "nzd",
             metadata: {
                 type: "membership",

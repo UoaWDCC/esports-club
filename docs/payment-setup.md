@@ -1,6 +1,6 @@
 # Payment System Setup Guide
 
-This guide will help you set up Stripe payments for your esports club with 1-semester and 2-semester membership plans.
+This guide will help you set up Stripe payments for the esports club with 1-semester and 2-semester membership plans.
 
 ## Prerequisites
 
@@ -30,8 +30,8 @@ node scripts/setup-stripe.js
 
 This will create:
 
--   1 Semester Plan product ($50.00)
--   2 Semester Plan product ($90.00)
+-   1 Semester Plan product
+-   2 Semester Plan product
 -   Corresponding prices for each plan
 
 The pricing page will automatically fetch these prices from Stripe, so no additional configuration is needed!
@@ -103,7 +103,7 @@ When a payment is successful, the system creates:
 
 To change the prices, modify:
 
-1. The prices in `scripts/setup-stripe.js`
+1. The prices in `scripts/setup-stripe.ts`
 2. The prices in `src/libs/db/seed/membershipTypes.seed.ts`
 3. The pricing page will automatically display the new prices from Stripe
 
@@ -114,29 +114,6 @@ To modify the features list, edit the `features` array in `src/app/(frontend)/pr
 ### Semester Dates
 
 To adjust semester dates, modify the date calculations in `src/libs/db/seed/membershipTypes.seed.ts`.
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"Coming Soon" button instead of "Join Plan"**
-
-    - Make sure you've run the setup script to create products in Stripe
-    - Check that the product names match exactly: "1 Semester Plan" and "2 Semester Plan"
-
-2. **Webhook signature verification failed**
-
-    - Check that your `STRIPE_WEBHOOK_SECRET` is correct
-    - Ensure the webhook endpoint URL is accessible
-
-3. **Membership type not found**
-
-    - Run the seed script to create membership types
-    - Ensure the product names in Stripe match the membership type names in your database
-
-4. **Payment succeeds but no membership created**
-    - Check the webhook logs for errors
-    - Verify the webhook is receiving events from Stripe
 
 ### Testing
 

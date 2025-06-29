@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { db } from "@libs/db";
 import { membershipTypes } from "@libs/db/schema";
 

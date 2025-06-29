@@ -1,23 +1,115 @@
 "use client";
 
-import { useState } from "react";
-import { getStripePrices, getStripeProducts } from "@libs/stripe/server";
+import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 
 import { Button } from "@/components/button/Button";
 import { PageLayout } from "@/components/layout/PageLayout";
 
-// Prices are fresh for one hour max
-export const revalidate = 3600;
+interface StripeProduct {
+    id: string;
+    name: string;
+    description: string;
+}
 
-export default async function PricingPage() {
-    const [prices, products] = await Promise.all([getStripePrices(), getStripeProducts()]);
+interface StripePrice {
+    id: string;
+    productId: string;
+    unitAmount: number;
+    currency: string;
+    productName: string;
+    productDescription: string;
+}
 
-    const oneSemesterPlan = products.find((product) => product.name === "1 Semester Plan");
-    const twoSemesterPlan = products.find((product) => product.name === "2 Semester Plan");
+interface PricingData {
+    prices: StripePrice[];
+    products: StripeProduct[];
+}
 
-    const oneSemesterPrice = prices.find((price) => price.productId === oneSemesterPlan?.id);
-    const twoSemesterPrice = prices.find((price) => price.productId === twoSemesterPlan?.id);
+async function getPricingData(): Promise<PricingData> {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const response = await fetch(`${baseUrl}/api/stripe/prices`);
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch pricing data");
+    }
+
+    return response.json();
+}
+
+export default function PricingPage() {
+    const [loading, setLoading] = useState<string | null>(null);
+    const [pricingData, setPricingData] = useState<PricingData | null>(null);
+
+    useEffect(() => {
+        getPricingData().then(setPricingData);
+    }, []);
+
+    const handleCheckout = async (priceId: string | undefined, planName: string) => {
+        if (!priceId) {
+            alert("Price ID not available. Please try again.");
+            return;
+        }
+
+        setLoading(planName);
+
+        try {
+            const formData = new FormData();
+            formData.append("priceId", priceId);
+
+            const response = await fetch("/api/stripe/checkout", {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401) {
+                alert("Please sign in to purchase a membership.");
+                window.location.href = "/sign-in?redirect=/pricing";
+                return;
+            }
+
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                throw new Error(data.error || "Failed to create checkout session");
+            }
+        } catch (error) {
+            console.error("Checkout error:", error);
+            alert("Failed to start checkout. Please try again.");
+        } finally {
+            setLoading(null);
+        }
+    };
+
+    if (!pricingData) {
+        return (
+            <PageLayout>
+                <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+                    <div className="text-center">
+                        <p>Loading pricing...</p>
+                    </div>
+                </div>
+            </PageLayout>
+        );
+    }
+
+    const { prices, products } = pricingData;
+
+    const oneSemesterPlan = products.find(
+        (product: StripeProduct) => product.name === "1 Semester Plan",
+    );
+    const twoSemesterPlan = products.find(
+        (product: StripeProduct) => product.name === "2 Semester Plan",
+    );
+
+    const oneSemesterPrice = prices.find(
+        (price: StripePrice) => price.productId === oneSemesterPlan?.id,
+    );
+    const twoSemesterPrice = prices.find(
+        (price: StripePrice) => price.productId === twoSemesterPlan?.id,
+    );
 
     const pricingPlans = [
         {
@@ -64,6 +156,9 @@ export default async function PricingPage() {
                         Join the esports club and unlock access to tournaments, facilities, and a
                         community of gamers.
                     </p>
+                    <p className="mt-2 text-sm text-gray-500">
+                        Please sign in to purchase a membership.
+                    </p>
                 </div>
 
                 <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
@@ -92,12 +187,17 @@ export default async function PricingPage() {
                                 ))}
                             </ul>
 
-                            <form action="/api/stripe/checkout" method="POST">
-                                <input type="hidden" name="priceId" value={plan.priceId} />
-                                <Button type="submit" disabled={!plan.priceId} className="w-full">
-                                    {plan.priceId ? `Join ${plan.name}` : "Coming Soon"}
-                                </Button>
-                            </form>
+                            <Button
+                                onClick={() => handleCheckout(plan.priceId, plan.name)}
+                                disabled={!plan.priceId || loading === plan.name}
+                                className="w-full"
+                            >
+                                {loading === plan.name
+                                    ? "Processing..."
+                                    : plan.priceId
+                                      ? `Join ${plan.name}`
+                                      : "Coming Soon"}
+                            </Button>
                         </div>
                     ))}
                 </div>
