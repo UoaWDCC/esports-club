@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Link from "next/link";
-import { profileNavigation } from "@libs/navigation/profile";
+import { profileNavigation } from "@libs/routes/profile";
 
 export function ProfileDashboardLayout({ children }: { children: ReactNode }) {
     return (

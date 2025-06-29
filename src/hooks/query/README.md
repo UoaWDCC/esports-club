@@ -1,0 +1,1 @@
+client-side querying function use along-side with fetch function from `src/libs/fetch/...`

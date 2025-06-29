@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { staffNavigation } from "@libs/navigation/staff";
+import { staffNavigation } from "@libs/routes/staff";
 
 export default async function StaffPage() {
     return (

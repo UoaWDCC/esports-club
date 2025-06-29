@@ -31,7 +31,16 @@ type UserRouteHandler = (
 
 const defaultEndpointOptions = { protected: false, admin: false };
 
+// this is a wrapper for nextjs api routes
+// https://nextjs.org/docs/app/api-reference/file-conventions/route
+// fetches the session of the user and deals with automatically authenticating protected and staff api routes
+// exposes the session to the handler to be used
+
 export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
+    // 1. get session
+    // 2. compare permission required
+    // 3. authenticate user
+    // 4. return response from handler
     return async (req: NextRequest, context: RouteContext) => {
         try {
             const session = await getSession(req);

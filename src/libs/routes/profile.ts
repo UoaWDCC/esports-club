@@ -1,3 +1,5 @@
+// profile navigation for `/profile` dashboard
+
 export const profileNavigation = [
     {
         name: "Profile",
