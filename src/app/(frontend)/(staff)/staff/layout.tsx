@@ -3,6 +3,8 @@ import { getSession } from "@libs/auth/auth";
 import { isBypassingRouteProtection } from "@libs/bypass";
 import { DEFAULT_LOGIN_REDIRECT, DEFAULT_UNAUTHORIZED_REDIRECT } from "@libs/routes";
 
+import { StaffDashboardLayout } from "@/components/layout/StaffDashboardLayout";
+
 export default async function StaffLayout({
     children,
 }: Readonly<{
@@ -12,7 +14,8 @@ export default async function StaffLayout({
         return children;
     }
 
-    const session = await getSession();
+    // get session without cache
+    const session = await getSession(null, true);
 
     if (!session) {
         redirect(DEFAULT_LOGIN_REDIRECT);
@@ -22,5 +25,5 @@ export default async function StaffLayout({
         redirect(DEFAULT_UNAUTHORIZED_REDIRECT);
     }
 
-    return children;
+    return <StaffDashboardLayout>{children}</StaffDashboardLayout>;
 }

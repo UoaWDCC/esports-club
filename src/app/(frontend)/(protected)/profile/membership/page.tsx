@@ -11,7 +11,6 @@ export default function MembershipPage() {
     return (
         <div className="flex h-[2000px] flex-col gap-12">
             <h1 className="text-3xl">Memberships</h1>
-
             <p>{JSON.stringify(profile, null, 2)}</p>
         </div>
     );

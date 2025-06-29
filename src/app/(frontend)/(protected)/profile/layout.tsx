@@ -1,10 +1,10 @@
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { getSession } from "@libs/auth/auth";
 import { isBypassingRouteProtection } from "@libs/bypass";
 import { DEFAULT_LOGIN_REDIRECT, DEFAULT_PROFILE_CREATION_REDIRECT } from "@libs/routes";
 
-import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { ProfileDashboardLayout } from "@/components/layout/ProfileDashboardLayout";
 import { validateUserProfile } from "@/services/profile/validateUserProfile";
 
 import { ProfileProvider } from "./components/ProfileProvider";
@@ -35,8 +35,8 @@ export default async function ProfileLayout({
     }
 
     return (
-        <DashboardLayout>
+        <ProfileDashboardLayout>
             <ProfileProvider profile={profile.data}>{children}</ProfileProvider>
-        </DashboardLayout>
+        </ProfileDashboardLayout>
     );
 }
