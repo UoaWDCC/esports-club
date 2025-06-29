@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Link from "next/link";
-import { staffNavigation } from "@libs/navigation/staff";
+import { staffNavigation } from "@libs/routes/staff";
 
 export function StaffDashboardLayout({ children }: { children: ReactNode }) {
     return (

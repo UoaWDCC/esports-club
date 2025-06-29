@@ -12,6 +12,9 @@ import {
 // API response stanard base out of JSend
 // https://github.com/omniti-labs/jsend
 
+// thoughts:
+// bit weird atm might refactor in the future
+
 type DetailType<T extends string = string> =
     | {
           [key in T]: string | string[];
@@ -30,6 +33,9 @@ interface ApiErrorResponse {
 
 type AnyApiResponse = ApiResponse | ApiErrorResponse;
 
+// standard success api response with
+// - stastus: 200-299
+// - data: anything
 const ApiResponse = <T>(status: SuccessStatuses, data: T) =>
     NextResponse.json(
         {
@@ -41,6 +47,9 @@ const ApiResponse = <T>(status: SuccessStatuses, data: T) =>
         },
     );
 
+// standard error api response with
+// - stastus: 400-599
+// - data: anything
 const ApiErrorResponse = (
     status: ErrorStatuses,
     message: string | null = "",

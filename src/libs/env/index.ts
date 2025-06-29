@@ -1,6 +1,7 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
+// t3-oss env object that validates env variables and restricts access to only server-side
 export const env = createEnv({
     server: {
         ENVIRONMENT: z.enum(["development", "test", "production"]).default("production"),

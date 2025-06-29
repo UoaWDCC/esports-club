@@ -12,6 +12,7 @@ type EmailVerification = {
 };
 
 export const sendVerificationEmail = async (body: EmailVerification) => {
+    // email ui
     const emailHtml = await render(<EsportsLinkVerification url={body.url} />);
 
     const mailOptions = standardMailOption({

@@ -1,0 +1,1 @@
+this should be used alongside with a tanstack query hook from `src/hooks/query/...`

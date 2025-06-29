@@ -1,3 +1,5 @@
+// staff navigation for `/staff` dashboard
+
 export const staffNavigation = [
     {
         name: "Approve user",
