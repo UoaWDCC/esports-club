@@ -1,6 +1,6 @@
 
 // automatically generated with generate-index.js, 
-// last generated: 27/06/2025
+// last generated: 29/06/2025
 
 export type RouteSection = {
     name: string;
@@ -14,7 +14,11 @@ export const PUBLIC_ROUTES: RouteSection = {
   "routes": [
     {
       "url": "/",
-      "name": "landing"
+      "name": "LandingPage"
+    },
+    {
+      "url": "/unauthorized/",
+      "name": "UnauthorizedPage"
     }
   ]
 };
@@ -43,6 +47,18 @@ export const PROTECTED_ROUTES: RouteSection = {
     {
       "url": "/create-profile/",
       "name": "ProfileCreationPage"
+    },
+    {
+      "url": "/profile/account/",
+      "name": "AccountPage"
+    },
+    {
+      "url": "/profile/invoice/",
+      "name": "InvoicePage"
+    },
+    {
+      "url": "/profile/membership/",
+      "name": "MembershipPage"
     },
     {
       "url": "/profile/",
