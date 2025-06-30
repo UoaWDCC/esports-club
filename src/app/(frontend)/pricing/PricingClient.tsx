@@ -1,3 +1,24 @@
+/**
+ * Pricing Client Component
+ *
+ * This client component handles all the interactive UI elements for the pricing page.
+ * It receives data from the server component and manages user interactions including
+ * checkout flow, loading states, and conditional rendering based on membership status.
+ *
+ * Key Features:
+ * - Displays pricing plans with dynamic data from Stripe
+ * - Handles checkout process with error handling
+ * - Shows membership status for users with active memberships
+ * - Manages loading states during checkout
+ * - Provides user-friendly error messages and redirects
+ *
+ * Component States:
+ * 1. Active Membership: Shows membership details and prevents new purchases
+ * 2. No Membership: Shows pricing plans for purchase
+ * 3. Loading: Shows loading state during checkout process
+ * 4. Error: Shows appropriate error messages for various scenarios
+ */
+
 "use client";
 
 import { useState } from "react";
@@ -6,12 +27,18 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/button/Button";
 import { PageLayout } from "@/components/layout/PageLayout";
 
+/**
+ * TypeScript interfaces for type safety and data structure definition
+ */
+
+/** Stripe product information from the API */
 interface StripeProduct {
     id: string;
     name: string;
     description: string;
 }
 
+/** Stripe price information with product details */
 interface StripePrice {
     id: string;
     productId: string;
@@ -21,11 +48,13 @@ interface StripePrice {
     productDescription: string;
 }
 
+/** Combined pricing data structure */
 interface PricingData {
     prices: StripePrice[];
     products: StripeProduct[];
 }
 
+/** User membership status information */
 interface MembershipStatus {
     isValid: boolean;
     membership?: {
@@ -45,6 +74,7 @@ interface MembershipStatus {
     error?: string;
 }
 
+/** User session information */
 interface Session {
     user?: {
         id: string;
@@ -53,15 +83,47 @@ interface Session {
     } | null;
 }
 
+/** Props for the PricingClient component */
 interface PricingClientProps {
     pricingData: PricingData;
     membershipStatus: MembershipStatus | null;
     session: Session | null;
 }
 
+/**
+ * PricingClient Component
+ *
+ * Main client component that handles the pricing page UI and interactions.
+ *
+ * This component:
+ * 1. Receives data from the server component (pricing data, membership status, session)
+ * 2. Manages checkout flow and loading states
+ * 3. Conditionally renders content based on user's membership status
+ * 4. Handles error scenarios and user feedback
+ * 5. Provides interactive elements for membership purchase
+ *
+ * @param pricingData - Dynamic pricing information from Stripe
+ * @param membershipStatus - User's current membership status
+ * @param session - User's authentication session
+ * @returns JSX element representing the pricing page UI
+ */
 export function PricingClient({ pricingData, membershipStatus, session }: PricingClientProps) {
+    // State for managing loading states during checkout
     const [loading, setLoading] = useState<string | null>(null);
 
+    /**
+     * Handles the checkout process for membership purchases
+     *
+     * This function:
+     * 1. Validates the price ID is available
+     * 2. Sets loading state for the specific plan
+     * 3. Sends checkout request to the API
+     * 4. Handles various response scenarios (success, auth errors, etc.)
+     * 5. Redirects to Stripe checkout or shows appropriate error messages
+     *
+     * @param priceId - The Stripe price ID for the selected plan
+     * @param planName - The name of the plan for loading state management
+     */
     const handleCheckout = async (priceId: string | undefined, planName: string) => {
         if (!priceId) {
             alert("Price ID not available. Please try again.");
@@ -71,9 +133,11 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
         setLoading(planName);
 
         try {
+            // Prepare form data for the checkout API
             const formData = new FormData();
             formData.append("priceId", priceId);
 
+            // Send checkout request to the API
             const response = await fetch("/api/stripe/checkout", {
                 method: "POST",
                 body: formData,
@@ -81,17 +145,20 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
 
             const data = await response.json();
 
+            // Handle authentication errors
             if (response.status === 401) {
                 alert("Please sign in to purchase a membership.");
                 window.location.href = "/sign-in?redirect=/pricing";
                 return;
             }
 
+            // Handle duplicate membership errors
             if (response.status === 403) {
                 alert("You already have an active membership.");
                 return;
             }
 
+            // Handle successful checkout session creation
             if (data.url) {
                 window.location.href = data.url;
             } else {
@@ -105,6 +172,7 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
         }
     };
 
+    // Conditional rendering: Show membership details if user has active membership
     if (membershipStatus?.isValid) {
         return (
             <PageLayout>
@@ -146,8 +214,10 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
         );
     }
 
+    // Extract pricing data for plan generation
     const { prices, products } = pricingData;
 
+    // Find the specific semester plans from the products array
     const oneSemesterPlan = products.find(
         (product: StripeProduct) => product.name === "1 Semester Plan",
     );
@@ -155,6 +225,7 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
         (product: StripeProduct) => product.name === "2 Semester Plan",
     );
 
+    // Find the corresponding prices for each plan
     const oneSemesterPrice = prices.find(
         (price: StripePrice) => price.productId === oneSemesterPlan?.id,
     );
@@ -162,6 +233,7 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
         (price: StripePrice) => price.productId === twoSemesterPlan?.id,
     );
 
+    // Define the pricing plans with features and fallback values
     const pricingPlans = [
         {
             id: "1-semester",
@@ -196,6 +268,7 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
         },
     ];
 
+    // Render the pricing plans for users without active memberships
     return (
         <PageLayout>
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

@@ -1,68 +1,70 @@
 name: Check Next.js Build
 
 on:
-  # run on push to any branch except main
-  push:
-    branches:
-      - '*'
-      - '!main'
-  # run on pull request events
-  pull_request:
-    types: [opened, reopened]
-  # allow manual triggers
-  workflow_dispatch:
+    # run on push to any branch except main
+    push:
+        branches:
+            - "*"
+            - "!main"
+    # run on pull request events
+    pull_request:
+        types: [opened, reopened]
+    # allow manual triggers
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      DRIZZLE_DATABASE_URL: ${{ secrets.DRIZZLE_DATABASE_URL }}
-      APP_URL: ${{ secrets.APP_URL }}
-      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-      AUTH_GOOGLE_ID: ${{ secrets.AUTH_GOOGLE_ID }}
-      AUTH_GOOGLE_SECRET: ${{ secrets.AUTH_GOOGLE_SECRET }}
-      MAIL_HOST: ${{ secrets.MAIL_HOST }}
-      MAIL_PORT: ${{ secrets.MAIL_PORT }}
-      MAIL_USER: ${{ secrets.MAIL_USER }}
-      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+    build:
+        runs-on: ubuntu-latest
+        env:
+            DRIZZLE_DATABASE_URL: ${{ secrets.DRIZZLE_DATABASE_URL }}
+            APP_URL: ${{ secrets.APP_URL }}
+            BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+            AUTH_GOOGLE_ID: ${{ secrets.AUTH_GOOGLE_ID }}
+            AUTH_GOOGLE_SECRET: ${{ secrets.AUTH_GOOGLE_SECRET }}
+            MAIL_HOST: ${{ secrets.MAIL_HOST }}
+            MAIL_PORT: ${{ secrets.MAIL_PORT }}
+            MAIL_USER: ${{ secrets.MAIL_USER }}
+            MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+            NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+            STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY  }}
+            STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
 
-    steps:
-      # checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v4
+        steps:
+            # checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      # set-up pnpm https://github.com/pnpm/action-setup
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+            # set-up pnpm https://github.com/pnpm/action-setup
+            - name: Set up pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 9
 
-      # set-up node
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-          cache: "pnpm"
+            # set-up node
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+                  cache: "pnpm"
 
-      # cache dependencies
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v3
-        with:
-          # pnpm stores dependencies in a 'node_modules/.pnpm' folder
-          path: |
-            ~/.pnpm-store
-            node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+            # cache dependencies
+            - name: Cache pnpm dependencies
+              uses: actions/cache@v3
+              with:
+                  # pnpm stores dependencies in a 'node_modules/.pnpm' folder
+                  path: |
+                      ~/.pnpm-store
+                      node_modules
+                  key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-
 
-      # install dependencies using pnpm
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+            # install dependencies using pnpm
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
 
-      # build the application
-      - name: Build Next.js project
-        run: pnpm run build
-
+            # build the application
+            - name: Build Next.js project
+              run: pnpm run build
 # message from shing
 # https://tenor.com/view/cupid-arrow-sandwich-thankyou-no-gif-20331827?quality=lossless
