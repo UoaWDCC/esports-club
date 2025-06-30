@@ -45,10 +45,18 @@ interface MembershipStatus {
     error?: string;
 }
 
+interface Session {
+    user?: {
+        id: string;
+        email?: string;
+        name?: string;
+    } | null;
+}
+
 interface PricingClientProps {
     pricingData: PricingData;
     membershipStatus: MembershipStatus | null;
-    session: any;
+    session: Session | null;
 }
 
 export function PricingClient({ pricingData, membershipStatus, session }: PricingClientProps) {
@@ -207,7 +215,7 @@ export function PricingClient({ pricingData, membershipStatus, session }: Pricin
                 </div>
 
                 <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
-                    {pricingPlans.map((plan: any) => (
+                    {pricingPlans.map((plan) => (
                         <div
                             key={plan.id}
                             className="rounded-lg border border-gray-200 bg-white p-8 shadow-lg"
