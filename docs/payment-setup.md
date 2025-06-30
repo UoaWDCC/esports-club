@@ -123,6 +123,10 @@ For testing, use Stripe's test mode and test card numbers:
 -   Expiry: Any future date
 -   CVC: Any 3 digits
 
+In development you can't directly use the prod webhook secret so generate your own one for the session using
+
+`stripe listen --forward-to localhost:3000/api/stripe/webhook`
+
 ## Production Deployment
 
 1. Switch to Stripe live mode

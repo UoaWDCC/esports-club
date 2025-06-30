@@ -2,69 +2,117 @@
 
 import { db } from "@libs/db";
 import { memberships, membershipTypes, profiles } from "@libs/db/schema";
-import { eq, and} from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
-// a member is valid if there is a single active membership (current time is between a membership)
-// the membership must be paid for it to be valid
-// should return boolean
-export const getMembershipStatus = async (userId: string) => {
-    
-    // Find the user's profile
-    // Selects id from profiles schema where userId matches the provided userId
-    // To get profileId, which is just called id in the profiles schema
-    // Is profile here a list of the things we select???
-    const profile = await db
-        .select({ id: profiles.id })
-        .from(profiles)
-        .where(eq(profiles.userId, userId));
-    if (!profile[0]) return false;
-    
-    // const profileIda = await db.select().from(profiles).where(eq(profiles.userId, userId))
-    // .innerjoin(profiles, eq(users.id, profiles.id))
-
-    // Find a paid membership for this profile
-    // Selects the membershipTypeId from memberships schema where profileId matches
-    // the profileId we just found and isPaid is true
-    const membership = await db
-        .select({
-            membershipTypeId: memberships.membershipTypeId,
-        })
-        .from(memberships)
-        .where(
-            and(
-                eq(memberships.profileId, profile[0].id),
-                eq(memberships.isPaid, true)
-            )
-        );
-
-    if (!membership[0]) return false;
-
-    // Selects the startAt and endAt from membershipTypes schema
-    // where the id in membershipTypes matches the membershipTypeId we just found
-    const membershipType = await db
-        .select({
-            startAt: membershipTypes.startAt,
-            endAt: membershipTypes.endAt,
-        })
-        .from(membershipTypes)
-        .where(eq(membershipTypes.id, membership[0].membershipTypeId));
-
-    if (!membershipType[0]) return false;
-
-    // Check if current date is within the membership period
-    const now = new Date();
-    const startAt = new Date(membershipType[0].startAt);
-    const endAt = new Date(membershipType[0].endAt);
-
-    const isValid = now >= startAt && now <= endAt;
-
-    if (!isValid) return {
-        body: null,
-        error: "Membership is not within the start and end date"
+export interface MembershipStatus {
+    isValid: boolean;
+    membership?: {
+        id: string;
+        membershipTypeId: string;
+        isPaid: boolean;
+        createdAt: Date;
     };
-    return {
-        body: {/* membership + membership type */},
-        error: null
+    membershipType?: {
+        id: string;
+        name: string;
+        description?: string;
+        startAt: Date;
+        endAt: Date;
+        price: number;
     };
+    error?: string;
+}
 
-}; 
+// Check if a user has a valid, paid membership that is currently active
+export const getMembershipStatus = async (userId: string): Promise<MembershipStatus> => {
+    try {
+        // Find the user's profile
+        const profile = await db
+            .select({ id: profiles.id })
+            .from(profiles)
+            .where(eq(profiles.userId, userId))
+            .limit(1);
+
+        if (!profile[0]) {
+            return {
+                isValid: false,
+                error: "Profile not found",
+            };
+        }
+
+        // Find the most recent paid membership for this profile
+        const membership = await db
+            .select({
+                id: memberships.id,
+                membershipTypeId: memberships.membershipTypeId,
+                isPaid: memberships.isPaid,
+                createdAt: memberships.createdAt,
+            })
+            .from(memberships)
+            .where(and(eq(memberships.profileId, profile[0].id), eq(memberships.isPaid, true)))
+            .orderBy(memberships.createdAt)
+            .limit(1);
+
+        if (!membership[0]) {
+            return {
+                isValid: false,
+                error: "No paid membership found",
+            };
+        }
+
+        // Get the membership type details
+        const membershipType = await db
+            .select({
+                id: membershipTypes.id,
+                name: membershipTypes.name,
+                description: membershipTypes.description,
+                startAt: membershipTypes.startAt,
+                endAt: membershipTypes.endAt,
+                price: membershipTypes.price,
+            })
+            .from(membershipTypes)
+            .where(eq(membershipTypes.id, membership[0].membershipTypeId))
+            .limit(1);
+
+        if (!membershipType[0]) {
+            return {
+                isValid: false,
+                error: "Membership type not found",
+            };
+        }
+
+        // Check if current date is within the membership period
+        const now = new Date();
+        const startAt = new Date(membershipType[0].startAt);
+        const endAt = new Date(membershipType[0].endAt);
+
+        const isValid = now >= startAt && now <= endAt;
+
+        if (!isValid) {
+            return {
+                isValid: false,
+                membership: membership[0],
+                membershipType: {
+                    ...membershipType[0],
+                    description: membershipType[0].description || undefined,
+                },
+                error: "Membership has expired",
+            };
+        }
+
+        return {
+            isValid: true,
+            membership: membership[0],
+            membershipType: {
+                ...membershipType[0],
+                description: membershipType[0].description || undefined,
+            },
+        };
+    } catch (error) {
+        console.error("Error checking membership status:", error);
+        return {
+            isValid: false,
+            error: "Error checking membership status",
+        };
+    }
+};

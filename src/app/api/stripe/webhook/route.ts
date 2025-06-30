@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@libs/db";
 import { invoices, memberships, membershipTypes } from "@libs/db/schema";
+import { env } from "@libs/env";
 import { stripe } from "@libs/stripe/server";
 import { eq } from "drizzle-orm";
 import Stripe from "stripe";
@@ -16,7 +17,7 @@ export async function POST(request: NextRequest) {
     let event: Stripe.Event;
 
     try {
-        event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
+        event = stripe.webhooks.constructEvent(body, signature, env.STRIPE_WEBHOOK_SECRET);
     } catch (err) {
         console.error("Webhook signature verification failed:", err);
         return NextResponse.json({ error: "Invalid signature" }, { status: 400 });

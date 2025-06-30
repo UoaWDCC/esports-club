@@ -6,11 +6,22 @@ import { env } from "@libs/env";
 import { createCheckoutSession } from "@libs/stripe/server";
 import { eq } from "drizzle-orm";
 
+import { getMembershipStatus } from "@/services/membership/getMembershipStatus";
+
 export async function POST(request: NextRequest) {
     try {
         const session = await getSession(request);
         if (!session?.user?.id) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        // Check if user already has an active membership
+        const membershipStatus = await getMembershipStatus(session.user.id);
+        if (membershipStatus.isValid) {
+            return NextResponse.json(
+                { error: "You already have an active membership" },
+                { status: 403 },
+            );
         }
 
         const formData = await request.formData();
