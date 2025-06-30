@@ -107,23 +107,19 @@ To change the prices, modify:
 2. The prices in `src/libs/db/seed/membershipTypes.seed.ts`
 3. The pricing page will automatically display the new prices from Stripe
 
-### Features
-
-To modify the features list, edit the `features` array in `src/app/(frontend)/pricing/page.tsx`.
-
 ### Semester Dates
 
 To adjust semester dates, modify the date calculations in `src/libs/db/seed/membershipTypes.seed.ts`.
 
 ### Testing
 
-For testing, use Stripe's test mode and test card numbers:
+For testing, use Stripe's test mode and test card numbers (you can only use these in sandbox testing):
 
 -   Test card: `4242 4242 4242 4242`
 -   Expiry: Any future date
 -   CVC: Any 3 digits
 
-In development you can't directly use the prod webhook secret so generate your own one for the session using
+In development please generate your own webhook secret for local development
 
 `stripe listen --forward-to localhost:3000/api/stripe/webhook`
 
@@ -134,10 +130,3 @@ In development you can't directly use the prod webhook secret so generate your o
 3. Set up production webhook endpoint
 4. Test the complete payment flow
 5. Monitor webhook events in Stripe dashboard
-
-## Security Notes
-
--   Never expose your `STRIPE_SECRET_KEY` in client-side code
--   Always verify webhook signatures
--   Use HTTPS in production
--   Regularly rotate your API keys
