@@ -3,7 +3,7 @@
 // THIS IS A DEMO EXAMPLE FOR TANSTACK QUERY
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { fetchPlaceholder } from "@/services/comments";
+import { fetchPlaceholder } from "@/libs/fetch/placeholder";
 
 const useGetPlaceholder = () => {
     const query = useSuspenseQuery({
