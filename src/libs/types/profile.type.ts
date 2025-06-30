@@ -23,20 +23,20 @@ export const ZProfile = z.object({
     // TODO: switch to uuid in the future
     id: z.string(),
     userId: z.string(),
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
+    firstName: z.string().min(1, { message: "Field is required" }),
+    lastName: z.string().min(1, { message: "Field is required" }),
     email: z.email(),
     university: z.string(),
-    universityId: z.string().optional(),
+    universityId: z.string().nullable().optional(),
     previousMember: z.boolean().default(false),
     tournamentPasses: z.number().int().default(0),
     yearOfStudy: z.enum(YEAR_OF_STUDY_OPTIONS),
     gender: z.enum(GENDER_OPTIONS),
     updatedAt: z.date(),
     createdAt: z.date(),
-    ethnicity: z.string().optional(),
-    currentStudy: z.string().optional(),
-    currentDegree: z.string().optional(),
+    ethnicity: z.string().nullable().optional(),
+    currentStudy: z.string().nullable().optional(),
+    currentDegree: z.string().nullable().optional(),
 });
 
 /**

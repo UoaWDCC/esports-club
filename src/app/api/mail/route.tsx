@@ -12,6 +12,7 @@ type SendEmailDTO = {
     text: string;
 };
 
+// TODO: DELETE
 const sendEmail = async (sendEmail: SendEmailDTO) => {
     const emailHtml = await render(<EsportsLoginCodeEmail validationCode="123456" />);
 

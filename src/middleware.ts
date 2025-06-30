@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { DEFAULT_LOGIN_REDIRECT } from "@libs/routes";
 import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(request: NextRequest) {
@@ -7,12 +8,12 @@ export async function middleware(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
 
     if (!sessionCookie) {
-        return NextResponse.redirect(new URL("/auth/sign-in", request.url));
+        return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.url));
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/staff/:path*", "/profile"],
+    matcher: ["/staff/:path*", "/profile/:path*"],
 };

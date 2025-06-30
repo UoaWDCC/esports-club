@@ -1,31 +1,18 @@
-import { getSession } from "@libs/auth/auth";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-
-import { Footer } from "@/components/footer/Footer";
-import { PageLayout } from "@/components/layout/PageLayout";
-import { getComment } from "@/services/comments";
+import Link from "next/link";
+import { staffNavigation } from "@libs/routes/staff";
 
 export default async function StaffPage() {
-    const session = await getSession();
-
-    const queryClient = new QueryClient();
-
-    // prefetch the api on the serverside
-    // doesn't need client to be rendered in to start fetching
-    queryClient.prefetchQuery({
-        queryKey: ["user"],
-        queryFn: getComment,
-    });
-
-    const dehydratedState = dehydrate(queryClient);
-
     return (
-        <HydrationBoundary state={dehydratedState}>
-            <PageLayout>
-                <h1 className="max-w-[600px]">Staff page</h1>
-                <p>{JSON.stringify(session, null, 4)}</p>
-                <Footer />
-            </PageLayout>
-        </HydrationBoundary>
+        <div className="grid grid-cols-3 gap-3">
+            {staffNavigation.map((route) => (
+                <Link
+                    key={route.href}
+                    href={route.href}
+                    className="h-36 w-full rounded bg-neutral-800 p-3 hover:bg-neutral-700"
+                >
+                    {route.name}
+                </Link>
+            ))}
+        </div>
     );
 }

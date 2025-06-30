@@ -1,0 +1,1 @@
+please do not put images into the public folder since next.js can't properly optimise the image here

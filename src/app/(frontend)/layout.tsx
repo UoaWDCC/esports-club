@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
+import { Tomorrow } from "next/font/google";
 import localFont from "next/font/local";
 import { RoutingDevTools } from "@providers/devtools/DevToolsProvider";
 import { TanstackClientProvider } from "@providers/query/TanstackClientProvider";
@@ -10,14 +11,6 @@ export const metadata: Metadata = {
     title: { default: "Esports club", template: "%s | Esports club" },
     description:
         "Esports club is dedicated to cultivating a friendly community where individuals can come together through their passion for gaming. We host tournaments for various games, game-themed events, and casual nights to cater for every kind of player.",
-    icons: {
-        // icon: [
-        //     {
-        //         url: "/images/icon.svg",
-        //         href: "/svgs/favicon.svg",
-        //     },
-        // ],
-    },
 };
 
 const satoshi = localFont({
@@ -32,6 +25,12 @@ const satoshi = localFont({
     variable: "--font-satoshi",
 });
 
+const tomorrow = Tomorrow({
+    subsets: ["latin"],
+    weight: "400",
+    variable: "--font-tomorrow",
+});
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -39,7 +38,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${satoshi.className} antialiased`}>
+            <body className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
                 <RoutingDevTools />
                 <TanstackClientProvider>{children}</TanstackClientProvider>
             </body>
