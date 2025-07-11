@@ -1,3 +1,4 @@
+// Stripe client utility for loading Stripe.js
 import { env } from "@libs/env";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 
