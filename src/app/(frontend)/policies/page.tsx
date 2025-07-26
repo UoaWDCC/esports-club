@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 import { AUECLogo } from "@/components/assets/image";
 import { PageLayout } from "@/components/layout/PageLayout";
+
+import { PolicyButton } from "./_components/PolicyButton";
 
 export default function page() {
     return (
@@ -18,7 +19,7 @@ export default function page() {
                             alt="Auckland University Esport Club Logo"
                         ></Image>
                         <div className="py-12">
-                            <h1 className="font-tomorrow text-center text-[64px]">
+                            <h1 className="font-tomorrow text-center text-6xl">
                                 Auckland University
                                 <br />
                                 Esport Club
@@ -43,27 +44,5 @@ export default function page() {
                 </div>
             </div>
         </PageLayout>
-    );
-}
-
-interface PolicyButtonProps {
-    title: string;
-    policy: string;
-    link: string;
-}
-
-function PolicyButton({ title, policy, link }: PolicyButtonProps) {
-    return (
-        <div className="flex w-fit flex-col gap-6 rounded-lg border-2 border-[#978FFE] p-6">
-            <p className="text-xl leading-none">{title}</p>
-            <p className="text-[16px] leading-none text-[#AFAFAF]">
-                Our {policy}.
-                <br />
-                Last updated on December 19, 2024.
-            </p>
-            <Link className="w-[340px] text-[14px] text-[#978FFE] hover:underline" href={link}>
-                View
-            </Link>
-        </div>
     );
 }

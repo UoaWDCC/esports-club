@@ -14,10 +14,10 @@ export default function page() {
                 <div className="flex flex-col items-center">
                     <div className="2-full flex max-w-[800px] flex-col gap-12 border border-black">
                         <p className="leading-none">
-                            This Privacy Policy explains how the Auckland University Esports Club's
-                            membership and tournament platform (“Service”), developed by WDCC{" "}
-                            <strong>(Web Development and Consulting Club)</strong>, collects, uses,
-                            and protects your personal information.
+                            This Privacy Policy explains how the Auckland University Esports
+                            Club&apos;s membership and tournament platform (“Service”), developed by
+                            WDCC <strong>(Web Development and Consulting Club)</strong>, collects,
+                            uses, and protects your personal information.
                         </p>
 
                         <h2 className="text-left text-3xl">1. Information We Collect</h2>
@@ -64,7 +64,7 @@ export default function page() {
                             data.
                         </p>
                         <h2 className="text-3xl">5. Your Rights</h2>
-                        <p className="">
+                        <p>
                             You may update your personal information at any time via your account
                             settings. Some fields may be restricted depending on platform needs. To
                             delete your account or personal data, please contact our staff at
@@ -72,7 +72,7 @@ export default function page() {
                             indefinitely unless explicitly requested for deletion.
                         </p>
                         <h2 className="text-3xl">6. Data Security</h2>
-                        <p className="">
+                        <p>
                             All communication between the client and server is encrypted using
                             HTTPS. Sensitive information is protected using role-based access
                             control, and database access is limited to authorized staff only.
@@ -80,7 +80,7 @@ export default function page() {
                             exposed to the frontend.
                         </p>
                         <h2 className="text-3xl">7. Changes To This Policy</h2>
-                        <p className="">
+                        <p>
                             We may update this Privacy Policy from time to time. Changes will be
                             posted on this page, and your continued use of the Service indicates
                             your acceptance of the updated terms.

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 
@@ -14,7 +15,7 @@ export default function page() {
                 <div className="font-satoshi flex flex-col items-center">
                     <div className="flex w-full max-w-[800px] flex-col gap-12 border border-black">
                         <p className="leading-none">
-                            Welcome to the Auckland University Esports Club's membership and
+                            Welcome to the Auckland University Esports Club&apos;s membership and
                             tournament platform (“Service”), developed by WDCC{" "}
                             <strong>(Web Development and Consulting Club)</strong>. By accessing or
                             using the Service, you agree to the following terms.
@@ -36,7 +37,7 @@ export default function page() {
                         <p>
                             By registering, you agree to provide accurate information including your
                             name, email, and profile image via Google. You are responsible for your
-                            account's security.
+                            account&apos;s security.
                         </p>
                         <h2 className="text-3xl">4. User Content</h2>
                         <p>
@@ -65,12 +66,12 @@ export default function page() {
                         <h2 className="text-3xl">8. Contact</h2>
                         <div className="pb-20">
                             For support or questions, contact us at{" "}
-                            <a
+                            <Link
                                 href="esports@project.wdcc.co.nz"
                                 className="underline-white xl hover:underline"
                             >
                                 esports@project.wdcc.co.nz.
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
