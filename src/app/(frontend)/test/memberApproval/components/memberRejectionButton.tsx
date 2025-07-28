@@ -5,20 +5,11 @@ import { useState } from "react";
 import { Button } from "@/components/button/Button";
 import { rejectMembership } from "@/services/membership/rejectMembership";
 
-export default function MemberRejectionButton({
-    name,
-    email,
-    membershipID,
-}: {
-    name: string;
-    email: string;
-    membershipID: string;
-}) {
+export default function MemberRejectionButton({ membershipID }: { membershipID: string }) {
     const [reason, setReason] = useState<string>("");
 
     const handleRejection = async () => {
-        const result = await rejectMembership(name, email, membershipID, reason);
-        console.log(result);
+        await rejectMembership(membershipID, reason);
     };
 
     return (

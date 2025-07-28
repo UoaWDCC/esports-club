@@ -21,14 +21,8 @@ export default async function memberApprovalPage() {
                                     <td>{profile.firstName}</td>
                                     <td>{profile.lastName}</td>
                                     <td>
-                                        <MemberApprovalButton
-                                            name={profile.firstName}
-                                            email={profile.email}
-                                            membershipID={membership.id}
-                                        />
+                                        <MemberApprovalButton membershipID={membership.id} />
                                         <MemberRejectionButton
-                                            name={profile.firstName}
-                                            email={profile.email}
                                             membershipID={membership.id}
                                         ></MemberRejectionButton>
                                     </td>

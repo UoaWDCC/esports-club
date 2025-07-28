@@ -13,10 +13,14 @@ import {
 } from "@react-email/components";
 
 interface membershipApprovedEmailProps {
-    name?: string;
+    name: string;
+    invoiceID: string;
 }
 
-export const EsportsMembershipApprovedEmail = ({ name }: membershipApprovedEmailProps) => (
+export const EsportsMembershipApprovedEmail = ({
+    name,
+    invoiceID,
+}: membershipApprovedEmailProps) => (
     <Html>
         <Head />
         <Body style={main}>
@@ -28,7 +32,7 @@ export const EsportsMembershipApprovedEmail = ({ name }: membershipApprovedEmail
                         Login to Esports
                     </Button>
                 </Section>
-                <Text style={paragraph}>Membership Approved</Text>
+                <Text style={paragraph}>Membership Approved : Invoice ID {invoiceID}</Text>
                 <code style={code}>{name}</code>
                 <Hr style={hr} />
                 <Link href="https://Esports.app" style={reportLink}>

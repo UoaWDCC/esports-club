@@ -9,10 +9,13 @@ type EmailApproval = {
     to: string;
     subject: string;
     name: string;
+    invoiceID: string;
 };
 
 export const sendApprovalEmail = async (body: EmailApproval) => {
-    const emailHtml = await render(<EsportsMembershipApprovedEmail name={body.name} />);
+    const emailHtml = await render(
+        <EsportsMembershipApprovedEmail name={body.name} invoiceID={body.invoiceID} />,
+    );
 
     const mailOptions = standardMailOption({
         to: body.to,
