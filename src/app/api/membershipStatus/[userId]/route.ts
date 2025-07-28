@@ -34,13 +34,13 @@ export const GET = async (
 
     // Find a paid membership for this profile
     // Selects the membershipTypeId from memberships schema where profileId matches
-    // the profileId we just found and isPaid is true
+    // the profileId we just found and status is "approved"
     const membership = await db
         .select({
             membershipTypeId: memberships.membershipTypeId,
         })
         .from(memberships)
-        .where(and(eq(memberships.profileId, profile[0].id), eq(memberships.isPaid, true)));
+        .where(and(eq(memberships.profileId, profile[0].id), eq(memberships.status, "approved")));
 
     console.log("membership", membership);
     if (!membership[0]) return NextResponse.json({ body: false });

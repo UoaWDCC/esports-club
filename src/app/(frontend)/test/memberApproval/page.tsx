@@ -1,24 +1,36 @@
 import { PageLayout } from "@/components/layout/PageLayout";
-import getAllMembershipsUnpaid from "@/services/membership/getAllMembershipsUnpaid";
+import getAllMembershipsPending from "@/services/membership/getAllMembershipsPending";
 
 import MemberApprovalButton from "./components/memberApprovalButton";
+import MemberRejectionButton from "./components/memberRejectionButton";
+import ResetTestMembershipButton from "./components/resetTestMembershipButton";
 
 export default async function memberApprovalPage() {
     // Get all unpaid memberships
-    const unpaid_memberships = await getAllMembershipsUnpaid();
+    const pending_memberships = await getAllMembershipsPending();
     return (
         <PageLayout>
             <div className="w-full">
+                <ResetTestMembershipButton></ResetTestMembershipButton>
                 <table>
                     <tbody>
-                        {unpaid_memberships.map((profileData, index) => {
+                        {pending_memberships.map((profileData, index) => {
                             const { profile, membership } = profileData;
                             return (
                                 <tr key={index}>
                                     <td>{profile.firstName}</td>
                                     <td>{profile.lastName}</td>
                                     <td>
-                                        <MemberApprovalButton membershipID={membership.id} />
+                                        <MemberApprovalButton
+                                            name={profile.firstName}
+                                            email={profile.email}
+                                            membershipID={membership.id}
+                                        />
+                                        <MemberRejectionButton
+                                            name={profile.firstName}
+                                            email={profile.email}
+                                            membershipID={membership.id}
+                                        ></MemberRejectionButton>
                                     </td>
                                 </tr>
                             );

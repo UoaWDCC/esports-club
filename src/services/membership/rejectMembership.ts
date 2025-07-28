@@ -5,24 +5,30 @@ import { db } from "@libs/db";
 import { memberships } from "@schema";
 import { eq } from "drizzle-orm";
 
-import { sendApprovalEmail } from "../email/membership-approved-email";
+import { sendRejectionEmail } from "../email/membership-rejection-email";
 
-export async function approveMembership(name: string, email: string, membershipID: string) {
+export async function rejectMembership(
+    name: string,
+    email: string,
+    membershipID: string,
+    reason: string,
+) {
     try {
         const result = await db
             .update(memberships)
-            .set({ status: "approved" })
+            .set({ status: "rejected", notes: reason })
             .where(eq(memberships.id, membershipID))
             .returning();
         if (result.length < 1) {
-            console.error("Error Approving Membership - MembershipID does not map to a Membership");
+            console.error("Error Rejecting Membership - MembershipID does not map to a Membership");
             return false;
         }
 
-        await sendApprovalEmail({
+        await sendRejectionEmail({
             to: email,
-            subject: "UOA Esports Club Membership Approved",
+            subject: "UOA Esports Club Membership Not Approved",
             name: name,
+            reason: reason,
         });
         return result;
     } catch (error) {

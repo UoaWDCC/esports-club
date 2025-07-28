@@ -3,10 +3,17 @@
 import { Button } from "@/components/button/Button";
 import { approveMembership } from "@/services/membership/approveMembership";
 
-export default function MemberApprovalButton({ membershipID }: { membershipID: string }) {
+export default function MemberApprovalButton({
+    name,
+    email,
+    membershipID,
+}: {
+    name: string;
+    email: string;
+    membershipID: string;
+}) {
     const handleApprove = async () => {
-        const result = await approveMembership(membershipID);
-        console.log(result);
+        await approveMembership(name, email, membershipID);
     };
 
     return (

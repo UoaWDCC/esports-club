@@ -1,5 +1,9 @@
 import { z } from "zod/v4";
 
+export const STATUS_OPTIONS = ["rejected", "pending", "approved"] as const;
+
+export type StatusOptions = (typeof STATUS_OPTIONS)[number];
+
 /**
  * Zod schema for the `memberships` table
  * use to validate an object
