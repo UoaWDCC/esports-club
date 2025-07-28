@@ -5,7 +5,7 @@ import { approveMembership } from "@/services/membership/approveMembership";
 
 export default function MemberApprovalButton({ membershipID }: { membershipID: string }) {
     const handleApprove = async () => {
-        await approveMembership(membershipID);
+        await approveMembership({ membershipID });
     };
 
     return (

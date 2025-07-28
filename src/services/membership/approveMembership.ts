@@ -2,13 +2,23 @@
 "use server";
 
 import { db } from "@libs/db";
+import { PaymentMethod } from "@libs/types/invoice.type";
 import { memberships, profiles } from "@schema";
 import { and, eq } from "drizzle-orm";
 
 import { sendApprovalEmail } from "../email/membership-approved-email";
 import createMembershipInvoice from "./createMembershipInvoice";
 
-export async function approveMembership(membershipID: string) {
+export type approveMembershipType = {
+    membershipID: string;
+    paidDate?: Date;
+    payment_method?: PaymentMethod;
+};
+export async function approveMembership({
+    membershipID,
+    paidDate = new Date(),
+    payment_method = "Stripe",
+}: approveMembershipType) {
     try {
         const result = await db
             .update(memberships)
@@ -38,7 +48,11 @@ export async function approveMembership(membershipID: string) {
             return false;
         }
 
-        const invoice = await createMembershipInvoice(membershipID);
+        const invoice = await createMembershipInvoice({
+            membershipID: membershipID,
+            paidDate: paidDate,
+            payment_method: payment_method,
+        });
 
         const profileData = data[0];
         await sendApprovalEmail({

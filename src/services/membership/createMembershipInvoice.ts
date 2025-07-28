@@ -1,9 +1,18 @@
 import { db } from "@libs/db";
-import { Invoice, InvoiceDTO } from "@libs/types/invoice.type";
+import { Invoice, InvoiceDTO, PaymentMethod } from "@libs/types/invoice.type";
 import { invoices, memberships, membershipTypes, profiles } from "@schema";
 import { and, eq } from "drizzle-orm";
 
-export default async function createMembershipInvoice(membershipID: string) {
+export type createMembershipInvoiceType = {
+    membershipID: string;
+    paidDate?: Date;
+    payment_method?: PaymentMethod;
+};
+export default async function createMembershipInvoice({
+    membershipID,
+    paidDate = new Date(),
+    payment_method = "Stripe",
+}: createMembershipInvoiceType) {
     const data = await db
         .select({
             profileID: profiles.id,
@@ -31,9 +40,9 @@ export default async function createMembershipInvoice(membershipID: string) {
             profileId: profileData.profileID,
             type: "membership",
             status: "paid",
-            paidDate: new Date(),
+            paidDate: paidDate,
             price: profileData.price,
-            paymentMethod: "bank_transfer",
+            paymentMethod: payment_method,
         };
         const result = await db.insert(invoices).values(newInvoice).returning();
         invoice = result[0];
@@ -41,7 +50,7 @@ export default async function createMembershipInvoice(membershipID: string) {
     } else {
         const result = await db
             .update(invoices)
-            .set({ status: "paid", paidDate: new Date(), paymentMethod: "bank_transfer" })
+            .set({ status: "paid", paidDate: paidDate, paymentMethod: payment_method })
             .where(eq(invoices.id, profileData.invoiceID))
             .returning();
         invoice = result[0];
