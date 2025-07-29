@@ -1,5 +1,8 @@
+import { STATUS_OPTIONS } from "@libs/types/membership.type";
 import { invoices, membershipTypes, profiles } from "@schema";
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
+export const statusEnum = pgEnum("status", STATUS_OPTIONS);
 
 export const memberships = pgTable("membership", {
     id: text("id")
@@ -14,6 +17,7 @@ export const memberships = pgTable("membership", {
     membershipTypeId: text("membership_type_id")
         .references(() => membershipTypes.id, { onDelete: "cascade" })
         .notNull(),
-    isPaid: boolean("is_paid").default(false).notNull(),
+    status: statusEnum("status").default("pending").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
+    notes: text("notes").default(""),
 });

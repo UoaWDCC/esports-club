@@ -2,13 +2,12 @@
 
 import { db } from "@libs/db";
 import { memberships, membershipTypes, profiles } from "@libs/db/schema";
-import { eq, and} from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 // a member is valid if there is a single active membership (current time is between a membership)
 // the membership must be paid for it to be valid
 // should return boolean
 export const getMembershipStatus = async (userId: string) => {
-    
     // Find the user's profile
     // Selects id from profiles schema where userId matches the provided userId
     // To get profileId, which is just called id in the profiles schema
@@ -18,7 +17,7 @@ export const getMembershipStatus = async (userId: string) => {
         .from(profiles)
         .where(eq(profiles.userId, userId));
     if (!profile[0]) return false;
-    
+
     // const profileIda = await db.select().from(profiles).where(eq(profiles.userId, userId))
     // .innerjoin(profiles, eq(users.id, profiles.id))
 
@@ -30,12 +29,7 @@ export const getMembershipStatus = async (userId: string) => {
             membershipTypeId: memberships.membershipTypeId,
         })
         .from(memberships)
-        .where(
-            and(
-                eq(memberships.profileId, profile[0].id),
-                eq(memberships.isPaid, true)
-            )
-        );
+        .where(and(eq(memberships.profileId, profile[0].id), eq(memberships.status, "approved")));
 
     if (!membership[0]) return false;
 
@@ -58,13 +52,15 @@ export const getMembershipStatus = async (userId: string) => {
 
     const isValid = now >= startAt && now <= endAt;
 
-    if (!isValid) return {
-        body: null,
-        error: "Membership is not within the start and end date"
-    };
+    if (!isValid)
+        return {
+            body: null,
+            error: "Membership is not within the start and end date",
+        };
     return {
-        body: {/* membership + membership type */},
-        error: null
+        body: {
+            /* membership + membership type */
+        },
+        error: null,
     };
-
-}; 
+};
