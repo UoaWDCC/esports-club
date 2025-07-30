@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { AuthSession, getSession } from "@libs/auth/auth";
 import { z } from "zod";
 
-import { ApiErrorResponse } from "./responses";
+import { Response, response } from "./response";
 
 // Credits to David Zhu
 
@@ -17,17 +17,11 @@ export type RouteContext<P extends string = string> = {
     }>;
 };
 
-type Handler = (
+type Handler<TReq extends object> = (
     req: NextRequest,
     session: AuthSession,
     context: RouteContext,
-) => Response | Promise<Response>;
-
-type UserRouteHandler = (
-    req: NextRequest,
-    user: AuthSession,
-    context: RouteContext,
-) => Response | Promise<Response>;
+) => Response<TReq> | Promise<Response<TReq>>;
 
 const defaultEndpointOptions = { protected: false, admin: false };
 
@@ -36,7 +30,10 @@ const defaultEndpointOptions = { protected: false, admin: false };
 // fetches the session of the user and deals with automatically authenticating protected and staff api routes
 // exposes the session to the handler to be used
 
-export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
+export function routeWrapper<TReq extends object>(
+    handler: Handler<TReq>,
+    options: EndpointOptions = defaultEndpointOptions,
+) {
     // 1. get session
     // 2. compare permission required
     // 3. authenticate user
@@ -46,32 +43,32 @@ export function routeWrapper(handler: Handler, options: EndpointOptions = defaul
             const session = await getSession(req);
 
             if (!session && (options.protected || options.staff)) {
-                return ApiErrorResponse("unauthorized");
+                return response("unauthorized");
             }
 
             if (options.staff && session?.user.role !== "staff") {
-                return ApiErrorResponse("forbidden");
+                return response("forbidden");
             }
 
             return await handler(req, session, context);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                return ApiErrorResponse("bad_request", error.message, error.issues);
+                return response("bad_request", { message: error.message, error: error.issues });
             }
 
-            return ApiErrorResponse("internal_server_error");
+            return response("internal_server_error");
         }
     };
 }
 
-export function userRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user, context) => handler(req, user, context), {
+export function userRouteWrapper<TReq extends object>(handler: Handler<TReq>) {
+    return routeWrapper((req, session, context) => handler(req, session, context), {
         protected: true,
     });
 }
 
-export function staffRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user, context) => handler(req, user, context), {
+export function staffRouteWrapper<TReq extends object>(handler: Handler<TReq>) {
+    return routeWrapper((req, session, context) => handler(req, session, context), {
         staff: true,
     });
 }

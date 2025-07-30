@@ -1,8 +1,9 @@
 import { unstable_cache } from "next/cache";
-import { ApiErrorResponse, ApiResponse } from "@libs/api/responses";
+import { Response, response } from "@libs/api/response";
 import { RouteContext, routeWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { membershipTypes } from "@libs/db/schema";
+import { MembershipTypeDTO, ZMembershipTypeDTO } from "@libs/types/membershipType.type";
 import { eq } from "drizzle-orm";
 
 function getMembershipType(id: string) {
@@ -18,12 +19,15 @@ function getMembershipType(id: string) {
     )();
 }
 
-export const GET = routeWrapper(async (req, session, context: RouteContext<"id">) => {
-    const { id } = await context.params;
+export const GET = routeWrapper(
+    async (req, session, context: RouteContext<"id">): Promise<Response<MembershipTypeDTO>> => {
+        const { id } = await context.params;
 
-    const membershipType = await getMembershipType(id);
+        const membershipType = await getMembershipType(id);
+        const { data } = ZMembershipTypeDTO.safeParse(membershipType);
 
-    if (membershipType[0]) return ApiResponse("ok", membershipType[0]);
+        if (data) return response("ok", { data });
 
-    return ApiErrorResponse("not_found", "cound not find the requested membershipType");
-});
+        return response("not_found", { message: "cound not find the requested membershipType" });
+    },
+);
