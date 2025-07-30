@@ -47,7 +47,7 @@ type Successes = Extract<Statuses, "ok" | "created" | "no_content">;
 type Errors = Exclude<Statuses, Successes>;
 
 export type Responses = keyof typeof response;
-export type Response<T extends {}> = NextResponse<
+export type Response<T extends object = object> = NextResponse<
     | { status: Successes; data: T; message: string; error?: DetailType }
     | { status: Errors; message: string; error?: DetailType }
 >;
@@ -59,19 +59,32 @@ type DetailType<T extends string = string> =
     | ZodIssue[];
 
 // ? Success statuses: must include data
+// ? exclude error from success responses
 
 export function response<T extends object>(
     status: Successes,
-    body: { data?: Exact<T>; message?: string; error?: DetailType },
+    body?: { data?: Exact<T>; message?: string; error?: never },
 ): Response<T>;
 
 // ? Error statuses: must be empty
-
+// ? exclude data from error responses
 export function response<T extends object>(
     status: Errors,
     body?: { data?: never; message?: string; error?: DetailType },
 ): Response<T>;
 
+/**
+ * see documentation at `docs/backend.md`
+ *
+ * @param status { Successes | Errors }
+ * @param body { data?: Exact<T>; message?: string; error?: DetailType }
+ * @returns
+ *
+ *  @description this is an api response type that will ensure consistent api responses as well as zod error handling when doing integration testing
+ *
+ *  200 - 299: success response must include data unless Response type is empty
+ *  everything else:  error response may include message and error details for zod state management
+ */
 export function response<T extends object = object>(
     status: Statuses,
     body: { data?: Exact<T>; message?: string; error?: DetailType } = {},
@@ -88,3 +101,25 @@ export function response<T extends object = object>(
         },
     ) as Response<T>;
 }
+
+/* examples
+export const GET = (): Response<GetData> => { 
+    
+    success response 200 - 299
+
+    ✅ response("created");
+    ✅ response("ok", { message: "profile update" });
+    ✅ response("ok", { data: { id: "1" } });
+    
+    ❌ response("ok", { data: { a: "2" } }); // ? data type is incorrect to the function signature
+    ❌ response("ok", { error: { password: "not enough characters" } });
+    
+    other responses
+    
+    ✅ response("unauthorized");
+    ✅ response("unauthorized", { message: "not a staff member" });
+    ✅ response("unauthorized", { error: { password: "not enough characters" } });
+
+    ❌ response("unauthorized", { data: { id: "2" } });
+};
+*/

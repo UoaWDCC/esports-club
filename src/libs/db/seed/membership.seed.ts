@@ -31,7 +31,7 @@ async function seedMembership() {
         profileId: existingProfileId,
         invoiceId: invoiceId,
         membershipTypeId: existingMembershipTypeId,
-        isPaid: true,
+        status: "pending",
     };
 
     const result = await db.insert(memberships).values(newMembership).returning().execute();

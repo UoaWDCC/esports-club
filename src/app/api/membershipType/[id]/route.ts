@@ -24,7 +24,7 @@ export const GET = routeWrapper(
         const { id } = await context.params;
 
         const membershipType = await getMembershipType(id);
-        const { data, error } = ZMembershipTypeDTO.safeParse(membershipType);
+        const { data } = ZMembershipTypeDTO.safeParse(membershipType);
 
         if (data) return response("ok", { data });
 

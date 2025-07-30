@@ -5,5 +5,17 @@
         "description": "My API description.",
         "version": "1.0.0"
     },
-    "paths": {}
+    "paths": {
+        "/": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
 }

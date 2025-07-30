@@ -22,7 +22,7 @@ export function ProfileCreationForm() {
         setError,
         formState: { errors },
     } = useForm({
-        // intial form state
+        // initial form state
         defaultValues: {
             firstName: "",
             lastName: "",

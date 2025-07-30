@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { AuthSession, getSession } from "@libs/auth/auth";
 import { z } from "zod";
 
-import { ApiErrorResponse } from "./responses";
+import { Response, response } from "./response";
 
 // Credits to David Zhu
 
@@ -46,20 +46,20 @@ export function routeWrapper(handler: Handler, options: EndpointOptions = defaul
             const session = await getSession(req);
 
             if (!session && (options.protected || options.staff)) {
-                return ApiErrorResponse("unauthorized");
+                return response("unauthorized");
             }
 
             if (options.staff && session?.user.role !== "staff") {
-                return ApiErrorResponse("forbidden");
+                return response("forbidden");
             }
 
             return await handler(req, session, context);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                return ApiErrorResponse("bad_request", error.message, error.issues);
+                return response("bad_request", { message: error.message, error: error.issues });
             }
 
-            return ApiErrorResponse("internal_server_error");
+            return response("internal_server_error");
         }
     };
 }

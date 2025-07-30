@@ -44,5 +44,8 @@ export const POST = routeWrapper(async (req, session): Promise<Response> => {
 
     await db.insert(profiles).values(profileInsertion);
 
-    return response("created", { message: "Profile created successfully" });
+    return response("created", {
+        data: { asdasd: "asd" },
+        message: "Profile created successfully",
+    });
 });
