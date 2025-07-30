@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Exact } from "@libs/types/utils";
 import { ZodIssue } from "zod";
 
 // API response stanard base out of JSend
@@ -38,26 +39,23 @@ const messages: Record<Statuses, string> = {
     gateway_timeout: "The server timed out while fulfilling the request.",
 };
 
-// strict typing
-type Exact<T> = T extends infer U
-    ? { [K in keyof U]: U[K] } & Record<Exclude<keyof T, keyof U>, never>
-    : never;
-
 export type Statuses = keyof typeof statuses;
 
-type Successes = Extract<Statuses, "ok" | "created" | "no_content">;
+const successes = ["ok", "created", "no_content"] as const;
+
+type Successes = Extract<Statuses, (typeof successes)[number]>;
 type Specials = Extract<Statuses, "teapot">;
 type Errors = Exclude<Statuses, Successes | Specials>;
 
-export type Responses = keyof typeof response;
-export type Response<T extends object = object> = NextResponse<
+export type ApiResponse<T extends object = object> =
     | { status: Successes | Specials; data: T; message: string; error?: never }
-    | { status: Errors; data?: never; message: string; error?: DetailType }
->;
+    | { status: Errors; data?: never; message: string; error?: DetailType };
+
+export type Response<T extends object = object> = NextResponse<ApiResponse<T>>;
 
 type DetailType<T extends string = string> =
     | {
-          [key in T]: string | string[];
+          [key in T]: string | string[] | undefined;
       }
     | Array<ZodIssue>;
 
@@ -104,6 +102,11 @@ export function response<T extends object>(
         },
     ) as Response<T>;
 }
+
+export const isOk = async (res: Response) => {
+    const response = await res.json();
+    return successes.some((status) => status === response.status);
+};
 
 /* examples
 export const GET = (): Response<GetData> => { 

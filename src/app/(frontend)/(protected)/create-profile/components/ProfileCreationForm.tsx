@@ -36,7 +36,7 @@ export function ProfileCreationForm() {
 
     const mutation = useMutation({
         mutationFn: async (newProfile: ProfileCreationDTO) => {
-            const response = await fetch("/api/user/createProfile", {
+            const response = await fetch("/api/profile.create", {
                 method: "POST",
                 body: JSON.stringify(newProfile),
             });

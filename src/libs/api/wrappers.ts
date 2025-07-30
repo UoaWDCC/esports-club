@@ -56,7 +56,18 @@ export function routeWrapper<TReq extends object>(
                 return response("bad_request", { message: error.message, error: error.issues });
             }
 
-            return response("internal_server_error");
+            if (error instanceof Error) {
+                return response("internal_server_error", {
+                    message: error.message,
+                    error: {
+                        name: error.name,
+                        stack:
+                            process.env.NODE_ENV === "development" ? error.stack || "" : undefined,
+                    },
+                });
+            }
+
+            return response("internal_server_error", { message: "unhandled server exception(s)" });
         }
     };
 }
