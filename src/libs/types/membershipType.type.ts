@@ -26,8 +26,7 @@ const ZMembershipTypeDTO = z.object({
     description: z.string().optional(),
     startAt: z.date(),
     endAt: z.date(),
-    price: z.coerce.number(),
-    isActive: z.boolean(),
+    price: z.number(),
 });
 
 type MembershipType = z.infer<typeof ZMembershipType>;

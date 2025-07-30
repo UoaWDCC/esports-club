@@ -1,21 +1,25 @@
-import { response, Response } from "@libs/api/response";
+import { redirect } from "next/navigation";
+import { response } from "@libs/api/response";
 import { routeWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
+import { DEFAULT_PROFILE_REDIRECT } from "@libs/routes";
 import { ProfileInsertionDTO, ZProfileCreationDTO } from "@libs/types/profile.type";
 import { profiles } from "@schema";
 import { eq } from "drizzle-orm";
 
-export const POST = routeWrapper(async (req, session): Promise<Response> => {
+export const POST = routeWrapper(async (req, session) => {
     const res = await req.json();
 
     // infer values from user in db
     const { id: userId, email, emailVerified } = session.user;
-    // validate data
-    const { data, success } = ZProfileCreationDTO.safeParse(res);
 
-    // check is request body is valid
+    // validate body
+    const { data, success, error } = ZProfileCreationDTO.safeParse(res);
     if (!success) {
-        return response("bad_request", { message: "Data is missing or malformed" });
+        return response("bad_request", {
+            message: "Data is missing or malformed",
+            error: error?.issues,
+        });
     }
 
     if (!emailVerified) {
@@ -29,9 +33,7 @@ export const POST = routeWrapper(async (req, session): Promise<Response> => {
         .limit(1);
 
     if (existingProfile.length != 0) {
-        return response("bad_request", {
-            message: "A profile linked to this email already exists, please refresh",
-        });
+        redirect(DEFAULT_PROFILE_REDIRECT);
     }
 
     // create profile
