@@ -17,17 +17,11 @@ export type RouteContext<P extends string = string> = {
     }>;
 };
 
-type Handler = (
+type Handler<TReq extends object> = (
     req: NextRequest,
     session: AuthSession,
     context: RouteContext,
-) => Response | Promise<Response>;
-
-type UserRouteHandler = (
-    req: NextRequest,
-    user: AuthSession,
-    context: RouteContext,
-) => Response | Promise<Response>;
+) => Response<TReq> | Promise<Response<TReq>>;
 
 const defaultEndpointOptions = { protected: false, admin: false };
 
@@ -36,7 +30,10 @@ const defaultEndpointOptions = { protected: false, admin: false };
 // fetches the session of the user and deals with automatically authenticating protected and staff api routes
 // exposes the session to the handler to be used
 
-export function routeWrapper(handler: Handler, options: EndpointOptions = defaultEndpointOptions) {
+export function routeWrapper<TReq extends object>(
+    handler: Handler<TReq>,
+    options: EndpointOptions = defaultEndpointOptions,
+) {
     // 1. get session
     // 2. compare permission required
     // 3. authenticate user
@@ -64,14 +61,14 @@ export function routeWrapper(handler: Handler, options: EndpointOptions = defaul
     };
 }
 
-export function userRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user, context) => handler(req, user, context), {
+export function userRouteWrapper<TReq extends object>(handler: Handler<TReq>) {
+    return routeWrapper((req, session, context) => handler(req, session, context), {
         protected: true,
     });
 }
 
-export function staffRouteWrapper(handler: UserRouteHandler) {
-    return routeWrapper((req, user, context) => handler(req, user, context), {
+export function staffRouteWrapper<TReq extends object>(handler: Handler<TReq>) {
+    return routeWrapper((req, session, context) => handler(req, session, context), {
         staff: true,
     });
 }
