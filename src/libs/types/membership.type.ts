@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 export const STATUS_OPTIONS = ["rejected", "pending", "approved"] as const;
 

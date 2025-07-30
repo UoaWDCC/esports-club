@@ -5,7 +5,7 @@ import Link from "next/link";
 import { easeOutExpo } from "@libs/motion/ease";
 import { ROUTE_SYSTEM } from "@libs/routes";
 import { Route } from "@libs/routes/index.generated";
-import { cn } from "@libs/utils";
+import { cn } from "@libs/utils/class";
 import { GitBranch } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";

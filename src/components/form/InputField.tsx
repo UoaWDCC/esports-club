@@ -1,5 +1,5 @@
 import { forwardRef, InputHTMLAttributes, useId } from "react";
-import { cn } from "@libs/utils";
+import { cn } from "@libs/utils/class";
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;

@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 /**
  * Zod schema for the `membership_types` table

@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 const INVOICE_TYPES = ["tournament_pass", "membership", "other"] as const;
 const PAYMENT_STATUSES = ["cancelled", "pending", "paid"] as const;
