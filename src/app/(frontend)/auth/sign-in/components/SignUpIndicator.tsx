@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 import Link from "next/link";
-import { cn } from "@libs/utils";
+import { cn } from "@libs/utils/class";
 
 export const SignUpIndicator = (props: HTMLAttributes<HTMLParagraphElement>) => {
     return (

@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 const INVOICE_TYPES = ["tournament_pass", "membership", "other"] as const;
 const PAYMENT_STATUSES = ["cancelled", "pending", "paid"] as const;
@@ -16,9 +16,9 @@ type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 const ZInvoice = z.object({
     // TODO: switch id, and profileId to uuid in the future
     id: z.string(),
-    profileId: z.string(),
+    profileId: z.string().nullable(),
     type: z.enum(INVOICE_TYPES),
-    description: z.string().optional(),
+    description: z.string().nullable(),
     status: z.enum(PAYMENT_STATUSES),
     paidDate: z.date(),
     paymentMethod: z.enum(PAYMENT_METHODS),

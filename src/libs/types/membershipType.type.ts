@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 /**
  * Zod schema for the `membership_types` table
@@ -27,7 +27,6 @@ const ZMembershipTypeDTO = z.object({
     startAt: z.date(),
     endAt: z.date(),
     price: z.coerce.number(),
-    isActive: z.boolean(),
 });
 
 type MembershipType = z.infer<typeof ZMembershipType>;

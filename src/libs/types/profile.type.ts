@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 export const GENDER_OPTIONS = ["male", "female", "non_binary", "genderfluid", "other"] as const;
 export const YEAR_OF_STUDY_OPTIONS = [
@@ -25,7 +25,7 @@ export const ZProfile = z.object({
     userId: z.string(),
     firstName: z.string().min(1, { message: "Field is required" }),
     lastName: z.string().min(1, { message: "Field is required" }),
-    email: z.email(),
+    email: z.string().email(),
     university: z.string(),
     universityId: z.string().nullable().optional(),
     previousMember: z.boolean().default(false),
