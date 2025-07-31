@@ -2,7 +2,7 @@
 
 import { db } from "@libs/db";
 import { memberships, membershipTypes } from "@libs/db/schema";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 export const getAllActiveMemberships = async () => {
     const now = new Date();
@@ -14,7 +14,7 @@ export const getAllActiveMemberships = async () => {
         })
         .from(memberships)
         .innerJoin(membershipTypes, eq(memberships.membershipTypeId, membershipTypes.id))
-        .where(eq(memberships.isPaid, true));
+        .where(eq(memberships.status, "approved"));
 
     return activeMemberships.filter(({ membershipType }) => {
         const start = new Date(membershipType.startAt);

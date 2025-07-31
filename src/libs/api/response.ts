@@ -103,8 +103,33 @@ export function response<T extends object>(
     ) as Response<T>;
 }
 
-export const isOk = async (res: Response) => {
-    const response = await res.json();
+export function serverResponse<T extends object>(
+    status: Statuses,
+    body: { data?: Exact<T>; message?: string; error?: DetailType } = {},
+): ApiResponse<T> {
+    return {
+        status,
+        data: body.data,
+        message: body.message || messages[status],
+        error: body.error,
+    } as ApiResponse<T>;
+}
+
+export function toResponse<T extends object>(result: ApiResponse<T>): Response<T> {
+    return NextResponse.json(
+        {
+            status: result.status,
+            data: result.data,
+            message: result.message,
+            error: result.error,
+        },
+        {
+            status: statuses[result.status],
+        },
+    ) as Response<T>;
+}
+
+export const isOk = async (response: ApiResponse) => {
     return successes.some((status) => status === response.status);
 };
 
