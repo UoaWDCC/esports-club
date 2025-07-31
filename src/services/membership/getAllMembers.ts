@@ -2,7 +2,7 @@
 
 import { db } from "@libs/db";
 import { memberships, profiles } from "@libs/db/schema";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 export const getAllMembers = async () => {
     const members = await db
@@ -12,7 +12,7 @@ export const getAllMembers = async () => {
         })
         .from(memberships)
         .innerJoin(profiles, eq(memberships.profileId, profiles.id))
-        .where(eq(memberships.isPaid, true));
+        .where(eq(memberships.status, "approved"));
 
     // Remove duplicates in case of multiple memberships per profile
     const uniqueMembers = Array.from(

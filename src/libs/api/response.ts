@@ -103,6 +103,8 @@ export function response<T extends object>(
     ) as Response<T>;
 }
 
+// ? server action response
+
 export function serverResponse<T extends object>(
     status: Statuses,
     body: { data?: Exact<T>; message?: string; error?: DetailType } = {},
@@ -129,7 +131,7 @@ export function toResponse<T extends object>(result: ApiResponse<T>): Response<T
     ) as Response<T>;
 }
 
-export const isOk = async (response: ApiResponse) => {
+export const isOk = (response: ApiResponse) => {
     return successes.some((status) => status === response.status);
 };
 

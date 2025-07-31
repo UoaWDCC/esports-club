@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation";
 import { response } from "@libs/api/response";
-import { routeWrapper } from "@libs/api/wrappers";
+import { userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { DEFAULT_PROFILE_REDIRECT } from "@libs/routes";
 import { ProfileInsertionDTO, ZProfileCreationDTO } from "@libs/types/profile.type";
 import { profiles } from "@schema";
 import { eq } from "drizzle-orm";
 
-export const POST = routeWrapper(async (req, session) => {
+export const POST = userRouteWrapper(async (req, session) => {
     const res = await req.json();
 
     // infer values from user in db

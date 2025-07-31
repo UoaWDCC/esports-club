@@ -14,7 +14,7 @@ export const getAllExpiredMemberships = async () => {
         })
         .from(memberships)
         .innerJoin(membershipTypes, eq(memberships.membershipTypeId, membershipTypes.id))
-        .where(eq(memberships.isPaid, true));
+        .where(eq(memberships.status, "approved"));
 
     return expiredMemberships.filter(({ membershipType }) => {
         const end = new Date(membershipType.endAt);

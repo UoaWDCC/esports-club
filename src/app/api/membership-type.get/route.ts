@@ -1,14 +1,14 @@
 import { unstable_cache } from "next/cache";
-import { Response, response } from "@libs/api/response";
-import { staffRouteWrapper } from "@libs/api/wrappers";
+import { ApiResponse, response, serverResponse, toResponse } from "@libs/api/response";
+import { routeWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { MembershipType, ZMembershipType } from "@libs/types/membershipType.type";
 
 import { ZMembershipTypeRequest } from "./type";
 
-function getMembershipType(id: string): Promise<Response<MembershipType>> {
+function getMembershipType(id: string) {
     return unstable_cache(
-        async (): Promise<Response<MembershipType>> => {
+        async (): Promise<ApiResponse<MembershipType>> => {
             const membershipType = await db.query.membershipTypes.findFirst({
                 where: (mt, { eq }) => eq(mt.id, id),
             });
@@ -16,13 +16,13 @@ function getMembershipType(id: string): Promise<Response<MembershipType>> {
             const { data, success, error } = ZMembershipType.safeParse(membershipType);
 
             if (!success) {
-                return response("bad_request", {
+                return serverResponse("bad_request", {
                     message: "Data is missing or malformed, this should not happen",
                     error: error?.issues,
                 });
             }
 
-            return response("ok", { data });
+            return serverResponse("ok", { data });
         },
         ["membershipType", id],
         {
@@ -32,7 +32,7 @@ function getMembershipType(id: string): Promise<Response<MembershipType>> {
     )();
 }
 
-export const POST = staffRouteWrapper<MembershipType>(async (req) => {
+export const POST = routeWrapper<MembershipType>(async (req) => {
     console.log(req);
 
     const body = await req.json();
@@ -46,5 +46,5 @@ export const POST = staffRouteWrapper<MembershipType>(async (req) => {
         });
     }
 
-    return await getMembershipType(requested.data.id);
+    return await toResponse(await getMembershipType(requested.data.id));
 });

@@ -6,6 +6,7 @@ import { z } from "zod";
 export const ZTeapotRoute = z.object({
     tea: z.string(),
 });
+
 export type TeaPotRouteResponse = z.infer<typeof ZTeapotRoute>;
 
 // * for POST
