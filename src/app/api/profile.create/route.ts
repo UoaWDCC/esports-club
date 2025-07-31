@@ -7,6 +7,10 @@ import { ProfileInsertionDTO, ZProfileCreationDTO } from "@libs/types/profile.ty
 import { profiles } from "@schema";
 import { eq } from "drizzle-orm";
 
+/**
+ * @description Create a new profile if the logged in user does not have one
+ * @example Request body example: TBA
+ */
 export const POST = userRouteWrapper(async (req, session) => {
     const res = await req.json();
 

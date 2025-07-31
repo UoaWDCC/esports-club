@@ -11,10 +11,11 @@ import {
 } from "./type";
 
 /**
- * @body {
- *  "status"?: "active" | "expired" | undefined
- *  }
- * @returns get membership all membership
+ * @description Get all membership with status label, can be filtered by passing "status"
+ * @example Request body example:
+ * {
+ *   "status": "active"  // or "expired" or empty
+ * }
  */
 export const POST = staffRouteWrapper<MembershipAllRouteResponse[]>(async (req) => {
     const body = await req.json();

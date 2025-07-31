@@ -10,7 +10,9 @@ import {
     ZMembershipListRouteResponse,
 } from "./type";
 
-// get all memberships of the logged in user
+/**
+ * @description Get all membership of the current logged in user
+ */
 export const GET = userRouteWrapper(async (_, session) => {
     const { id: userId } = session.user;
 
@@ -18,11 +20,11 @@ export const GET = userRouteWrapper(async (_, session) => {
 });
 
 /**
- * @body {
- *  "userId": string,
- *  "status"?: "active" | "expired" | undefined
- *  }
- * @returns get membership of specific user
+ * @description Get all membership of a specific user via userId
+ * @example Request body example:
+ * {
+ *   "userId": "4wmO9ldIBDx4xadtEunZtfkhuaxTgVyH"
+ * }
  */
 export const POST = staffRouteWrapper<MembershipListRouteResponse[]>(async (req) => {
     const body = await req.json();

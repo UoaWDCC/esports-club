@@ -32,6 +32,13 @@ function getMembershipType(id: string) {
     )();
 }
 
+/**
+ * @description Get a membership type via membership type id (ms_id)
+ * @example Request body example:
+ * {
+ *   "ms_id": "1082919f-18db-4fcf-b8d5-f62617c84945"
+ * }
+ */
 export const POST = routeWrapper<MembershipType>(async (req) => {
     console.log(req);
 
@@ -46,5 +53,5 @@ export const POST = routeWrapper<MembershipType>(async (req) => {
         });
     }
 
-    return await toResponse(await getMembershipType(requested.data.id));
+    return await toResponse(await getMembershipType(requested.data.ms_id));
 });

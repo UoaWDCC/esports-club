@@ -6,6 +6,9 @@ import { getAllMembers } from "@/services/membership/getAllMembers";
 
 import { MemberResponse, ZMemberResponse } from "./type";
 
+/**
+ * @description Get all profile with active membership
+ */
 export const GET = staffRouteWrapper<MemberResponse[]>(async () => {
     const members = await getAllMembers();
 
