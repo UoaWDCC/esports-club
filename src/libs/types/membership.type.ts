@@ -20,14 +20,11 @@ const ZMembership = z.object({
     notes: z.string(),
 });
 
-/**
- * data transfer object for the `memberships` table
- */
-const ZMembershipDTO = z.object({
-    profileId: z.string(),
-    invoiceId: z.string(),
-    membershipTypeId: z.string(),
-    status: z.enum(STATUS_OPTIONS),
+const ZMembershipDTO = ZMembership.omit({
+    id: true,
+    profileId: true,
+    createdAt: true,
+    notes: true,
 });
 
 type Membership = z.infer<typeof ZMembership>;
