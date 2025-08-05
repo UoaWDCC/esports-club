@@ -1,1 +1,0 @@
-see esport's figjam for db schema

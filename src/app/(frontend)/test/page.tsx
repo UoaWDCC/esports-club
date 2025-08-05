@@ -6,7 +6,8 @@ export default function TestNavigation() {
         <div className="flex h-dvh w-dvw flex-col items-center justify-center gap-6 bg-white text-black">
             <h1 className="text-3xl">Emailing UI</h1>
             <div className="flex h-min w-min gap-6">
-                <NavBlock href="tests/email/verification">verification-email</NavBlock>
+                <NavBlock href="test/email/verification">verification-email</NavBlock>
+                <NavBlock href="test/memberApproval">memberApproval</NavBlock>
             </div>
         </div>
     );

@@ -1,8 +1,7 @@
 import React, { ReactNode } from "react";
 import Link, { LinkProps } from "next/link";
+import { cn } from "@libs/utils/class";
 import { tv, VariantProps } from "tailwind-variants";
-
-import { cn } from "@/libs/utils";
 
 type CommonProps = {
     className?: string;

@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 /**
  * Zod schema for the `membership_types` table
@@ -18,16 +18,11 @@ const ZMembershipType = z.object({
     createdAt: z.date(),
 });
 
-/**
- * data transfer object for the `membership_types` table
- */
-const ZMembershipTypeDTO = z.object({
-    name: z.string().min(1),
-    description: z.string().optional(),
-    startAt: z.date(),
-    endAt: z.date(),
-    price: z.coerce.number(),
-    isActive: z.boolean(),
+const ZMembershipTypeDTO = ZMembershipType.omit({
+    id: true,
+    isActive: true,
+    updateAt: true,
+    createdAt: true,
 });
 
 type MembershipType = z.infer<typeof ZMembershipType>;
