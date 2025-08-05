@@ -16,9 +16,9 @@ type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 const ZInvoice = z.object({
     // TODO: switch id, and profileId to uuid in the future
     id: z.string(),
-    profileId: z.string().nullable(),
+    profileId: z.string().nullable().optional(),
     type: z.enum(INVOICE_TYPES),
-    description: z.string().nullable(),
+    description: z.string().nullable().optional(),
     status: z.enum(PAYMENT_STATUSES),
     paidDate: z.date(),
     paymentMethod: z.enum(PAYMENT_METHODS),
@@ -29,16 +29,7 @@ const ZInvoice = z.object({
 /**
  * data transfer object for the `invoices` table
  */
-const ZInvoiceDTO = z.object({
-    // TODO: switch id to uuid in the future
-    profileId: z.string(),
-    type: z.enum(INVOICE_TYPES),
-    description: z.string().optional(),
-    status: z.enum(PAYMENT_STATUSES),
-    paidDate: z.date(),
-    paymentMethod: z.enum(PAYMENT_METHODS),
-    price: z.number(),
-});
+const ZInvoiceDTO = ZInvoice.omit({ id: true, profileId: true, createdAt: true });
 
 type Invoice = z.infer<typeof ZInvoice>;
 type InvoiceDTO = z.infer<typeof ZInvoiceDTO>;

@@ -20,3 +20,21 @@ export const GET = routeWrapper(async (req, session, context: RouteContext<"id">
 });
 
 ```
+
+reading collection
+
+`route.all/` - getting all item of a collection
+`route.get/` - getting a single item via some conditions
+`route.list/` - getting an array of items via some conditions
+
+creating collection
+
+`route.create/` - creating an object of a collection
+
+updating collection
+
+`route.update/` - 
+
+deleting collection
+
+`route.delete/` - 

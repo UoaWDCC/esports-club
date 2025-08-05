@@ -10,6 +10,7 @@ import { TeaPotIdRouteResponse } from "./type";
 // simple GET, that returns a tea with "id"
 // wrap the api and type the response
 // type your param with RouteContext<"param_name">
+// TODO: change access control
 export const GET = routeWrapper<TeaPotIdRouteResponse>(
     async (req, session, ctx: RouteContext<"id">) => {
         // ctx param is a promise so you need to await
