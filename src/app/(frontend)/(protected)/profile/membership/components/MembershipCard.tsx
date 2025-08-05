@@ -1,8 +1,8 @@
-import { cn } from "@libs/utils";
+import { cn } from "@libs/utils/class";
 
 import { Button } from "@/components/button/Button";
 
-import { TestMembershipType } from "../types/TestMembershipType";
+import type { TestMembershipType } from "../types/TestMembershipType";
 
 interface MembershipCardProps {
     membership: TestMembershipType;
@@ -19,7 +19,7 @@ export function MembershipCard({ membership }: MembershipCardProps) {
     return (
         <div
             className={cn(
-                `flex w-full max-w-[752px] flex-col gap-6 rounded-xl p-3`,
+                `flex w-full flex-col gap-6 rounded-xl p-3`,
                 membership.isActive ? "border border-[#978FFE] bg-[#978FFE]/20" : "bg-gray",
             )}
         >
@@ -34,7 +34,6 @@ export function MembershipCard({ membership }: MembershipCardProps) {
                 <div className="flex h-fit gap-2">
                     <Button
                         className={cn(
-                            `px-[10px] py-3`,
                             membership.isActive
                                 ? "bg-[#00FF62]/10 text-[#00FF62]"
                                 : "text-gray-400",
@@ -43,9 +42,7 @@ export function MembershipCard({ membership }: MembershipCardProps) {
                     >
                         {membership.isActive ? "Active" : "Expired"}
                     </Button>
-                    <Button className="px-[10px] py-3" variant={{ style: "cta" }}>
-                        Open invoice
-                    </Button>
+                    <Button variant={{ style: "cta" }}>Open invoice</Button>
                 </div>
             </div>
         </div>
