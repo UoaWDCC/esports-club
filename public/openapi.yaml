@@ -1,0 +1,117 @@
+openapi: 3.1.0
+info:
+  title: Esports club API
+  version: 1.0.0
+
+tags:
+  - name: Teapot
+    description: Teapot-related endpoints for tea suggestions and commentary.
+
+paths:
+  /api/teapot:
+    get:
+      tags:
+        - Teapot
+      description: Returns the greatest tea of all time.
+      responses:
+        '200':
+          description: Tea recommendation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeaPotSuccessResponse'
+    post:
+      tags:
+        - Teapot
+      description: Send a tea name and the teapot will comment on it.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeaPotSaysRequest'
+      responses:
+        '200':
+          description: Comment on your tea
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeaPotCommentResponseWrapper'
+        '400':
+          description: Invalid tea input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+
+components:
+  schemas:
+    TeaPotSaysRequest:
+      type: object
+      properties:
+        tea:
+          type: string
+          example: Qimen Hongcha
+      required:
+        - tea
+
+    TeaPotRouteResponse:
+      type: object
+      properties:
+        tea:
+          type: string
+          example: Qimen Hongcha
+      required:
+        - tea
+
+    TeaPotCommentResponse:
+      type: object
+      properties:
+        comment:
+          type: string
+          example: good choice.
+      required:
+        - comment
+
+    TeaPotSuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [teapot]
+        message:
+          type: string
+          example: the greatest tea of all time
+        data:
+          $ref: '#/components/schemas/TeaPotRouteResponse'
+
+    TeaPotCommentResponseWrapper:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [teapot]
+        message:
+          type: string
+          example: you should try Qimen Hongcha
+        data:
+          $ref: '#/components/schemas/TeaPotCommentResponse'
+
+    BadRequestResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [bad_request]
+        message:
+          type: string
+          example: teapot does not understand your tea, try Qimen Hongcha
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string

@@ -12,7 +12,7 @@ import { db } from "..";
  */
 
 async function seedMembership() {
-    const existingProfileId = "16d722a8-fc8b-4cc6-a816-2abfbe67151b";
+    const existingProfileId = "JB0BsSYAsblU4dcfWPpcwx36UbrHnJvL";
     const existingMembershipTypeId = "9670729f-95e5-4145-99e1-d368378191f2";
 
     const newInvoice: InvoiceDTO = {
@@ -31,7 +31,7 @@ async function seedMembership() {
         profileId: existingProfileId,
         invoiceId: invoiceId,
         membershipTypeId: existingMembershipTypeId,
-        isPaid: true,
+        status: "pending",
     };
 
     const result = await db.insert(memberships).values(newMembership).returning().execute();

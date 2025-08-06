@@ -1,18 +1,18 @@
 import { ZProfile } from "@libs/types/profile.type";
 
-import { createValidProfile } from "../utils/mockProfile";
+import { fakeProfile } from "../../../libs/utils/fake/fake.profile";
 
 describe("Profile Schema", () => {
     // highkey a useless and brittle test but it's a start 💀
     // testing zod for them, who does he think he is? 😭
     it("accepts valid input", () => {
-        const validProfile = createValidProfile();
+        const validProfile = fakeProfile();
         const result = ZProfile.safeParse(validProfile);
 
         expect(result.success).toBe(true);
     });
     it("rejects invalid input", () => {
-        const validProfile = createValidProfile();
+        const validProfile = fakeProfile();
         const invalidProfile = {
             ...validProfile,
             // integer instead of string

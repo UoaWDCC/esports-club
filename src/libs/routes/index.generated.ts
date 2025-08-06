@@ -1,6 +1,6 @@
 
 // automatically generated with generate-index.js, 
-// last generated: 29/06/2025
+// last generated: 29/07/2025
 
 export type RouteSection = {
     name: string;
@@ -91,6 +91,10 @@ export const TEST_ROUTES: RouteSection = {
     {
       "url": "/test/email/verification/",
       "name": "EmailVerificationPage"
+    },
+    {
+      "url": "/test/memberApproval/",
+      "name": "memberApprovalPage"
     },
     {
       "url": "/test/",

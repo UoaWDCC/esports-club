@@ -1,9 +1,8 @@
 "use client";
 
 // THIS IS A DEMO EXAMPLE FOR TANSTACK QUERY
+import { fetchPlaceholder } from "@libs/fetch/placeholder";
 import { useSuspenseQuery } from "@tanstack/react-query";
-
-import { fetchPlaceholder } from "@/libs/fetch/placeholder";
 
 const useGetPlaceholder = () => {
     const query = useSuspenseQuery({

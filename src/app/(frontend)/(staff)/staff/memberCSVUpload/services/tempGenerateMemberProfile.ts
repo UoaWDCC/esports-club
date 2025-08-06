@@ -55,7 +55,7 @@ export const generateMemberProfile = async (data: MemberData) => {
         profileId: profileData.id,
         invoiceId: invoiceData.id,
         membershipTypeId: membershipTypeId,
-        isPaid: true,
+        status: "approved",
     };
 
     const finalMembership = await db

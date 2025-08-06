@@ -1,4 +1,8 @@
-import { z } from "zod/v4";
+import { z } from "zod";
+
+export const STATUS_OPTIONS = ["rejected", "pending", "approved"] as const;
+
+export type StatusOptions = (typeof STATUS_OPTIONS)[number];
 
 /**
  * Zod schema for the `memberships` table
@@ -11,18 +15,16 @@ const ZMembership = z.object({
     profileId: z.string(),
     invoiceId: z.string(),
     membershipTypeId: z.string(),
-    isPaid: z.boolean(),
+    status: z.enum(STATUS_OPTIONS),
     createdAt: z.date(),
+    notes: z.string(),
 });
 
-/**
- * data transfer object for the `memberships` table
- */
-const ZMembershipDTO = z.object({
-    profileId: z.string(),
-    invoiceId: z.string(),
-    membershipTypeId: z.string(),
-    isPaid: z.boolean(),
+const ZMembershipDTO = ZMembership.omit({
+    id: true,
+    profileId: true,
+    createdAt: true,
+    notes: true,
 });
 
 type Membership = z.infer<typeof ZMembership>;

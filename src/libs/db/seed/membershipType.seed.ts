@@ -16,7 +16,6 @@ async function seedMembershipType() {
         startAt: new Date(),
         endAt: new Date("9999-12-31"),
         price: 9999,
-        isActive: false,
     };
 
     const result = await db.insert(membershipTypes).values(newMembershipType).returning().execute();
