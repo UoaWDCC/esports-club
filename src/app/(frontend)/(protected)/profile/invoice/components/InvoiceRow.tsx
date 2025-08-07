@@ -1,17 +1,19 @@
-import { Invoice } from "../data/TestInvoices";
+import Link from "next/link";
 
-export function InvoiceRow({ invoice }: { invoice: Invoice }) {
+import { TestInvoicesType } from "../types/TestInvoicesType";
+
+export function InvoiceRow({ invoice }: { invoice: TestInvoicesType }) {
     return (
-        <tr className="transition hover:bg-gray-900">
-            <td className="px-4 py-2">{invoice.period}</td>
-            <td className="px-4 py-2">{invoice.type}</td>
-            <td className="px-4 py-2">{invoice.method}</td>
-            <td className="px-4 py-2">{invoice.status}</td>
-            <td className="px-4 py-2">{invoice.total}</td>
-            <td className="px-4 py-2 text-right">
-                <a href="#" className="text-[#978FFE] hover:underline">
+        <tr className="transition *:px-4 *:py-2 hover:bg-gray-900">
+            <td>{invoice.period}</td>
+            <td>{invoice.type}</td>
+            <td>{invoice.method}</td>
+            <td>{invoice.status}</td>
+            <td>{invoice.total}</td>
+            <td className="text-right">
+                <Link href="#" className="text-[#978FFE] hover:underline">
                     View →
-                </a>
+                </Link>
             </td>
         </tr>
     );
