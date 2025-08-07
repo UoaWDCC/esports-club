@@ -13,7 +13,7 @@ please use with caution.\x1b[0m
 // ROUTE_PROTECTION_BYPASS="enabled"
 
 export const isBypassingRouteProtection = () => {
-    const isBypass = env.ROUTE_PROTECTION_BYPASS === "enabled";
+    const isBypass = env.NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS === "enabled";
 
     if (isBypass) {
         console.log(message);
