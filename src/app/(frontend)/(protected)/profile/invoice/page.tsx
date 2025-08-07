@@ -28,7 +28,7 @@ export default function InvoicePage() {
                 <div className="overflow-auto rounded-lg">
                     <table className="w-full text-left text-sm">
                         <thead className="bg-opacity-50 bg-[#978FFE] text-white">
-                            <tr className="*px-4 *py-2">
+                            <tr className="*:px-4 *:py-2">
                                 <th>Period</th>
                                 <th>Type</th>
                                 <th>Method</th>
