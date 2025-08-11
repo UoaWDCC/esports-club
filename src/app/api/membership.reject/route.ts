@@ -4,9 +4,7 @@ import { db } from "@libs/db";
 import { memberships, profiles } from "@schema";
 import { and, eq } from "drizzle-orm";
 
-import { sendApprovalEmail } from "@/services/email/membership-approved-email";
 import { sendRejectionEmail } from "@/services/email/membership-rejection-email";
-import createMembershipInvoice from "@/services/membership/createMembershipInvoice";
 
 import { ZMembershipRejectRouteRequest } from "./type";
 
@@ -43,6 +41,7 @@ export const POST = staffRouteWrapper(async (req) => {
                 message: "Error Rejecting Membership - MembershipID does not map to a Membership",
             });
         }
+
         const data = await db
             .select({
                 name: profiles.firstName,
@@ -53,6 +52,7 @@ export const POST = staffRouteWrapper(async (req) => {
                 memberships,
                 and(eq(memberships.id, membershipId), eq(profiles.id, memberships.profileId)),
             );
+
         const profileData = data[0];
         await sendRejectionEmail({
             to: profileData.email,
@@ -60,6 +60,7 @@ export const POST = staffRouteWrapper(async (req) => {
             name: profileData.name,
             reason: reason,
         });
+
         return response("ok", {
             message: "Membership Rejected Succesfully",
         });

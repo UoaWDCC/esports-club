@@ -22,7 +22,6 @@ const ZMembership = z.object({
 
 const ZMembershipDTO = ZMembership.omit({
     id: true,
-    profileId: true,
     createdAt: true,
     notes: true,
 });

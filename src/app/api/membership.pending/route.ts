@@ -9,21 +9,21 @@ import { MembershipPendingRouteResponse, ZMembershipPendingRouteResponse } from 
 /**
  * @description Get all memberships that are currently pending
  */
-export const GET = userRouteWrapper(async (_, session) => {
+export const GET = userRouteWrapper(async () => {
     return toResponse(await getAllMembershipsPending());
 });
 
 /**
  * @description Get all memberships that are currently pending
  */
-export const POST = staffRouteWrapper<MembershipPendingRouteResponse[]>(async (req) => {
+export const POST = staffRouteWrapper<MembershipPendingRouteResponse[]>(async () => {
     const memberships = await getAllMembershipsPending();
 
     if (!isOk(memberships)) {
         return toResponse(memberships);
     }
 
-    let filteredMemberships: MembershipPendingRouteResponse[] = memberships.data || [];
+    const filteredMemberships: MembershipPendingRouteResponse[] = memberships.data || [];
 
     return response("ok", { data: filteredMemberships });
 });

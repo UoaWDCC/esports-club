@@ -1,5 +1,4 @@
-import { title } from "process";
-import { ZMembership, ZMembershipDTO } from "@libs/types/membership.type";
+import { ZMembership } from "@libs/types/membership.type";
 import { z } from "zod";
 
 export const ZStatus = z.enum(["active", "expired"]);

@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { MembershipType } from "@libs/types/membershipType.type";
-
 import { useGetMyMemberships } from "@/app/api/membership.list/query";
 import { MembershipListRouteResponse } from "@/app/api/membership.list/type";
 import { Button } from "@/components/button/Button";
@@ -22,18 +19,20 @@ export default function MembershipPage() {
     if (!memberships) {
         return <div>No Data</div>;
     }
-    let active_membership = useMemo<MembershipListRouteResponse | null>(() => {
-        if (memberships.length == 0) {
-            return null;
-        }
+    let active_membership: MembershipListRouteResponse | null = null;
+    if (memberships.length == 0) {
+        active_membership = null;
+    } else {
         for (let i = 0; i < memberships.length; i++) {
             if (memberships[i].status === "active") {
                 return memberships[i];
             }
         }
 
-        return memberships[0];
-    }, [memberships]);
+        if (!active_membership) {
+            active_membership = memberships[0];
+        }
+    }
 
     return (
         <div className="flex items-center justify-center">

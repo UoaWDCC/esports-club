@@ -1,12 +1,7 @@
-import { ZMembershipType } from "@libs/types/membershipType.type";
 import { cn } from "@libs/utils/class";
-import { membershipTypes } from "@schema";
 
-import { useGetMembershipType } from "@/app/api/membership-type.get/query";
 import { MembershipListRouteResponse } from "@/app/api/membership.list/type";
 import { Button } from "@/components/button/Button";
-
-import type { TestMembershipType } from "../types/TestMembershipType";
 
 interface MembershipCardProps {
     membership: MembershipListRouteResponse;

@@ -15,7 +15,6 @@ export const useGetMembershipType = (id: string) => {
 export const fetchMembershipType = async (id: string) => {
     // Simulate additional network delay
     await new Promise((resolve) => setTimeout(resolve, 200));
-    const random = Math.floor(1 + Math.random() * 100);
     const data: MembershipTypeRequest = { ms_id: id };
     // free api
     const res = await fetch("/api/membership-type.get", {

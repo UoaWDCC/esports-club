@@ -1,11 +1,9 @@
 "use client";
 
-// Shared enum for filtering
-import { useEffect, useState } from "react";
 import { ApiResponse } from "@libs/api/response";
 import { useQuery } from "@tanstack/react-query";
 
-import { MembershipListRouteResponse, Status, ZMembershipListRouteResponse } from "./type";
+import { MembershipListRouteResponse } from "./type";
 
 export const useGetMyMemberships = () => {
     const query = useQuery<
