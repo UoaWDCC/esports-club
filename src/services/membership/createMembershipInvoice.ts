@@ -25,7 +25,7 @@ export default async function createMembershipInvoice({
             and(eq(memberships.id, membershipID), eq(profiles.id, memberships.profileId)),
         )
         .innerJoin(membershipTypes, and(eq(membershipTypes.id, memberships.membershipTypeId)))
-        .leftJoin(invoices, and(memberships.invoiceId, invoices.id));
+        .leftJoin(invoices, eq(memberships.invoiceId, invoices.id));
 
     if (data.length < 1) {
         console.log(

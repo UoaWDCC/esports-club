@@ -72,7 +72,13 @@ const getAllMembershipsByUserId = async (
     const membershipsList = await db
         .select({
             memberships: memberships,
-            membershipType: { startAt: membershipTypes.startAt, endAt: membershipTypes.endAt },
+            membershipType: {
+                startAt: membershipTypes.startAt,
+                endAt: membershipTypes.endAt,
+                description: membershipTypes.description,
+                price: membershipTypes.price,
+                title: membershipTypes.name,
+            },
         })
         .from(memberships)
         .where(and(eq(memberships.profileId, profile[0].id), eq(memberships.status, "approved")))
@@ -81,11 +87,11 @@ const getAllMembershipsByUserId = async (
     // check if membership is active or expired
     const now = new Date();
     const membershipsWithStatus = membershipsList.map((m) => {
-        const { startAt, endAt } = m.membershipType;
+        const { startAt, endAt, description } = m.membershipType;
 
         if (startAt <= now && now <= endAt)
-            return { ...m.memberships, startAt, endAt, status: "active" };
-        else return { ...m.memberships, startAt, endAt, status: "expired" };
+            return { ...m.memberships, startAt, endAt, description, status: "active" };
+        else return { ...m.memberships, startAt, endAt, description, status: "expired" };
     });
 
     const { data, success, error } =

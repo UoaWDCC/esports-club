@@ -1,15 +1,40 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+import { MembershipType } from "@libs/types/membershipType.type";
+
+import { useGetMyMemberships } from "@/app/api/membership.list/query";
+import { MembershipListRouteResponse } from "@/app/api/membership.list/type";
 import { Button } from "@/components/button/Button";
 
 import { MembershipCard } from "./components/MembershipCard";
 import { MembershipInfoRow } from "./components/MembershipInfoRow";
-import { TestMemberships } from "./data/TestMemberships";
 
 // requires user to be logged in
 // requires user to have a profile
 // see (protected)/profile/layout.tsx
 export default function MembershipPage() {
+    const { data: memberships, isLoading } = useGetMyMemberships();
+
+    if (isLoading) {
+        return <div> IsLoading</div>;
+    }
+    if (!memberships) {
+        return <div>No Data</div>;
+    }
+    let active_membership = useMemo<MembershipListRouteResponse | null>(() => {
+        if (memberships.length == 0) {
+            return null;
+        }
+        for (let i = 0; i < memberships.length; i++) {
+            if (memberships[i].status === "active") {
+                return memberships[i];
+            }
+        }
+
+        return memberships[0];
+    }, [memberships]);
+
     return (
         <div className="flex items-center justify-center">
             <div className="mb-24 flex w-full max-w-5xl flex-col gap-6">
@@ -19,9 +44,18 @@ export default function MembershipPage() {
                     <h2 className="font-tomorrow text-xl text-[#978FFE]">Membership status</h2>
                     <p className="text-sm">Your membership status</p>
                 </div>
-                <MembershipInfoRow title="Membership type" info="Full year membership" />
-                <MembershipInfoRow title="Status" info="Active membership" />
-                <MembershipInfoRow title="Expiry Date" info="29/12/2025" />
+                <MembershipInfoRow
+                    title="Membership type"
+                    info={active_membership?.title ?? "No Previous Memberships"}
+                />
+                <MembershipInfoRow
+                    title="Status"
+                    info={active_membership?.status ?? "No Previous Memberships"}
+                />
+                <MembershipInfoRow
+                    title="Expiry Date"
+                    info={active_membership?.endAt.toDateString() ?? "No Previous Memberships"}
+                />
                 <div className="flex justify-end gap-2">
                     <Button variant={{ style: "solid" }}>
                         <span>See advance details</span>
@@ -34,12 +68,12 @@ export default function MembershipPage() {
                 <div className="flex flex-col gap-2">
                     <div className="font-tomorrow flex gap-2 text-xl">
                         <p className="text-[#978FFE]">All membership(s)</p>
-                        <p>({TestMemberships.length})</p>
+                        <p>({memberships.length})</p>
                     </div>
                     <p className="text-sm">Your membership status</p>
                 </div>
-                {TestMemberships.map((membership) => (
-                    <MembershipCard key={membership.title} membership={membership} />
+                {memberships.map((membership) => (
+                    <MembershipCard key={membership.id} membership={membership} />
                 ))}
             </div>
         </div>

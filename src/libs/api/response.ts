@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Exact } from "@libs/types/utils";
-import { ZodIssue } from "zod";
+import { z, ZodIssue } from "zod";
 
 // API response stanard base out of JSend
 // https://github.com/omniti-labs/jsend
@@ -135,6 +135,14 @@ export const isOk = (response: ApiResponse) => {
     return successes.some((status) => status === response.status);
 };
 
+// Generic API Response Wrapper
+export const createZApiResponse = <T extends z.ZodTypeAny>(dataSchema: T) =>
+    z.object({
+        status: z.enum(Object.keys(statuses) as [keyof typeof statuses]),
+        data: dataSchema.optional(),
+        message: z.string(),
+        error: z.any().optional(), // Replace with Zod schema for DetailType if you have it
+    });
 /* examples
 export const GET = (): Response<GetData> => { 
     
