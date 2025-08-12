@@ -15,10 +15,7 @@ function formatDate(date: Date): string {
 }
 
 export function MembershipCard({ membership }: MembershipCardProps) {
-    let isActive = false;
-    if (membership.state == "active") {
-        isActive = true;
-    }
+    const isActive = membership.state === "active";
 
     return (
         <div
