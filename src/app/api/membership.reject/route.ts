@@ -9,10 +9,11 @@ import { sendRejectionEmail } from "@/services/email/membership-rejection-email"
 import { ZMembershipRejectRouteRequest } from "./type";
 
 /**
- * @description Get all membership of a specific user via userId
+ * @description Rejects a specific membership via membershipId and a reason
  * @example Request body example:
  * {
- *   "userId": "4wmO9ldIBDx4xadtEunZtfkhuaxTgVyH"
+ *   "membershipId": "4wmO9ldIBDx4xadtEunZtfkhuaxTgVyH",
+ *   "reason":"Was rude to staff"
  * }
  */
 export const POST = staffRouteWrapper(async (req) => {

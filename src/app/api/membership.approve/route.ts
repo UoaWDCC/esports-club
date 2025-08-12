@@ -10,10 +10,10 @@ import createMembershipInvoice from "@/services/membership/createMembershipInvoi
 import { ZMembershipApproveRouteRequest } from "./type";
 
 /**
- * @description Get all membership of a specific user via userId
+ * @description Approve a membership with membershipID
  * @example Request body example:
  * {
- *   "userId": "4wmO9ldIBDx4xadtEunZtfkhuaxTgVyH"
+ *   "membershipId": "4wmO9ldIBDx4xadtEunZtfkhuaxTgVyH"
  * }
  */
 export const POST = staffRouteWrapper(async (req) => {
@@ -30,59 +30,52 @@ export const POST = staffRouteWrapper(async (req) => {
 
     const { membershipId, paidDate, paymentMethod } = data;
 
-    try {
-        const result = await db
-            .update(memberships)
-            .set({ status: "approved" })
-            .where(eq(memberships.id, membershipId))
-            .returning();
+    const result = await db
+        .update(memberships)
+        .set({ status: "approved" })
+        .where(eq(memberships.id, membershipId))
+        .returning();
 
-        if (result.length < 1) {
-            return response("bad_request", {
-                message:
-                    "Error Approving Membership - MembershipID does not map to a exisiting Membership",
-            });
-        }
-
-        const data = await db
-            .select({
-                profileID: profiles.id,
-                name: profiles.firstName,
-                email: profiles.email,
-            })
-            .from(profiles)
-            .innerJoin(
-                memberships,
-                and(eq(memberships.id, membershipId), eq(profiles.id, memberships.profileId)),
-            );
-
-        if (data.length < 1) {
-            return response("bad_request", {
-                message: "Error Approving Membership - Membership does not map to a profile",
-            });
-        }
-
-        const invoice = await createMembershipInvoice({
-            membershipID: membershipId,
-            paidDate: paidDate,
-            payment_method: paymentMethod,
-        });
-
-        const profileData = data[0];
-        await sendApprovalEmail({
-            to: profileData.email,
-            subject: "UOA Esports Club Membership Approved",
-            name: profileData.name,
-            invoiceID: invoice.id,
-        });
-
-        return response("ok", {
-            message: "Membership Approved Succesfully",
-        });
-    } catch (error) {
-        console.error("Error Approving Membership:", error);
-        return response("internal_server_error", {
-            message: "Something went wrong when approving membership",
+    if (result.length < 1) {
+        return response("bad_request", {
+            message:
+                "Error Approving Membership - MembershipID does not map to a exisiting Membership",
         });
     }
+
+    const dbdata = await db
+        .select({
+            profileID: profiles.id,
+            name: profiles.firstName,
+            email: profiles.email,
+        })
+        .from(profiles)
+        .innerJoin(
+            memberships,
+            and(eq(memberships.id, membershipId), eq(profiles.id, memberships.profileId)),
+        );
+
+    if (dbdata.length < 1) {
+        return response("bad_request", {
+            message: "Error Approving Membership - Membership does not map to a profile",
+        });
+    }
+
+    const invoice = await createMembershipInvoice({
+        membershipID: membershipId,
+        paidDate: paidDate,
+        payment_method: paymentMethod,
+    });
+
+    const profileData = dbdata[0];
+    await sendApprovalEmail({
+        to: profileData.email,
+        subject: "UOA Esports Club Membership Approved",
+        name: profileData.name,
+        invoiceID: invoice.id,
+    });
+
+    return response("ok", {
+        message: "Membership Approved Succesfully",
+    });
 });

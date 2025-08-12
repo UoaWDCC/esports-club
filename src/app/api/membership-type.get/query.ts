@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import { MembershipTypeRequest } from "./type";
 
-export const useGetMembershipType = (id: string) => {
+export const useMembershipTypeQuery = (id: string) => {
     const query = useQuery({
-        queryKey: ["myMemberships"],
+        queryKey: ["get-membership-type"],
         queryFn: () => fetchMembershipType(id),
         staleTime: 5000 /*ms*/,
     });
@@ -13,8 +13,6 @@ export const useGetMembershipType = (id: string) => {
 };
 
 export const fetchMembershipType = async (id: string) => {
-    // Simulate additional network delay
-    await new Promise((resolve) => setTimeout(resolve, 200));
     const data: MembershipTypeRequest = { ms_id: id };
     // free api
     const res = await fetch("/api/membership-type.get", {

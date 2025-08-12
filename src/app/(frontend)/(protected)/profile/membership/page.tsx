@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetMyMemberships } from "@/app/api/membership.list/query";
+import { useMembershipListQuery } from "@/app/api/membership.list/query";
 import { MembershipListRouteResponse } from "@/app/api/membership.list/type";
 import { Button } from "@/components/button/Button";
 
@@ -11,7 +11,7 @@ import { MembershipInfoRow } from "./components/MembershipInfoRow";
 // requires user to have a profile
 // see (protected)/profile/layout.tsx
 export default function MembershipPage() {
-    const { data: memberships, isLoading } = useGetMyMemberships();
+    const { data: memberships, isLoading } = useMembershipListQuery();
 
     if (isLoading) {
         return <div> IsLoading</div>;
@@ -19,20 +19,8 @@ export default function MembershipPage() {
     if (!memberships) {
         return <div>No Data</div>;
     }
-    let active_membership: MembershipListRouteResponse | null = null;
-    if (memberships.length == 0) {
-        active_membership = null;
-    } else {
-        for (let i = 0; i < memberships.length; i++) {
-            if (memberships[i].status === "active") {
-                return memberships[i];
-            }
-        }
-
-        if (!active_membership) {
-            active_membership = memberships[0];
-        }
-    }
+    const active_membership: MembershipListRouteResponse | null =
+        memberships.find((e) => e.status == "active") ?? memberships[0];
 
     return (
         <div className="flex items-center justify-center">
