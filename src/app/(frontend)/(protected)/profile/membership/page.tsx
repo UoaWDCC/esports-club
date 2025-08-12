@@ -20,7 +20,7 @@ export default function MembershipPage() {
         return <div>No Data</div>;
     }
     const active_membership: MembershipListRouteResponse | null =
-        memberships.find((e) => e.status == "active") ?? memberships[0];
+        memberships.find((e) => e.state == "active") ?? memberships[0];
 
     return (
         <div className="flex items-center justify-center">
@@ -37,7 +37,7 @@ export default function MembershipPage() {
                 />
                 <MembershipInfoRow
                     title="Status"
-                    info={active_membership?.status ?? "No Previous Memberships"}
+                    info={active_membership?.state ?? "No Previous Memberships"}
                 />
                 <MembershipInfoRow
                     title="Expiry Date"

@@ -16,7 +16,7 @@ function formatDate(date: Date): string {
 
 export function MembershipCard({ membership }: MembershipCardProps) {
     let isActive = false;
-    if (membership.status == "active") {
+    if (membership.state == "active") {
         isActive = true;
     }
 

@@ -1,8 +1,11 @@
 import { z } from "zod";
 
+// seperated to be imported for neon pg and zod
 export const STATUS_OPTIONS = ["rejected", "pending", "approved"] as const;
 
-export type StatusOptions = (typeof STATUS_OPTIONS)[number];
+export const ZStatusOptions = z.enum(STATUS_OPTIONS);
+
+export type StatusOption = z.infer<typeof ZStatusOptions>;
 
 /**
  * Zod schema for the `memberships` table
@@ -15,7 +18,7 @@ const ZMembership = z.object({
     profileId: z.string(),
     invoiceId: z.string(),
     membershipTypeId: z.string(),
-    status: z.enum(STATUS_OPTIONS),
+    status: ZStatusOptions,
     createdAt: z.date(),
     notes: z.string(),
 });
