@@ -7,6 +7,8 @@ import { ProfileInsertionDTO, ZProfileCreationDTO } from "@libs/types/profile.ty
 import { profiles } from "@schema";
 import { eq } from "drizzle-orm";
 
+import { ZProfilePostRequest } from "./type";
+
 /**
  * @description Create a new profile if the logged in user does not have one
  * @example Request body example: TBA
@@ -18,7 +20,8 @@ export const POST = userRouteWrapper(async (req, session) => {
     const { id: userId, email, emailVerified } = session.user;
 
     // validate body
-    const { data, success, error } = ZProfileCreationDTO.safeParse(res);
+    // TODO: replace with type.ts type
+    const { data, success, error } = ZProfilePostRequest.safeParse(res);
     if (!success) {
         return response("bad_request", {
             message: "Data is missing or malformed",
