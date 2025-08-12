@@ -1,6 +1,7 @@
 import { ApiResponse, isOk, response, serverResponse, toResponse } from "@libs/api/response";
 import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
+import { StatusOption } from "@libs/types/membership.type";
 import { memberships, membershipTypes, profiles } from "@schema";
 import { and, eq } from "drizzle-orm";
 
@@ -38,17 +39,17 @@ export const POST = staffRouteWrapper<MembershipListRouteResponse[]>(async (req)
         });
     }
 
-    const { userId, status } = data;
+    const { userId, state, status } = data;
 
-    const memberships = await getAllMembershipsByUserId(userId);
+    const memberships = await getAllMembershipsByUserId(userId, status);
 
     if (!isOk(memberships)) {
         return toResponse(memberships);
     }
 
     let filteredMemberships: MembershipListRouteResponse[] = memberships.data || [];
-    if (status) {
-        filteredMemberships = filteredMemberships.filter((m) => m.status === status) || [];
+    if (state) {
+        filteredMemberships = filteredMemberships.filter((m) => m.state === state) || [];
     }
 
     return response("ok", { data: filteredMemberships });
@@ -60,6 +61,7 @@ export const POST = staffRouteWrapper<MembershipListRouteResponse[]>(async (req)
  */
 const getAllMembershipsByUserId = async (
     userId: string,
+    status?: StatusOption,
 ): Promise<ApiResponse<MembershipListRouteResponse[]>> => {
     const profile = await db
         .select({ id: profiles.id })
@@ -72,20 +74,38 @@ const getAllMembershipsByUserId = async (
     const membershipsList = await db
         .select({
             memberships: memberships,
-            membershipType: { startAt: membershipTypes.startAt, endAt: membershipTypes.endAt },
+            membershipType: {
+                startAt: membershipTypes.startAt,
+                endAt: membershipTypes.endAt,
+                description: membershipTypes.description,
+                price: membershipTypes.price,
+                title: membershipTypes.name,
+            },
         })
         .from(memberships)
-        .where(and(eq(memberships.profileId, profile[0].id), eq(memberships.status, "approved")))
+        .where(
+            and(
+                eq(memberships.profileId, profile[0].id),
+                status ? eq(memberships.status, status) : undefined,
+            ),
+        )
         .innerJoin(membershipTypes, eq(memberships.membershipTypeId, membershipTypes.id));
 
     // check if membership is active or expired
     const now = new Date();
     const membershipsWithStatus = membershipsList.map((m) => {
-        const { startAt, endAt } = m.membershipType;
+        const { startAt, endAt, description } = m.membershipType;
 
-        if (startAt <= now && now <= endAt)
-            return { ...m.memberships, startAt, endAt, status: "active" };
-        else return { ...m.memberships, startAt, endAt, status: "expired" };
+        const isActive = startAt <= now && now <= endAt;
+
+        return {
+            ...m.memberships,
+            ...m.membershipType,
+            startAt,
+            endAt,
+            description,
+            state: isActive ? "active" : "expired",
+        };
     });
 
     const { data, success, error } =
