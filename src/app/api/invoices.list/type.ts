@@ -1,6 +1,6 @@
-import { ZProfileDTO } from "@libs/types/profile.type";
+import { ZInvoiceDTO } from "@libs/types/invoice.type";
 import { z } from "zod";
 
-export const ZInvoiceListResponse = ZProfileDTO.array();
+export const ZInvoiceListResponse = ZInvoiceDTO.array();
 
 export type InvoiceListResponse = z.infer<typeof ZInvoiceListResponse>;

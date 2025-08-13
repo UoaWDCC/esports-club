@@ -8,11 +8,22 @@ import { useProfile } from "../components/ProfileProvider";
 import { InvoiceRow } from "./components/InvoiceRow";
 import { TestInvoices } from "./data/TestInvoices";
 
+import { useInvoiceListQuery } from "@/app/api/invoices.list/query"
+
 // requires user to be logged in
 // requires user to have a profile
 // see (protected)/profile/layout.tsx
 export default function InvoicePage() {
     const profile = useProfile();
+
+    const {data, isLoading} = useInvoiceListQuery()
+
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+
+    if (!data?.data) return
+
 
     return (
         <div className="flex items-center justify-center">
@@ -38,7 +49,7 @@ export default function InvoicePage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-800 border border-gray-800">
-                            {TestInvoices.map((invoice, index) => (
+                            {data.data.map((invoice, index) => (
                                 <InvoiceRow key={index} invoice={invoice} />
                             ))}
                         </tbody>
