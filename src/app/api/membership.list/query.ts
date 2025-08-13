@@ -3,23 +3,23 @@
 import { ApiResponse } from "@libs/api/response";
 import { useQuery } from "@tanstack/react-query";
 
-import { MembershipListRouteResponse } from "./type";
+import { MembershipListResponse } from "./type";
 
 export const useMembershipListQuery = () => {
     const query = useQuery<
-        ApiResponse<MembershipListRouteResponse[]>,
+        ApiResponse<MembershipListResponse>,
         Error,
-        MembershipListRouteResponse[]
+        ApiResponse<MembershipListResponse>
     >({
         queryKey: ["get-my-memberships"],
         queryFn: fetchMyMemberships,
-        select: (res) => res.data ?? [],
         staleTime: 5000 /*ms*/,
     });
-    return query;
+
+    return { ...query, data: (query.data?.data || []) as MembershipListResponse };
 };
 
-export const fetchMyMemberships = async (): Promise<ApiResponse<MembershipListRouteResponse[]>> => {
+export const fetchMyMemberships = async (): Promise<ApiResponse<MembershipListResponse>> => {
     const res = await fetch("/api/membership.list", { cache: "no-cache" });
     if (!res.ok) {
         throw new Error("Failed to fetch memberships");
