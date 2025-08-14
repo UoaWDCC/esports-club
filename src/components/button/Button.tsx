@@ -58,7 +58,7 @@ export const Button = ({ ...props }: ButtonProps) => {
         return (
             <Link
                 {...(props as LinkVersion)}
-                className={cn(button(props.variant))}
+                className={cn(button(props.variant), props.className)}
                 target={newTab}
                 href={props.href}
             >

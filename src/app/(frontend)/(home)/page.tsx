@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { LandingImage } from "@/components/assets/image";
 import { Button } from "@/components/button/Button";
+import Footer from "@/components/footer/Footer";
 import { PageLayout } from "@/components/layout/PageLayout";
 import Navbar from "@/components/navbar/Navbar";
 
@@ -46,6 +47,7 @@ export default function LandingPage() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </PageLayout>
     );
 }
