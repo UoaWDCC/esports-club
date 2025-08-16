@@ -1,7 +1,7 @@
 import { ZProfile } from "@libs/types/profile.type";
 import { z } from "zod";
 
-export const ZMemberResponse = z.object({
+export const ZMemberListResponse = z.object({
     members: ZProfile.array(),
     pagination: z
         .object({
@@ -13,4 +13,9 @@ export const ZMemberResponse = z.object({
         .optional(),
 });
 
-export type MemberResponse = z.infer<typeof ZMemberResponse>;
+export const ZMemberListRequest = z.object({
+    page: z.number().int().default(1),
+    limit: z.number().int().default(50),
+});
+
+export type MemberList = z.infer<typeof ZMemberListResponse>;

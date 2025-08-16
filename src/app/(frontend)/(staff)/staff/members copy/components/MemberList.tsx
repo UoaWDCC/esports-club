@@ -1,11 +1,11 @@
 "use client";
 
-import { useInvoiceListQuery } from "@/app/api/invoices.list/query";
+import { useMemberListQuery } from "@/app/api/member.all/query";
 
-import { InvoiceRow } from "./InvoiceRow";
+import { MemberRow } from "./MemberRow";
 
-export const InvoiceList = () => {
-    const { data, error, isLoading, isError } = useInvoiceListQuery();
+export const MemberList = () => {
+    const { data, error, isLoading, isError } = useMemberListQuery();
 
     if (isLoading) {
         return (
@@ -37,7 +37,9 @@ export const InvoiceList = () => {
         );
     }
 
-    const { invoices } = data;
+    const { members } = data;
 
-    return invoices.map((invoice, index) => <InvoiceRow key={index} invoice={invoice} />);
+    return members.map((member, index) => (
+        <MemberRow key={index} member={member} index={index + 1} />
+    ));
 };

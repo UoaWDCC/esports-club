@@ -1,7 +1,6 @@
 import { cn } from "@libs/utils/class";
 
 import { MembershipListResponse } from "@/app/api/membership.list/type";
-import { Button } from "@/components/button/Button";
 
 interface MembershipCardProps {
     membership: MembershipListResponse["memberships"][0];
@@ -20,30 +19,18 @@ export function MembershipCard({ membership }: MembershipCardProps) {
     return (
         <div
             className={cn(
-                `flex w-full flex-col gap-6 rounded-xl p-3`,
+                "flex w-full flex-col gap-6 rounded-sm p-6",
                 isActive ? "border border-[#978FFE] bg-[#978FFE]/20" : "bg-gray",
             )}
         >
-            <h1 className="text-xl font-bold">{membership.title}</h1>
-            <p className="text-gray-400">{membership?.description && "No description"}</p>
-            <div className="flex items-end justify-between">
-                <div className="flex flex-col">
-                    <p>MembershipId: {membership.id}</p>
-                    <p>Purchased: {formatDate(membership.startAt)}</p>
-                    <p>Expiry: {formatDate(membership.endAt)}</p>
-                </div>
-                <div className="flex h-fit gap-2">
-                    <Button
-                        className={cn(
-                            isActive ? "bg-[#00FF62]/10 text-[#00FF62]" : "text-gray-400",
-                        )}
-                        variant={{ style: "solid" }}
-                    >
-                        {isActive ? "Active" : "Expired"}
-                    </Button>
-                    <Button variant={{ style: "cta" }}>Open invoice</Button>
+            <div>
+                <h3 className="text-xl font-bold">{membership.title}</h3>
+                <div className="flex gap-2">
+                    <div className="rounded-xs">Expiry: {formatDate(membership.endAt)}</div>
+                    <div className="rounded-xs">Reference: {membership.id.slice(0, 8)}</div>
                 </div>
             </div>
+            <p className="text-gray-400">{membership?.description && "No description"}</p>
         </div>
     );
 }
