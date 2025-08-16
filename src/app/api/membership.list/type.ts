@@ -9,15 +9,17 @@ export const ZMembershipListRequest = z.object({
     status: ZStatusOptions.optional(),
 });
 
-export const ZMembershipListResponse = ZMembership.extend({
-    description: z.string(),
-    startAt: z.date(),
-    endAt: z.date(),
-    status: ZStatusOptions,
-    state: ZStateOptions,
-    price: z.number(),
-    title: z.string(),
-}).array();
+export const ZMembershipListResponse = z.object({
+    memberships: ZMembership.extend({
+        description: z.string(),
+        startAt: z.date(),
+        endAt: z.date(),
+        status: ZStatusOptions,
+        state: ZStateOptions,
+        price: z.number(),
+        title: z.string(),
+    }).array(),
+});
 
 export type MembershipListResponse = z.infer<typeof ZMembershipListResponse>;
 export type Status = z.infer<typeof ZStateOptions>;

@@ -145,21 +145,6 @@ export const isOk = (response: { status: Statuses }) => {
     return successes.some((status) => status === response.status);
 };
 
-export const parseQuery = async <T extends ZodSchema>(
-    response: Response,
-    schema: T,
-): Promise<z.infer<typeof schema>> => {
-    const data = (await response.json()) as ApiResponse<object>;
-
-    if (!response.ok) {
-        // error: Check if data has metadata property before accessing it
-        const errorMessage = "metadata" in data ? data.metadata.message : "Something went wrong";
-        throw new Error(errorMessage);
-    }
-
-    return schema.parse(data);
-};
-
 /* examples
 export const GET = (): Response<GetData> => { 
     

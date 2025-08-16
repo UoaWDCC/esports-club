@@ -43,12 +43,14 @@ export const POST = staffRouteWrapper<MembershipListResponse>(async (req) => {
         return toResponse(memberships);
     }
 
-    let filteredMemberships: MembershipListResponse = memberships.data || [];
+    let filteredMemberships: MembershipListResponse["memberships"] =
+        memberships.data?.memberships || [];
+
     if (state) {
         filteredMemberships = filteredMemberships.filter((m) => m.state === state) || [];
     }
 
-    return response("ok", { data: filteredMemberships });
+    return response("ok", { data: { memberships: filteredMemberships } });
 });
 
 /**
@@ -104,7 +106,9 @@ const getAllMembershipsByUserId = async (
         };
     });
 
-    const { data, success, error } = ZMembershipListResponse.safeParse(membershipsWithStatus);
+    const { data, success, error } = ZMembershipListResponse.safeParse({
+        memberships: membershipsWithStatus || [],
+    });
 
     if (!success) {
         return serverResponse("bad_request", {
