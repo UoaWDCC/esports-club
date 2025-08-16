@@ -29,7 +29,7 @@ const ZInvoice = z.object({
 /**
  * data transfer object for the `invoices` table
  */
-const ZInvoiceDTO = ZInvoice.omit({ id: true, profileId: true, createdAt: true });
+const ZInvoiceDTO = ZInvoice.omit({ id: true, createdAt: true });
 
 type Invoice = z.infer<typeof ZInvoice>;
 type InvoiceDTO = z.infer<typeof ZInvoiceDTO>;
