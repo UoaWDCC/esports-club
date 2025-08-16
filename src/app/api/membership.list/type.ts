@@ -12,8 +12,8 @@ export const ZMembershipListRequest = z.object({
 export const ZMembershipListResponse = z.object({
     memberships: ZMembership.extend({
         description: z.string(),
-        startAt: z.date(),
-        endAt: z.date(),
+        startAt: z.coerce.date(),
+        endAt: z.coerce.date(),
         status: ZStatusOptions,
         state: ZStateOptions,
         price: z.number(),

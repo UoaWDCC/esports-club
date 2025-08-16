@@ -1,14 +1,9 @@
-import { ApiResponse } from "@libs/api/response";
 import { useQuery } from "@tanstack/react-query";
 
-import { InvoiceListResponse } from "./type";
+import { InvoiceListResponse, ZInvoiceListResponse } from "./type";
 
 export const useInvoiceListQuery = () => {
-    const query = useQuery<
-        ApiResponse<InvoiceListResponse[]>,
-        Error,
-        ApiResponse<InvoiceListResponse[]>
-    >({
+    const query = useQuery<InvoiceListResponse, Error, InvoiceListResponse>({
         queryKey: ["list-my-invoices"],
         queryFn: fetchMyInvoices,
         staleTime: 5000 /*ms*/,
@@ -16,11 +11,11 @@ export const useInvoiceListQuery = () => {
     return query;
 };
 
-export const fetchMyInvoices = async (): Promise<ApiResponse<InvoiceListResponse[]>> => {
+export const fetchMyInvoices = async () => {
     const res = await fetch("/api/invoices.list", { cache: "no-cache" });
     if (!res.ok) {
         throw new Error("Failed to fetch Invoices");
     }
 
-    return await res.json();
+    return ZInvoiceListResponse.parse(await res.json());
 };
