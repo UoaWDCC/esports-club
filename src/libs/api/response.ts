@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Exact } from "@libs/types/utils";
-import { ZodIssue } from "zod";
+import { z, ZodIssue, ZodSchema } from "zod";
 
 // API response stanard base out of JSend
 // https://github.com/omniti-labs/jsend
@@ -47,10 +47,25 @@ type Successes = Extract<Statuses, (typeof successes)[number]>;
 type Specials = Extract<Statuses, "teapot">;
 type Errors = Exclude<Statuses, Successes | Specials>;
 
-export type ApiResponse<T extends object = object> =
+export type ServerResponse<T extends object = object> =
     | { status: Successes | Specials; data: T; message: string; error?: never }
     | { status: Errors; data?: never; message: string; error?: DetailType };
 
+type Metadata = {
+    status: Statuses;
+    message: string;
+    error: DetailType;
+};
+
+export type ApiResponse<T extends object = object> =
+    | ({
+          [K in keyof T]: T[K];
+      } & {
+          metadata: Metadata;
+      })
+    | Metadata;
+
+// Response type for NextResponse with new structure
 export type Response<T extends object = object> = NextResponse<ApiResponse<T>>;
 
 type DetailType<T extends string = string> =
@@ -58,21 +73,6 @@ type DetailType<T extends string = string> =
           [key in T]: string | string[] | undefined;
       }
     | Array<ZodIssue>;
-
-// ? Success statuses: must include data
-// ? exclude error from success responses
-
-export function response<T extends object>(
-    status: Successes | Specials,
-    body?: { data?: Exact<T>; message?: string; error?: never },
-): Response<T>;
-
-// ? Error statuses: must be empty
-// ? exclude data from error responses
-export function response<T extends object>(
-    status: Errors,
-    body?: { data?: never; message?: string; error?: DetailType },
-): Response<T>;
 
 /**
  * see documentation at `docs/backend.md`
@@ -90,17 +90,22 @@ export function response<T extends object>(
     status: Statuses,
     body: { data?: Exact<T>; message?: string; error?: DetailType } = {},
 ): Response<T> {
-    return NextResponse.json(
-        {
-            status,
-            data: body.data,
-            message: body.message || messages[status],
-            error: body.error,
-        },
-        {
-            status: statuses[status],
-        },
-    ) as Response<T>;
+    const metadata = {
+        status,
+        message: body.message || messages[status],
+        error: body.error,
+    };
+
+    // For successful responses, return data with metadata
+    if (successes.includes(status as Successes) || status === "teapot") {
+        return NextResponse.json(
+            { ...body.data, metadata },
+            { status: statuses[status] },
+        ) as Response<T>;
+    }
+
+    // For error responses, return only metadata
+    return NextResponse.json({ metadata }, { status: statuses[status] }) as Response<T>;
 }
 
 // ? server action response
@@ -108,30 +113,35 @@ export function response<T extends object>(
 export function serverResponse<T extends object>(
     status: Statuses,
     body: { data?: Exact<T>; message?: string; error?: DetailType } = {},
-): ApiResponse<T> {
+): ServerResponse<T> {
     return {
         status,
         data: body.data,
         message: body.message || messages[status],
         error: body.error,
-    } as ApiResponse<T>;
+    } as ServerResponse<T>;
 }
 
-export function toResponse<T extends object>(result: ApiResponse<T>): Response<T> {
-    return NextResponse.json(
-        {
-            status: result.status,
-            data: result.data,
-            message: result.message,
-            error: result.error,
-        },
-        {
-            status: statuses[result.status],
-        },
-    ) as Response<T>;
+export function toResponse<T extends object>(result: ServerResponse<T>): Response<T> {
+    const metadata = {
+        status: result.status,
+        message: result.message,
+        error: result.error,
+    };
+
+    // For successful responses, return data with metadata
+    if (successes.includes(result.status as Successes) || result.status === "teapot") {
+        return NextResponse.json(
+            { ...result.data, metadata },
+            { status: statuses[result.status] },
+        ) as Response<T>;
+    }
+
+    // For error responses, return only metadata
+    return NextResponse.json({ metadata }, { status: statuses[result.status] }) as Response<T>;
 }
 
-export const isOk = (response: ApiResponse) => {
+export const isOk = (response: { status: Statuses }) => {
     return successes.some((status) => status === response.status);
 };
 
@@ -155,4 +165,8 @@ export const GET = (): Response<GetData> => {
 
     ❌ response("unauthorized", { data: { id: "2" } });
 };
+
+// New response structure:
+// Success: { id: "1", metadata: { status: "ok", message: "The request was successful.", error: undefined } }
+// Error: { metadata: { status: "unauthorized", message: "not a staff member", error: { password: "not enough characters" } } }
 */

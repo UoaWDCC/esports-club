@@ -1,15 +1,11 @@
-import { ApiResponse, isOk, response, serverResponse, toResponse } from "@libs/api/response";
+import { isOk, response, ServerResponse, serverResponse, toResponse } from "@libs/api/response";
 import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { StatusOption } from "@libs/types/membership.type";
 import { memberships, membershipTypes, profiles } from "@schema";
 import { and, eq } from "drizzle-orm";
 
-import {
-    MembershipListRouteResponse,
-    ZMembershipListRouteRequest,
-    ZMembershipListRouteResponse,
-} from "./type";
+import { MembershipListResponse, ZMembershipListRequest, ZMembershipListResponse } from "./type";
 
 /**
  * @description Get all membership of the current logged in user
@@ -27,10 +23,10 @@ export const GET = userRouteWrapper(async (_, session) => {
  *   "userId": "4wmO9ldIBDx4xadtEunZtfkhuaxTgVyH"
  * }
  */
-export const POST = staffRouteWrapper<MembershipListRouteResponse[]>(async (req) => {
+export const POST = staffRouteWrapper<MembershipListResponse>(async (req) => {
     const body = await req.json();
 
-    const { data, success, error } = ZMembershipListRouteRequest.safeParse(body);
+    const { data, success, error } = ZMembershipListRequest.safeParse(body);
 
     if (!success) {
         return response("bad_request", {
@@ -47,12 +43,14 @@ export const POST = staffRouteWrapper<MembershipListRouteResponse[]>(async (req)
         return toResponse(memberships);
     }
 
-    let filteredMemberships: MembershipListRouteResponse[] = memberships.data || [];
+    let filteredMemberships: MembershipListResponse["memberships"] =
+        memberships.data?.memberships || [];
+
     if (state) {
         filteredMemberships = filteredMemberships.filter((m) => m.state === state) || [];
     }
 
-    return response("ok", { data: filteredMemberships });
+    return response("ok", { data: { memberships: filteredMemberships } });
 });
 
 /**
@@ -62,7 +60,7 @@ export const POST = staffRouteWrapper<MembershipListRouteResponse[]>(async (req)
 const getAllMembershipsByUserId = async (
     userId: string,
     status?: StatusOption,
-): Promise<ApiResponse<MembershipListRouteResponse[]>> => {
+): Promise<ServerResponse<MembershipListResponse>> => {
     const profile = await db
         .select({ id: profiles.id })
         .from(profiles)
@@ -108,8 +106,9 @@ const getAllMembershipsByUserId = async (
         };
     });
 
-    const { data, success, error } =
-        ZMembershipListRouteResponse.array().safeParse(membershipsWithStatus);
+    const { data, success, error } = ZMembershipListResponse.safeParse({
+        memberships: membershipsWithStatus || [],
+    });
 
     if (!success) {
         return serverResponse("bad_request", {
@@ -118,5 +117,5 @@ const getAllMembershipsByUserId = async (
         });
     }
 
-    return serverResponse("ok", { data: data });
+    return serverResponse("ok", { data });
 };
