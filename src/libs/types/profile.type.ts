@@ -22,7 +22,7 @@ export type YearOfStudyOptions = (typeof YEAR_OF_STUDY_OPTIONS)[number];
 export const ZProfile = z.object({
     // TODO: switch to uuid in the future
     id: z.string(),
-    userId: z.string(),
+    userId: z.string().nullable().optional(),
     firstName: z.string().min(1, { message: "Field is required" }),
     lastName: z.string().min(1, { message: "Field is required" }),
     email: z.string().email(),
@@ -32,8 +32,8 @@ export const ZProfile = z.object({
     tournamentPasses: z.number().int().default(0),
     yearOfStudy: z.enum(YEAR_OF_STUDY_OPTIONS),
     gender: z.enum(GENDER_OPTIONS),
-    updatedAt: z.date(),
-    createdAt: z.date(),
+    updatedAt: z.coerce.date(),
+    createdAt: z.coerce.date(),
     ethnicity: z.string().nullable().optional(),
     currentStudy: z.string().nullable().optional(),
     currentDegree: z.string().nullable().optional(),

@@ -2,9 +2,13 @@
 
 import { db } from "@libs/db";
 import { memberships, profiles } from "@libs/db/schema";
-import { count, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
-export const getAllMembers = async (limit?: number, page: number = 1) => {
+export const getAllMembers = async (
+    body: { limit?: number; page: number } = { limit: 50, page: 1 },
+) => {
+    const { page, limit } = body;
+
     if (page < 1) {
         throw new Error("Invalid page");
     }
@@ -13,7 +17,6 @@ export const getAllMembers = async (limit?: number, page: number = 1) => {
         .select({
             profileId: memberships.profileId,
             profile: profiles,
-            value: count(),
         })
         .from(memberships)
         .innerJoin(profiles, eq(memberships.profileId, profiles.id))

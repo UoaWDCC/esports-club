@@ -6,6 +6,7 @@ import { Tomorrow } from "next/font/google";
 import localFont from "next/font/local";
 import { RoutingDevTools } from "@providers/devtools/DevToolsProvider";
 import { TanstackClientProvider } from "@providers/query/TanstackClientProvider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
     title: { default: "Esports club", template: "%s | Esports club" },
@@ -40,7 +41,9 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
                 <RoutingDevTools />
-                <TanstackClientProvider>{children}</TanstackClientProvider>
+                <TanstackClientProvider>
+                    <NuqsAdapter>{children}</NuqsAdapter>
+                </TanstackClientProvider>
             </body>
         </html>
     );

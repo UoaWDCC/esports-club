@@ -4,7 +4,7 @@ import { InvoiceListResponse } from "@/app/api/invoices.list/type";
 
 export function InvoiceRow({ invoice }: { invoice: InvoiceListResponse["invoices"][0] }) {
     return (
-        <tr className="transition *:px-4 *:py-2 hover:bg-gray-900">
+        <tr>
             <td>{new Date(invoice.paidDate).toDateString()}</td>
             <td>{invoice.type}</td>
             <td>{invoice.paymentMethod}</td>
