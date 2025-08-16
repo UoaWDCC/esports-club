@@ -8,6 +8,7 @@ import { useMembershipTypeDeleteMutation } from "@/app/api/membership-type.delet
 import { useMembershipTypeEditMutation } from "@/app/api/membership-type.edit/query";
 import { MembershipTypeEditRequest } from "@/app/api/membership-type.edit/type";
 import { useMembershipTypeListQuery } from "@/app/api/membership-type.get.list/query";
+import { useMembershipTypeSyncStripeMutation } from "@/app/api/membership-type.sync-stripe/query";
 import { Button } from "@/components/button/Button";
 import { MembershipType } from "@/libs/types/membershipType.type";
 
@@ -29,6 +30,7 @@ export function MembershipTypeCRUD() {
     const addMutation = useMembershipTypeAddMutation();
     const editMutation = useMembershipTypeEditMutation();
     const deleteMutation = useMembershipTypeDeleteMutation();
+    const syncStripeMutation = useMembershipTypeSyncStripeMutation();
 
     const handleAdd = () => {
         setShowForm(true);
@@ -92,6 +94,31 @@ export function MembershipTypeCRUD() {
         setEditingId(null);
     };
 
+    const handleSyncStripe = async () => {
+        if (
+            confirm(
+                "This will sync all membership types to Stripe, creating, updating, or deactivating products and prices as needed. Continue?",
+            )
+        ) {
+            try {
+                const result = await syncStripeMutation.mutateAsync();
+                const message =
+                    `Sync completed!\n` +
+                    `Created: ${result.created}\n` +
+                    `Updated: ${result.updated}\n` +
+                    `Deleted: ${result.deleted}` +
+                    (result.errors.length > 0 ? `\n\nErrors:\n${result.errors.join("\n")}` : "");
+
+                alert(message);
+            } catch (error) {
+                console.error("Failed to sync with Stripe:", error);
+                alert(
+                    `Failed to sync with Stripe: ${error instanceof Error ? error.message : String(error)}`,
+                );
+            }
+        }
+    };
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -106,9 +133,18 @@ export function MembershipTypeCRUD() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold">Membership Types</h1>
-                <Button onClick={handleAdd} disabled={showForm}>
-                    Add New Membership Type
-                </Button>
+                <div className="flex gap-3">
+                    <Button
+                        onClick={handleSyncStripe}
+                        disabled={syncStripeMutation.isPending}
+                        variant={{ style: "secondary" }}
+                    >
+                        {syncStripeMutation.isPending ? "Syncing..." : "Sync with Stripe"}
+                    </Button>
+                    <Button onClick={handleAdd} disabled={showForm}>
+                        Add New Membership Type
+                    </Button>
+                </div>
             </div>
 
             {showForm && (
