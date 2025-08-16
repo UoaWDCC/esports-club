@@ -1,5 +1,5 @@
 import { unstable_cache } from "next/cache";
-import { ApiResponse, response, serverResponse, toResponse } from "@libs/api/response";
+import { response, serverResponse, ServerResponse, toResponse } from "@libs/api/response";
 import { routeWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { MembershipType, ZMembershipType } from "@libs/types/membershipType.type";
@@ -9,7 +9,7 @@ import { ZMembershipTypeListRequest } from "./type";
 
 function getAllMembershipTypes(includeInactive: boolean = false) {
     return unstable_cache(
-        async (): Promise<ApiResponse<MembershipType[]>> => {
+        async (): Promise<ServerResponse<MembershipType[]>> => {
             const membershipTypes = await db.query.membershipTypes.findMany({
                 where: includeInactive ? undefined : (mt, { eq }) => eq(mt.isActive, true),
                 orderBy: (mt, { asc }) => [asc(mt.name)],
@@ -69,5 +69,9 @@ export const POST = routeWrapper<MembershipType[]>(async (req) => {
         });
     }
 
-    return await toResponse(await getAllMembershipTypes(requested.data.includeInactive));
+    const result = await getAllMembershipTypes(requested.data.includeInactive);
+
+    const responseResult = toResponse(result);
+
+    return responseResult;
 });

@@ -1,5 +1,5 @@
 import { revalidateTag } from "next/cache";
-import { ApiResponse, serverResponse, toResponse } from "@libs/api/response";
+import { serverResponse, ServerResponse, toResponse } from "@libs/api/response";
 import { routeWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { membershipTypes } from "@libs/db/schema";
@@ -18,7 +18,7 @@ interface SyncResult {
     errors: string[];
 }
 
-async function syncMembershipTypesToStripe(): Promise<ApiResponse<SyncResult>> {
+async function syncMembershipTypesToStripe(): Promise<ServerResponse<SyncResult>> {
     try {
         const result: SyncResult = {
             created: 0,
@@ -136,7 +136,6 @@ async function syncMembershipTypesToStripe(): Promise<ApiResponse<SyncResult>> {
             }
         }
 
-        // Revalidate cache
         revalidateTag("membershipTypes");
 
         return serverResponse("ok", { data: result });

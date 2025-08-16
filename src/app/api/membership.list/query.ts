@@ -1,34 +1,38 @@
 "use client";
 
+import { ApiResponse } from "@libs/api/response";
 import { StatusOption } from "@libs/types/membership.type";
 import { useQuery } from "@tanstack/react-query";
 
-import { MembershipListResponse, Status, ZMembershipListResponse } from "./type";
+import { MembershipListResponse, Status } from "./type";
 
 export const useMembershipListQuery = () => {
-    const query = useQuery<MembershipListResponse, Error, MembershipListResponse>({
+    const query = useQuery<
+        ApiResponse<MembershipListResponse>,
+        Error,
+        MembershipListResponse["memberships"]
+    >({
         queryKey: ["get-my-memberships"],
         queryFn: fetchMyMemberships,
-        select: (res) => res.data ?? [],
+        select: (res) => {
+            // Handle new response format with metadata
+            if ("memberships" in res) {
+                return res.memberships;
+            }
+            return [];
+        },
         staleTime: 30000 /*ms*/,
-        staleTime: 30000, // 30 seconds
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
     });
-
     return query;
 };
 
-export const fetchMyMemberships = async () => {
-    const res = await fetch("/api/membership.list");
+export const fetchMyMemberships = async (): Promise<ApiResponse<MembershipListResponse>> => {
+    const res = await fetch("/api/membership.list", { cache: "no-cache" });
     if (!res.ok) {
         throw new Error("Failed to fetch memberships");
     }
 
-    const data = await res.json();
-
-    return ZMembershipListResponse.parse(data);
+    return await res.json();
 };
 
 /**
@@ -44,13 +48,19 @@ export const useMembershipListQueryWithFilters = (
     enabled: boolean = true,
 ) => {
     const query = useQuery<
-        ApiResponse<MembershipListRouteResponse[]>,
+        ApiResponse<MembershipListResponse>,
         Error,
-        MembershipListRouteResponse[]
+        MembershipListResponse["memberships"]
     >({
         queryKey: ["get-memberships", userId, state, status],
         queryFn: () => fetchMembershipsWithFilters(userId, state, status),
-        select: (res) => res.data ?? [],
+        select: (res) => {
+            // Handle new response format with metadata
+            if ("memberships" in res) {
+                return res.memberships;
+            }
+            return [];
+        },
         staleTime: 30000 /*ms*/,
         enabled: enabled && !!userId,
     });
@@ -61,7 +71,7 @@ export const fetchMembershipsWithFilters = async (
     userId: string,
     state?: Status,
     status?: StatusOption,
-): Promise<ApiResponse<MembershipListRouteResponse[]>> => {
+): Promise<ApiResponse<MembershipListResponse>> => {
     const res = await fetch("/api/membership.list", {
         method: "POST",
         headers: {
