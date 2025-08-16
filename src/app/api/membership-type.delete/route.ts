@@ -29,7 +29,6 @@ export const DELETE = staffRouteWrapper(async (req) => {
     }
 
     try {
-        // First, get the membership type to access Stripe IDs
         const membershipTypeToDelete = await db.query.membershipTypes.findFirst({
             where: eq(membershipTypes.id, data.id),
         });
@@ -59,7 +58,6 @@ export const DELETE = staffRouteWrapper(async (req) => {
             });
         }
 
-        // Invalidate the server-side cache for membership types
         revalidateTag("membershipTypes");
 
         return response("ok", {

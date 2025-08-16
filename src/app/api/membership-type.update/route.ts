@@ -39,7 +39,6 @@ export const PUT = staffRouteWrapper(async (req) => {
     try {
         const { id, ...updateData } = data;
 
-        // First, get the current membership type to access Stripe IDs
         const currentMembershipType = await db.query.membershipTypes.findFirst({
             where: eq(membershipTypes.id, id),
         });
@@ -84,8 +83,8 @@ export const PUT = staffRouteWrapper(async (req) => {
             .set({
                 name: updateData.name,
                 description: updateData.description,
-                startAt: updateData.startAt, // Already a Date object from schema transformation
-                endAt: updateData.endAt, // Already a Date object from schema transformation
+                startAt: updateData.startAt,
+                endAt: updateData.endAt,
                 price: updateData.price,
                 isActive: updateData.isActive,
                 stripeProductId,
@@ -101,7 +100,6 @@ export const PUT = staffRouteWrapper(async (req) => {
             });
         }
 
-        // Invalidate the server-side cache for membership types
         revalidateTag("membershipTypes");
 
         return response("ok", {

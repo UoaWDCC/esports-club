@@ -2,6 +2,7 @@
 
 import { ApiResponse } from "@libs/api/response";
 import { StatusOption } from "@libs/types/membership.type";
+import { parseDatesArray } from "@libs/utils/date-serializer";
 import { useQuery } from "@tanstack/react-query";
 
 import { MembershipListResponse, Status } from "./type";
@@ -17,7 +18,8 @@ export const useMembershipListQuery = () => {
         select: (res) => {
             // Handle new response format with metadata
             if ("memberships" in res) {
-                return res.memberships;
+                // Parse dates for all membership objects
+                return parseDatesArray(res.memberships);
             }
             return [];
         },

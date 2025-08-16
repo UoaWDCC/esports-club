@@ -1,3 +1,5 @@
+//the database should auto sync on crud operations but this was just for testing or if something went very wrong.
+
 import { revalidateTag } from "next/cache";
 import { serverResponse, ServerResponse, toResponse } from "@libs/api/response";
 import { routeWrapper } from "@libs/api/wrappers";
@@ -92,7 +94,6 @@ async function syncMembershipTypesToStripe(): Promise<ServerResponse<SyncResult>
 
                 neededPrices.add(stripePriceId);
 
-                // Update membership type with Stripe IDs
                 await db
                     .update(membershipTypes)
                     .set({

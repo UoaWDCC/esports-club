@@ -1,3 +1,4 @@
+import { parseDatesArray } from "@libs/utils/date-serializer";
 import { useQuery } from "@tanstack/react-query";
 
 import { MembershipType } from "@/libs/types/membershipType.type";
@@ -10,7 +11,8 @@ export const useMembershipTypeListQuery = (includeInactive: boolean = false) => 
         queryFn: () => fetchMembershipTypeList(includeInactive),
         select: (res): { data: MembershipType[] } => {
             const { metadata, ...data } = res;
-            return { data: Object.values(data).flat() as MembershipType[] };
+            const membershipTypes = Object.values(data).flat() as MembershipType[];
+            return { data: parseDatesArray(membershipTypes) };
         },
         staleTime: 50000,
     });
