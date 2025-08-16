@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^5.1.1",
+        "@icons-pack/react-simple-icons": "^13.7.0",
         "@neondatabase/serverless": "^1.0.0",
         "@react-email/components": "^0.1.0",
         "@scalar/nextjs-api-reference": "^0.8.13",
