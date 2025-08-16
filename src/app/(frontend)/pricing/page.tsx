@@ -9,7 +9,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@libs/auth/auth";
 
-import { PricingClient } from "@/components/pricing/PricingClient";
+import { PricingClient } from "@/app/(frontend)/pricing/_components/PricingClient";
 
 /**
  * Pricing Page Server Component
