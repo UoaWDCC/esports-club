@@ -10,12 +10,12 @@ const ZMembershipType = z.object({
     id: z.string(),
     name: z.string().min(1),
     description: z.string().optional(),
-    startAt: z.date(),
-    endAt: z.date(),
+    startAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
+    endAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
     price: z.coerce.number(),
     isActive: z.boolean(),
-    updateAt: z.date(),
-    createdAt: z.date(),
+    updateAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
+    createdAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
 });
 
 const ZMembershipTypeDTO = ZMembershipType.omit({
