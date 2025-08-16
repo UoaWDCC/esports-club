@@ -1,9 +1,10 @@
 "use client";
 
 import { ApiResponse } from "@libs/api/response";
+import { StatusOption } from "@libs/types/membership.type";
 import { useQuery } from "@tanstack/react-query";
 
-import { MembershipListRouteResponse } from "./type";
+import { MembershipListRouteResponse, Status } from "./type";
 
 export const useMembershipListQuery = () => {
     const query = useQuery<
@@ -21,6 +22,57 @@ export const useMembershipListQuery = () => {
 
 export const fetchMyMemberships = async (): Promise<ApiResponse<MembershipListRouteResponse[]>> => {
     const res = await fetch("/api/membership.list", { cache: "no-cache" });
+    if (!res.ok) {
+        throw new Error("Failed to fetch memberships");
+    }
+
+    return await res.json();
+};
+
+/**
+ * Hook to fetch memberships for a specific user with optional filtering
+ * @param userId - The user ID to fetch memberships for
+ * @param state - Optional state filter ("active" | "expired")
+ * @param status - Optional status filter ("approved" | "pending" | "rejected")
+ */
+export const useMembershipListQueryWithFilters = (
+    userId: string,
+    state?: Status,
+    status?: StatusOption,
+    enabled: boolean = true,
+) => {
+    const query = useQuery<
+        ApiResponse<MembershipListRouteResponse[]>,
+        Error,
+        MembershipListRouteResponse[]
+    >({
+        queryKey: ["get-memberships", userId, state, status],
+        queryFn: () => fetchMembershipsWithFilters(userId, state, status),
+        select: (res) => res.data ?? [],
+        staleTime: 30000 /*ms*/,
+        enabled: enabled && !!userId,
+    });
+    return query;
+};
+
+export const fetchMembershipsWithFilters = async (
+    userId: string,
+    state?: Status,
+    status?: StatusOption,
+): Promise<ApiResponse<MembershipListRouteResponse[]>> => {
+    const res = await fetch("/api/membership.list", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            userId,
+            ...(state && { state }),
+            ...(status && { status }),
+        }),
+        cache: "no-cache",
+    });
+
     if (!res.ok) {
         throw new Error("Failed to fetch memberships");
     }

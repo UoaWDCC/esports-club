@@ -6,6 +6,7 @@ import { stripe } from "../client";
  * @param priceId Stripe price ID
  * @param successUrl Redirect after payment
  * @param cancelUrl Redirect if cancelled
+ * @param membershipTypeId Optional membership type ID for metadata
  * @returns Stripe checkout session
  */
 export async function createCheckoutSession({
@@ -13,11 +14,13 @@ export async function createCheckoutSession({
     priceId,
     successUrl,
     cancelUrl,
+    membershipTypeId,
 }: {
     profileId: string;
     priceId: string;
     successUrl: string;
     cancelUrl: string;
+    membershipTypeId?: string;
 }) {
     // One-time payment for semester plans
     const session = await stripe.checkout.sessions.create({
@@ -36,6 +39,7 @@ export async function createCheckoutSession({
         metadata: {
             profileId,
             type: "semester_membership",
+            ...(membershipTypeId && { membershipTypeId }),
         },
     });
     return session;
