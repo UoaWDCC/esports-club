@@ -15,7 +15,11 @@ const Heading = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ children }: { children: React.ReactNode }) => {
-    return <tbody className="*:bg-background">{children}</tbody>;
+    return (
+        <tbody className="*:bg-background *:hover:bg-cta/5 *:*:px-4 *:*:py-2 *:transition">
+            {children}
+        </tbody>
+    );
 };
 
 export const Table = { Root, Heading, Body };

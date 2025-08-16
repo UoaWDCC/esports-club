@@ -4,12 +4,12 @@ import { staffRouteWrapper } from "@libs/api/wrappers";
 
 import { getAllMembers } from "@/services/membership/getAllMembers";
 
-import { MemberResponse, ZMemberResponse } from "./type";
+import { MemberList, ZMemberListResponse } from "./type";
 
 /**
  * @description Get all profile with active membership
  */
-export const GET = staffRouteWrapper<MemberResponse>(async () => {
+export const POST = staffRouteWrapper<MemberList>(async () => {
     const { members, count } = await getAllMembers();
 
     const data = {
@@ -19,7 +19,7 @@ export const GET = staffRouteWrapper<MemberResponse>(async () => {
         },
     };
 
-    const parsedMembers = ZMemberResponse.safeParse(data);
+    const parsedMembers = ZMemberListResponse.safeParse(data);
 
     if (!parsedMembers.success) {
         return response("bad_request", {

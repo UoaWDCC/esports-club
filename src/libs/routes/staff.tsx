@@ -26,22 +26,15 @@ export const staffNavigation: NavigationGrouping[] = [
         label: "Member",
         links: [
             {
-                name: "Member Search",
-                href: "/staff/member-search",
+                name: "Members",
+                href: "/staff/members",
                 icon: <UserSearch size={20} />,
-                notImplemented: true,
             },
         ],
     },
     {
         label: "Membership",
         links: [
-            {
-                name: "User Membership Lookup",
-                href: "/staff/membership/user-lookup",
-                icon: <User size={20} />,
-                notImplemented: true,
-            },
             {
                 name: "Membership lookup",
                 href: "/staff/membership/lookup",

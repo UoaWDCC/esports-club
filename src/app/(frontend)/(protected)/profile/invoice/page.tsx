@@ -30,16 +30,3 @@ export default function InvoicePage() {
         </div>
     );
 }
-
-const InvoiceTableHeading = () => (
-    <thead className="bg-opacity-50 bg-muted-background border-border border text-white">
-        <tr className="*:px-4 *:py-2">
-            <th>Period</th>
-            <th>Type</th>
-            <th>Method</th>
-            <th>Status</th>
-            <th>Total</th>
-            <th className="text-right">Action</th>
-        </tr>
-    </thead>
-);
