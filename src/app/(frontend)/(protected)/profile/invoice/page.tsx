@@ -12,7 +12,7 @@ import { TestInvoices } from "./data/TestInvoices";
 // requires user to have a profile
 // see (protected)/profile/layout.tsx
 export default function InvoicePage() {
-    const profile = useProfile();
+    useProfile(); // Ensures user has a profile
 
     return (
         <div className="flex items-center justify-center">

@@ -10,9 +10,16 @@ import { Button } from "@/components/button/Button";
 import { InputField } from "@/components/form/InputField";
 import { MembershipType } from "@/libs/types/membershipType.type";
 
+type MembershipTypeFormData = Pick<
+    MembershipType,
+    "name" | "description" | "price" | "startAt" | "endAt" | "isActive"
+> & {
+    id?: string;
+};
+
 interface MembershipTypeFormProps {
     membershipType?: MembershipType;
-    onSubmit: (data: any) => void;
+    onSubmit: (data: MembershipTypeFormData) => void;
     onCancel: () => void;
     isLoading?: boolean;
 }
@@ -81,7 +88,7 @@ export function MembershipTypeForm({
 
     const handleFormSubmit = handleSubmit((data) => {
         // Convert price from dollars to cents if needed
-        const formData: any = {
+        const formData: MembershipTypeFormData = {
             ...data,
             price: Math.round(data.price * 100), // Convert to cents
         };
@@ -104,7 +111,7 @@ export function MembershipTypeForm({
                 <input
                     type="hidden"
                     value={membershipType.id}
-                    onChange={(e) => {
+                    onChange={() => {
                         // This is handled in the form submission
                     }}
                 />

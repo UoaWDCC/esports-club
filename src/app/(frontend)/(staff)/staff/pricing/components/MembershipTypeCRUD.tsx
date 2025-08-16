@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 
 import { useMembershipTypeAddMutation } from "@/app/api/membership-type.add/query";
+import { MembershipTypeAddRequest } from "@/app/api/membership-type.add/type";
 import { useMembershipTypeDeleteMutation } from "@/app/api/membership-type.delete/query";
 import { useMembershipTypeEditMutation } from "@/app/api/membership-type.edit/query";
+import { MembershipTypeEditRequest } from "@/app/api/membership-type.edit/type";
 import { useMembershipTypeListQuery } from "@/app/api/membership-type.get.list/query";
 import { Button } from "@/components/button/Button";
 import { MembershipType } from "@/libs/types/membershipType.type";
@@ -12,8 +14,14 @@ import { MembershipType } from "@/libs/types/membershipType.type";
 import { InlineEditForm } from "./InlineEditForm";
 import { MembershipTypeForm } from "./MembershipTypeForm";
 
+type MembershipTypeFormData = Pick<
+    MembershipType,
+    "name" | "description" | "price" | "startAt" | "endAt" | "isActive"
+> & {
+    id?: string;
+};
+
 export function MembershipTypeCRUD() {
-    const [isAdding, setIsAdding] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [showForm, setShowForm] = useState(false);
 
@@ -23,7 +31,6 @@ export function MembershipTypeCRUD() {
     const deleteMutation = useMembershipTypeDeleteMutation();
 
     const handleAdd = () => {
-        setIsAdding(true);
         setShowForm(true);
     };
 
@@ -41,20 +48,36 @@ export function MembershipTypeCRUD() {
         }
     };
 
-    const handleFormSubmit = async (formData: any) => {
+    const handleFormSubmit = async (formData: MembershipTypeFormData) => {
         console.log("CRUD handleFormSubmit called with:", formData);
         try {
             // Check if this is an edit operation by looking for an ID
             if (formData.id) {
                 console.log("Processing edit operation for ID:", formData.id);
-                await editMutation.mutateAsync(formData);
+                const editData: MembershipTypeEditRequest = {
+                    id: formData.id,
+                    name: formData.name,
+                    description: formData.description || undefined,
+                    startAt: formData.startAt,
+                    endAt: formData.endAt,
+                    price: formData.price,
+                    isActive: formData.isActive,
+                };
+                await editMutation.mutateAsync(editData);
                 setEditingId(null);
             } else {
                 // No ID means it's a new membership type
                 console.log("Processing add operation");
-                await addMutation.mutateAsync(formData);
+                const addData: MembershipTypeAddRequest = {
+                    name: formData.name,
+                    description: formData.description || undefined,
+                    startAt: formData.startAt,
+                    endAt: formData.endAt,
+                    price: formData.price,
+                    isActive: formData.isActive,
+                };
+                await addMutation.mutateAsync(addData);
                 setShowForm(false);
-                setIsAdding(false);
             }
         } catch (error) {
             console.error("Failed to save membership type:", error);
@@ -63,7 +86,6 @@ export function MembershipTypeCRUD() {
 
     const handleCancel = () => {
         setShowForm(false);
-        setIsAdding(false);
     };
 
     const handleEditCancel = () => {

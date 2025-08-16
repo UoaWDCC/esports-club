@@ -19,7 +19,6 @@ function getAllMembershipTypes(includeInactive: boolean = false) {
             const errors: z.ZodIssue[] = [];
 
             for (const membershipType of membershipTypes) {
-                console.log("Validating membership type:", JSON.stringify(membershipType, null, 2));
                 const { data, success, error } = ZMembershipType.safeParse(membershipType);
 
                 if (success) {

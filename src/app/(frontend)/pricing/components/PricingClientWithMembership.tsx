@@ -8,7 +8,7 @@ interface Props {
     session: Session | null;
 }
 
-export function PricingClientWithMembership({ membershipStatus, session }: Props) {
+export function PricingClientWithMembership({ membershipStatus }: Props) {
     return (
         <PageLayout>
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

@@ -9,9 +9,16 @@ import { Button } from "@/components/button/Button";
 import { InputField } from "@/components/form/InputField";
 import { MembershipType } from "@/libs/types/membershipType.type";
 
+type MembershipTypeFormData = Pick<
+    MembershipType,
+    "name" | "description" | "price" | "startAt" | "endAt" | "isActive"
+> & {
+    id?: string;
+};
+
 interface InlineEditFormProps {
     membershipType: MembershipType;
-    onSubmit: (data: any) => void;
+    onSubmit: (data: MembershipTypeFormData) => void;
     onCancel: () => void;
     isLoading?: boolean;
 }
