@@ -59,7 +59,6 @@ const ListNavigation = ({
     grouping: NavigationGrouping;
 }) => {
     if (grouping.config?.staffOnly && role !== "staff") return;
-    if (grouping.config?.AdminOnly && role !== "admin") return;
 
     return (
         <div className="flex flex-col gap-3">

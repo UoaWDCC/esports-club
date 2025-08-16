@@ -34,6 +34,5 @@ export type NavigationGrouping = {
     }[];
     config?: {
         staffOnly?: boolean;
-        AdminOnly?: boolean;
     };
 };
