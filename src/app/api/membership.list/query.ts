@@ -24,5 +24,6 @@ export const fetchMyMemberships = async () => {
     }
 
     const data = await res.json();
-    return data;
+
+    return ZMembershipListResponse.parse(data);
 };

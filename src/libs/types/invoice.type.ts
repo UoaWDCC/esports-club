@@ -20,10 +20,10 @@ const ZInvoice = z.object({
     type: z.enum(INVOICE_TYPES),
     description: z.string().nullable().optional(),
     status: z.enum(PAYMENT_STATUSES),
-    paidDate: z.date(),
+    paidDate: z.coerce.date(),
     paymentMethod: z.enum(PAYMENT_METHODS),
     price: z.number(),
-    createdAt: z.date(),
+    createdAt: z.coerce.date(),
 });
 
 /**
