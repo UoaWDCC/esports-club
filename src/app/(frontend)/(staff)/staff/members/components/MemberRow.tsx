@@ -20,3 +20,27 @@ export function MemberRow({ member, index }: { member: MemberList["members"][0];
         </tr>
     );
 }
+export function MemberSkeleton() {
+    return (
+        <tr>
+            <td className="flex">
+                <SkeletonPill />
+                {/* make skeleton row size the same as one with text */}
+                <p className="pointer-events-none invisible w-0">|</p>
+            </td>
+            <td>
+                <SkeletonPill />
+            </td>
+            <td>
+                <SkeletonPill />
+            </td>
+            <td>
+                <SkeletonPill />
+            </td>
+        </tr>
+    );
+}
+
+export const SkeletonPill = () => {
+    return <div className="skeleton-gradient my-auto h-4 w-1/4 min-w-[50px] rounded-full" />;
+};

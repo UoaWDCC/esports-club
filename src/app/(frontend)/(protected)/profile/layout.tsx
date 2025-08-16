@@ -37,7 +37,9 @@ export default async function ProfileLayout({
 
     return (
         <ProfileProvider profile={profile.data}>
-            <DashboardLayout navigationGrouping={profileNavigation}>{children}</DashboardLayout>
+            <DashboardLayout session={session} navigationGrouping={profileNavigation}>
+                {children}
+            </DashboardLayout>
         </ProfileProvider>
     );
 }

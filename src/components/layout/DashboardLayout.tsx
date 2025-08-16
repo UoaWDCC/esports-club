@@ -1,20 +1,26 @@
+"use client";
+
 import { ReactNode } from "react";
 import Link from "next/link";
-import { getSession } from "@libs/auth/auth";
+import { usePathname } from "next/navigation";
+import { AuthSession } from "@libs/auth/auth";
 import { NavigationGrouping } from "@libs/routes";
 import { cn } from "@libs/utils/class";
 import { LogOut } from "lucide-react";
 
-export async function DashboardLayout({
+export function DashboardLayout({
     children,
+    session,
     navigationGrouping,
 }: {
     children: ReactNode;
+    session: AuthSession;
     navigationGrouping: NavigationGrouping[];
 }) {
     const {
         user: { role, email, name },
-    } = await getSession();
+    } = session;
+    const pathname = usePathname();
 
     return (
         <div className="flex flex-col">
@@ -39,7 +45,12 @@ export async function DashboardLayout({
                     <hr className="border-border" />
                     {/* nav routes */}
                     {navigationGrouping.map((grouping, i) => (
-                        <ListNavigation key={i} grouping={grouping} role={role} />
+                        <ListNavigation
+                            key={i}
+                            grouping={grouping}
+                            role={role}
+                            pathname={pathname}
+                        />
                     ))}
                 </nav>
                 {/* nav footer */}
@@ -54,9 +65,11 @@ export async function DashboardLayout({
 const ListNavigation = ({
     grouping,
     role,
+    pathname,
 }: {
     role?: string | null;
     grouping: NavigationGrouping;
+    pathname: string;
 }) => {
     if (grouping.config?.staffOnly && role !== "staff") return;
 
@@ -69,7 +82,8 @@ const ListNavigation = ({
                         key={route.name}
                         href={route.href}
                         className={cn(
-                            "hover:bg-btn-hover flex items-center gap-3 rounded-sm p-1.5 px-3",
+                            "hover:bg-btn-hover transition-color flex items-center gap-3 rounded-sm p-1.5 px-3",
+                            pathname == route.href && "bg-btn-hover/60",
                             route.notImplemented && "line-through",
                         )}
                     >

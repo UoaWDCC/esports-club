@@ -26,5 +26,9 @@ export default async function StaffLayout({
         redirect(DEFAULT_UNAUTHORIZED_REDIRECT);
     }
 
-    return <DashboardLayout navigationGrouping={staffNavigation}>{children}</DashboardLayout>;
+    return (
+        <DashboardLayout session={session} navigationGrouping={staffNavigation}>
+            {children}
+        </DashboardLayout>
+    );
 }

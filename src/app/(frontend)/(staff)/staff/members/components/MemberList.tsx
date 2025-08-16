@@ -4,7 +4,7 @@ import { parseAsInteger, useQueryState } from "nuqs";
 
 import { useMemberListQuery } from "@/app/api/member.all/query";
 
-import { MemberRow } from "./MemberRow";
+import { MemberRow, MemberSkeleton } from "./MemberRow";
 
 export const MemberList = () => {
     const [pageIndex] = useQueryState("page", parseAsInteger.withDefault(1));
@@ -12,13 +12,7 @@ export const MemberList = () => {
     const { data, error, isLoading, isError } = useMemberListQuery(pageIndex, limit);
 
     if (isLoading) {
-        return (
-            <tr>
-                <td colSpan={6} className="text-center">
-                    Loading...
-                </td>
-            </tr>
-        );
+        return <MemberSkeleton />;
     }
 
     if (isError) {

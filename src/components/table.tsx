@@ -1,6 +1,6 @@
 const Root = ({ children }: { children: React.ReactNode }) => {
     return (
-        <table className="bg-border/20 border-border w-full table-fixed border-separate border-spacing-x-px border-spacing-y-px divide-y rounded border text-left">
+        <table className="bg-border/20 border-border w-full table-fixed border-separate border-spacing-x-px border-spacing-y-px divide-y overflow-hidden rounded border text-left">
             {children}
         </table>
     );
