@@ -12,7 +12,7 @@ const ZMembershipType = z.object({
     description: z.string().optional(),
     startAt: z.coerce.date(),
     endAt: z.coerce.date(),
-    price: z.coerce.number(),
+    price: z.number(),
     isActive: z.boolean(),
     updateAt: z.coerce.date(),
     createdAt: z.coerce.date(),
