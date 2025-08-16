@@ -1,101 +1,20 @@
-// Stripe server-side utilities for membership checkout and pricing
-import { env } from "@libs/env";
-import Stripe from "stripe";
+// Re-export the Stripe client
+export { stripe } from "./client";
 
-// Stripe client instance for server-side operations
-export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-    apiVersion: "2025-05-28.basil",
-});
+// Re-export checkout functions
+export { createCheckoutSession } from "./checkout/createCheckoutSession";
 
-/**
- * Create a Stripe checkout session for a membership purchase.
- * @param profileId User's profile ID
- * @param priceId Stripe price ID
- * @param successUrl Redirect after payment
- * @param cancelUrl Redirect if cancelled
- * @returns Stripe checkout session
- */
-export async function createCheckoutSession({
-    profileId,
-    priceId,
-    successUrl,
-    cancelUrl,
-}: {
-    profileId: string;
-    priceId: string;
-    successUrl: string;
-    cancelUrl: string;
-}) {
-    // One-time payment for semester plans
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items: [
-            {
-                price: priceId,
-                quantity: 1,
-            },
-        ],
-        mode: "payment", // one-time
-        success_url: successUrl,
-        cancel_url: cancelUrl,
-        client_reference_id: profileId, // for webhooks
-        allow_promotion_codes: true,
-        metadata: {
-            profileId,
-            type: "semester_membership",
-        },
-    });
-    return session;
-}
+// Re-export customer functions
+export { createCustomerPortalSession } from "./customers/createCustomerPortalSession";
 
-/**
- * Create a Stripe customer portal session.
- * @param customerId Stripe customer ID
- * @param returnUrl Redirect after portal
- * @returns Stripe portal session
- */
-export async function createCustomerPortalSession(customerId: string, returnUrl: string) {
-    const session = await stripe.billingPortal.sessions.create({
-        customer: customerId,
-        return_url: returnUrl,
-    });
-    return session;
-}
+// Re-export product functions
+export { createStripeProduct } from "./products/createStripeProduct";
+export { updateStripeProduct } from "./products/updateStripeProduct";
+export { deactivateStripeProduct } from "./products/deactivateStripeProduct";
+export { getStripeProducts } from "./products/getStripeProducts";
 
-/**
- * Get all active Stripe prices with product info.
- * @returns Array of price objects
- */
-export async function getStripePrices() {
-    const prices = await stripe.prices.list({
-        expand: ["data.product"], // include product details
-        active: true,
-        type: "one_time", // only one-time payments
-    });
-    return prices.data.map((price: Stripe.Price) => {
-        const product = price.product as Stripe.Product;
-        return {
-            id: price.id,
-            productId: typeof price.product === "string" ? price.product : price.product.id,
-            unitAmount: price.unit_amount,
-            currency: price.currency,
-            productName: typeof price.product === "string" ? "" : product.name,
-            productDescription: typeof price.product === "string" ? "" : product.description,
-        };
-    });
-}
-
-/**
- * Get all active Stripe products.
- * @returns Array of product objects
- */
-export async function getStripeProducts() {
-    const products = await stripe.products.list({
-        active: true,
-    });
-    return products.data.map((product: Stripe.Product) => ({
-        id: product.id,
-        name: product.name,
-        description: product.description,
-    }));
-}
+// Re-export price functions
+export { createStripePrice } from "./prices/createStripePrice";
+export { updateStripePrice } from "./prices/updateStripePrice";
+export { deactivateStripePrice } from "./prices/deactivateStripePrice";
+export { getStripePrices } from "./prices/getStripePrices";

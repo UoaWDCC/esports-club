@@ -3,6 +3,8 @@ import { response } from "@libs/api/response";
 import { staffRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { membershipTypes } from "@libs/db/schema/membership_types";
+import { deactivateStripePrice } from "@libs/stripe/prices/deactivateStripePrice";
+import { deactivateStripeProduct } from "@libs/stripe/products/deactivateStripeProduct";
 import { eq } from "drizzle-orm";
 
 import { ZMembershipTypeDeleteRequest } from "./type";
@@ -27,6 +29,25 @@ export const DELETE = staffRouteWrapper(async (req) => {
     }
 
     try {
+        // First, get the membership type to access Stripe IDs
+        const membershipTypeToDelete = await db.query.membershipTypes.findFirst({
+            where: eq(membershipTypes.id, data.id),
+        });
+
+        if (!membershipTypeToDelete) {
+            return response("not_found", {
+                message: "Membership type not found",
+            });
+        }
+
+        // Deactivate Stripe product and price if they exist
+        if (membershipTypeToDelete.stripeProductId) {
+            await deactivateStripeProduct(membershipTypeToDelete.stripeProductId);
+        }
+        if (membershipTypeToDelete.stripePriceId) {
+            await deactivateStripePrice(membershipTypeToDelete.stripePriceId);
+        }
+
         const deletedMembershipType = await db
             .delete(membershipTypes)
             .where(eq(membershipTypes.id, data.id))
@@ -38,6 +59,7 @@ export const DELETE = staffRouteWrapper(async (req) => {
             });
         }
 
+        // Invalidate the server-side cache for membership types
         revalidateTag("membershipTypes");
 
         return response("ok", {
@@ -45,9 +67,13 @@ export const DELETE = staffRouteWrapper(async (req) => {
             data: deletedMembershipType[0],
         });
     } catch (error) {
+        console.error("Failed to delete membership type with Stripe integration:", error);
         return response("internal_server_error", {
             message: "Failed to delete membership type",
-            error: { name: "DatabaseError" },
+            error: {
+                name: "DatabaseError",
+                details: error instanceof Error ? error.message : "Unknown error",
+            },
         });
     }
 });

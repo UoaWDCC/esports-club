@@ -3,6 +3,8 @@ import { response } from "@libs/api/response";
 import { staffRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { membershipTypes } from "@libs/db/schema/membership_types";
+import { createStripePrice } from "@libs/stripe/prices/createStripePrice";
+import { createStripeProduct } from "@libs/stripe/products/createStripeProduct";
 
 import { ZMembershipTypeAddRequest } from "./type";
 
@@ -31,6 +33,10 @@ export const POST = staffRouteWrapper(async (req) => {
     }
 
     try {
+        // Create Stripe product and price first
+        const stripeProduct = await createStripeProduct(data.name, data.description);
+        const stripePrice = await createStripePrice(stripeProduct.id, data.price, "nzd");
+
         const newMembershipType = await db
             .insert(membershipTypes)
             .values({
@@ -40,6 +46,8 @@ export const POST = staffRouteWrapper(async (req) => {
                 endAt: data.endAt,
                 price: data.price,
                 isActive: data.isActive,
+                stripeProductId: stripeProduct.id,
+                stripePriceId: stripePrice.id,
             })
             .returning();
 
@@ -50,9 +58,13 @@ export const POST = staffRouteWrapper(async (req) => {
             data: newMembershipType[0],
         });
     } catch (error) {
+        console.error("Failed to create membership type with Stripe integration:", error);
         return response("internal_server_error", {
             message: "Failed to create membership type",
-            error: { name: "DatabaseError" },
+            error: {
+                name: "DatabaseError",
+                details: error instanceof Error ? error.message : "Unknown error",
+            },
         });
     }
 });

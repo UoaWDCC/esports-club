@@ -4,8 +4,9 @@ import { getSession } from "@libs/auth/auth";
 import { db } from "@libs/db";
 import { profiles } from "@libs/db/schema";
 import { env } from "@libs/env";
-import { createCheckoutSession } from "@libs/stripe/server";
+import { createCheckoutSession } from "@libs/stripe/checkout/createCheckoutSession";
 import { eq } from "drizzle-orm";
+
 import { getMembershipStatus } from "@/services/membership/getMembershipStatus";
 
 /**

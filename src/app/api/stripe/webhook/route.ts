@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@libs/db";
 import { invoices, memberships, membershipTypes } from "@libs/db/schema";
 import { env } from "@libs/env";
-import { stripe } from "@libs/stripe/server";
+import { stripe } from "@libs/stripe/client";
 import { eq } from "drizzle-orm";
 import Stripe from "stripe";
 

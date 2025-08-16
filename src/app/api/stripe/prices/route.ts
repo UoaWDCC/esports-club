@@ -1,6 +1,7 @@
 // Stripe prices API route
 import { NextResponse } from "next/server";
-import { getStripePrices, getStripeProducts } from "@libs/stripe/server";
+import { getStripePrices } from "@libs/stripe/prices/getStripePrices";
+import { getStripeProducts } from "@libs/stripe/products/getStripeProducts";
 
 export async function GET() {
     try {
