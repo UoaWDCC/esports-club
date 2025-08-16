@@ -17,4 +17,8 @@ export const staffNavigation = [
         name: "Audit logs",
         href: "/staff/logs",
     },
+    {
+        name: "Pricing",
+        href: "/staff/pricing",
+    },
 ] as const;
