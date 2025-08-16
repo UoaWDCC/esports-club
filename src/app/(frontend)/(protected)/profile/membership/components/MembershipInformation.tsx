@@ -30,18 +30,15 @@ export const MembershipInformation = () => {
         <>
             <MembershipStatuses memberships={memberships} />
             <div className="flex justify-end gap-2">
-                <Button variant={{ style: "solid" }}>
-                    <span>See advance details</span>
-                </Button>
                 <Button variant={{ style: "cta" }}>
-                    <span>Scan in code</span>
+                    <span>Member code</span>
                 </Button>
             </div>
             <hr className="border-gray" />
             {/* membership listing */}
             <div className="flex flex-col gap-2">
                 <div className="font-tomorrow flex gap-2 text-xl">
-                    <p className="text-[#978FFE]">All membership(s)</p>
+                    <p>All membership(s)</p>
                     <p>({memberships.length ?? 0})</p>
                 </div>
                 <p className="text-sm">Your membership status</p>
@@ -61,11 +58,7 @@ const MembershipStatuses = ({
     const active_membership = memberships.find((e) => e.state === "active") ?? memberships[0];
 
     return (
-        <>
-            <div className="flex flex-col gap-2">
-                <h2 className="font-tomorrow text-xl text-[#978FFE]">Membership status</h2>
-                <p className="text-sm">Your membership status</p>
-            </div>
+        <div className="bg-muted-background rounded-sm p-6">
             <div className="flex flex-col gap-3">
                 <MembershipInfoRow
                     title="Membership type"
@@ -80,7 +73,7 @@ const MembershipStatuses = ({
                     info={active_membership?.endAt?.toDateString() ?? "Non applicable"}
                 />
             </div>
-        </>
+        </div>
     );
 };
 
