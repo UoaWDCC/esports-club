@@ -1,14 +1,6 @@
 // staff page navigation for `/staff` dashboard
 
-import {
-    BarChart2,
-    DollarSign,
-    FileText,
-    LayoutDashboard,
-    List,
-    User,
-    UserSearch,
-} from "lucide-react";
+import { BarChart2, DollarSign, FileText, LayoutDashboard, List, UserSearch } from "lucide-react";
 
 import { NavigationGrouping } from ".";
 

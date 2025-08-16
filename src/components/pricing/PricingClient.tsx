@@ -297,7 +297,8 @@ export function PricingClient({ session }: PricingClientProps) {
                             No Memberships Available
                         </h3>
                         <p className="text-gray-600">
-                            We're currently updating our membership options. Please check back soon!
+                            We&apos;re currently updating our membership options. Please check back
+                            soon!
                         </p>
                     </div>
                 ) : (

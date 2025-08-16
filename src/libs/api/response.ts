@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Exact } from "@libs/types/utils";
-import { z, ZodIssue, ZodSchema } from "zod";
+import { ZodIssue } from "zod";
 
 // API response stanard base out of JSend
 // https://github.com/omniti-labs/jsend

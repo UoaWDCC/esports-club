@@ -57,7 +57,6 @@ export function PricingClient({
     hasActiveMembership,
     activeMembership,
     membershipTypes,
-    session,
 }: PricingClientProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [loadingMembershipId, setLoadingMembershipId] = useState<string | null>(null);
@@ -211,7 +210,8 @@ export function PricingClient({
                             No Memberships Available
                         </h3>
                         <p className="text-gray-600">
-                            We're currently updating our membership options. Please check back soon!
+                            We&apos;re currently updating our membership options. Please check back
+                            soon!
                         </p>
                     </div>
                 ) : (

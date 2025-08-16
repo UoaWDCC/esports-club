@@ -10,7 +10,13 @@ export const useMembershipTypeListQuery = (includeInactive: boolean = false) => 
         queryKey: ["membership-type-list", includeInactive],
         queryFn: () => fetchMembershipTypeList(includeInactive),
         select: (res): { data: MembershipType[] } => {
-            const { metadata, ...data } = res;
+            // Extract all properties except metadata
+            //ANNOYING AHH LINT ERROR unused imports cant use below
+            // const { metadata: _, ...data } = res;
+
+            const data = Object.fromEntries(
+                Object.entries(res).filter(([key]) => key !== "metadata"),
+            );
             const membershipTypes = Object.values(data).flat() as MembershipType[];
             return { data: parseDatesArray(membershipTypes) };
         },

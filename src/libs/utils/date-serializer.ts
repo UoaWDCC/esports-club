@@ -2,25 +2,25 @@
  * Utility to ensure consistent date handling in API responses
  */
 
-export type DateFields = Record<string, any>;
+export type DateFields = Record<string, unknown>;
 
 /**
  * Converts string date fields to Date objects
  * Useful for API responses where dates come as strings
  */
 export function parseDates<T extends DateFields>(obj: T): T {
-    const result = { ...obj } as any;
+    const result = { ...obj } as Record<string, unknown>;
 
     // Common date field names in your schema
     const dateFields = ["createdAt", "updatedAt", "updateAt", "startAt", "endAt"];
 
     dateFields.forEach((field) => {
         if (result[field] && typeof result[field] === "string") {
-            result[field] = new Date(result[field]);
+            result[field] = new Date(result[field] as string);
         }
     });
 
-    return result;
+    return result as T;
 }
 
 /**
@@ -35,15 +35,15 @@ export function parseDatesArray<T extends DateFields>(arr: T[]): T[] {
  * (Usually handled automatically by JSON.stringify, but useful for explicit control)
  */
 export function serializeDates<T extends DateFields>(obj: T): T {
-    const result = { ...obj } as any;
+    const result = { ...obj } as Record<string, unknown>;
 
     const dateFields = ["createdAt", "updatedAt", "updateAt", "startAt", "endAt"];
 
     dateFields.forEach((field) => {
         if (result[field] instanceof Date) {
-            result[field] = result[field].toISOString();
+            result[field] = (result[field] as Date).toISOString();
         }
     });
 
-    return result;
+    return result as T;
 }

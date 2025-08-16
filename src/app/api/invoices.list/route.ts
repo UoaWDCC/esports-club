@@ -7,7 +7,7 @@ import { ZInvoiceDTO } from "@libs/types/invoice.type";
 import { profiles } from "@schema";
 import { eq } from "drizzle-orm";
 
-import { InvoiceListResponse, ZInvoiceListResponse } from "./type";
+import { InvoiceListResponse } from "./type";
 
 export const GET = userRouteWrapper<InvoiceListResponse>(async (_, session) => {
     const { id: userId } = session.user;
