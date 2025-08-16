@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { MembershipTypeEditRequest } from "./type";
+import { MembershipTypeUpdateRequest } from "./type";
 
-export const useMembershipTypeEditMutation = () => {
+export const useMembershipTypeUpdateMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async (data: MembershipTypeEditRequest) => {
-            const response = await fetch("/api/membership-type.edit", {
+        mutationFn: async (data: MembershipTypeUpdateRequest) => {
+            const response = await fetch("/api/membership-type.update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const useMembershipTypeEditMutation = () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to edit membership type");
+                throw new Error(errorData.message || "Failed to update membership type");
             }
 
             return response.json();
@@ -25,9 +25,9 @@ export const useMembershipTypeEditMutation = () => {
         onSuccess: () => {
             console.log("INVALIDATED");
 
-            queryClient.invalidateQueries({ queryKey: ["get-membership-type-list"], exact: false });
+            queryClient.invalidateQueries({ queryKey: ["membership-type-list"], exact: false });
             // Also invalidate any specific membership type queries
-            queryClient.invalidateQueries({ queryKey: ["get-membership-type"] });
+            queryClient.invalidateQueries({ queryKey: ["membership-type"] });
         },
     });
 };

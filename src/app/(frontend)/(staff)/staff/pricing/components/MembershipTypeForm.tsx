@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { ZMembershipTypeAddRequest } from "@/app/api/membership-type.add/type";
-import { ZMembershipTypeEditRequest } from "@/app/api/membership-type.edit/type";
+import { ZMembershipTypeUpdateRequest } from "@/app/api/membership-type.update/type";
 import { Button } from "@/components/button/Button";
 import { InputField } from "@/components/form/InputField";
 import { MembershipType } from "@/libs/types/membershipType.type";
@@ -31,7 +31,7 @@ export function MembershipTypeForm({
     isLoading = false,
 }: MembershipTypeFormProps) {
     const isEditing = !!membershipType;
-    const schema = isEditing ? ZMembershipTypeEditRequest : ZMembershipTypeAddRequest;
+    const schema = isEditing ? ZMembershipTypeUpdateRequest : ZMembershipTypeAddRequest;
 
     const {
         register,

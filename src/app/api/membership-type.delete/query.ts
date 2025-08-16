@@ -23,7 +23,7 @@ export const useMembershipTypeDeleteMutation = () => {
             return response.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["get-membership-type-list"], exact: false });
+            queryClient.invalidateQueries({ queryKey: ["membership-type-list"], exact: false });
 
             queryClient.invalidateQueries({ queryKey: ["get-membership-type"] });
         },

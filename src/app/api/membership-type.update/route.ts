@@ -9,10 +9,10 @@ import { createStripeProduct } from "@libs/stripe/products/createStripeProduct";
 import { updateStripeProduct } from "@libs/stripe/products/updateStripeProduct";
 import { eq } from "drizzle-orm";
 
-import { ZMembershipTypeEditRequest } from "./type";
+import { ZMembershipTypeUpdateRequest } from "./type";
 
 /**
- * @description Edit an existing membership type
+ * @description Update an existing membership type
  * @example Request body example:
  * {
  *   "id": "membership-type-id",
@@ -27,7 +27,7 @@ import { ZMembershipTypeEditRequest } from "./type";
 export const PUT = staffRouteWrapper(async (req) => {
     const body = await req.json();
 
-    const { data, success, error } = ZMembershipTypeEditRequest.safeParse(body);
+    const { data, success, error } = ZMembershipTypeUpdateRequest.safeParse(body);
 
     if (!success) {
         return response("bad_request", {

@@ -5,7 +5,7 @@ import { MembershipTypeListRequest } from "./type";
 
 export const useMembershipTypeListQuery = (includeInactive: boolean = false) => {
     const query = useQuery({
-        queryKey: ["get-membership-type-list", includeInactive],
+        queryKey: ["membership-type-list", includeInactive],
         queryFn: () => fetchMembershipTypeList(includeInactive),
         staleTime: 50000 /*ms*/,
     });
@@ -15,7 +15,7 @@ export const useMembershipTypeListQuery = (includeInactive: boolean = false) => 
 export const fetchMembershipTypeList = async (includeInactive: boolean = false) => {
     const data: MembershipTypeListRequest = { includeInactive };
     // free api
-    const res = await fetch("/api/membership-type.get.list", {
+    const res = await fetch("/api/membership-type.list", {
         method: "POST",
         cache: "no-cache",
         body: JSON.stringify(data), // Convert data to JSON string

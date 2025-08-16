@@ -9,7 +9,7 @@ import { z } from "zod";
  * @param price price in cents
  * @param isActive whether the membership type is active
  */
-export const ZMembershipTypeEditRequest = z
+export const ZMembershipTypeUpdateRequest = z
     .object({
         id: z.string().min(1, { message: "ID is required" }),
         name: z.string().min(1, { message: "Name is required" }),
@@ -30,4 +30,4 @@ export const ZMembershipTypeEditRequest = z
         path: ["endAt"],
     });
 
-export type MembershipTypeEditRequest = z.infer<typeof ZMembershipTypeEditRequest>;
+export type MembershipTypeUpdateRequest = z.infer<typeof ZMembershipTypeUpdateRequest>;

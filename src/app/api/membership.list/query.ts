@@ -14,7 +14,7 @@ export const useMembershipListQuery = () => {
         queryKey: ["get-my-memberships"],
         queryFn: fetchMyMemberships,
         select: (res) => res.data ?? [],
-        staleTime: 5000 /*ms*/,
+        staleTime: 30000 /*ms*/,
     });
     return query;
 };

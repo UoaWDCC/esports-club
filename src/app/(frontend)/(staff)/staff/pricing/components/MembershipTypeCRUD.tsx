@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import { useMembershipTypeAddMutation } from "@/app/api/membership-type.add/query";
 import { MembershipTypeAddRequest } from "@/app/api/membership-type.add/type";
 import { useMembershipTypeDeleteMutation } from "@/app/api/membership-type.delete/query";
-import { useMembershipTypeEditMutation } from "@/app/api/membership-type.edit/query";
-import { MembershipTypeEditRequest } from "@/app/api/membership-type.edit/type";
-import { useMembershipTypeListQuery } from "@/app/api/membership-type.get.list/query";
+import { useMembershipTypeUpdateMutation } from "@/app/api/membership-type.update/query";
+import { MembershipTypeUpdateRequest } from "@/app/api/membership-type.update/type";
+import { useMembershipTypeListQuery } from "@/app/api/membership-type.list/query";
 import { useMembershipTypeSyncStripeMutation } from "@/app/api/membership-type.sync-stripe/query";
 import { Button } from "@/components/button/Button";
 import { MembershipType } from "@/libs/types/membershipType.type";
@@ -28,7 +28,7 @@ export function MembershipTypeCRUD() {
 
     const { data, isLoading, error } = useMembershipTypeListQuery(true);
     const addMutation = useMembershipTypeAddMutation();
-    const editMutation = useMembershipTypeEditMutation();
+    const updateMutation = useMembershipTypeUpdateMutation();
     const deleteMutation = useMembershipTypeDeleteMutation();
     const syncStripeMutation = useMembershipTypeSyncStripeMutation();
 
@@ -56,7 +56,7 @@ export function MembershipTypeCRUD() {
             // Check if this is an edit operation by looking for an ID
             if (formData.id) {
                 console.log("Processing edit operation for ID:", formData.id);
-                const editData: MembershipTypeEditRequest = {
+                const editData: MembershipTypeUpdateRequest = {
                     id: formData.id,
                     name: formData.name,
                     description: formData.description || undefined,
@@ -65,7 +65,7 @@ export function MembershipTypeCRUD() {
                     price: formData.price,
                     isActive: formData.isActive,
                 };
-                await editMutation.mutateAsync(editData);
+                await updateMutation.mutateAsync(editData);
                 setEditingId(null);
             } else {
                 // No ID means it's a new membership type
@@ -192,7 +192,7 @@ export function MembershipTypeCRUD() {
                                             membershipType={membershipType}
                                             onSubmit={handleFormSubmit}
                                             onCancel={handleEditCancel}
-                                            isLoading={editMutation.isPending}
+                                            isLoading={updateMutation.isPending}
                                         />
                                     </td>
                                 ) : (

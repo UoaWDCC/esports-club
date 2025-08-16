@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { ZMembershipTypeEditRequest } from "@/app/api/membership-type.edit/type";
+import { ZMembershipTypeUpdateRequest } from "@/app/api/membership-type.update/type";
 import { Button } from "@/components/button/Button";
 import { InputField } from "@/components/form/InputField";
 import { MembershipType } from "@/libs/types/membershipType.type";
@@ -35,7 +35,7 @@ export function InlineEditForm({
         setValue,
         formState: { errors, isValid },
     } = useForm({
-        resolver: zodResolver(ZMembershipTypeEditRequest),
+        resolver: zodResolver(ZMembershipTypeUpdateRequest),
         defaultValues: {
             id: membershipType.id,
             name: "",
