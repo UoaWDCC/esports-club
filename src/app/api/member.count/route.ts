@@ -11,19 +11,19 @@ import { MemberCount, ZMemberCountResponse } from "./type";
  * @description Get all profile with active membership
  */
 export const GET = staffRouteWrapper<MemberCount>(async () => {
-    let result = await db
+    // Count distinct profiles that have approved memberships
+    const result = await db
         .select({
-            count: count(),
+            count: count(profiles.id),
         })
         .from(memberships)
         .innerJoin(profiles, eq(memberships.profileId, profiles.id))
-        .where(eq(memberships.status, "approved"))
-        .groupBy(memberships.profileId, profiles.id);
+        .where(eq(memberships.status, "approved"));
 
-    const rowCount = result[0].count;
+    const totalMembers = result[0]?.count || 0;
 
     const data = {
-        totalItems: rowCount,
+        totalItems: totalMembers,
     };
 
     const parsedCount = ZMemberCountResponse.safeParse(data);

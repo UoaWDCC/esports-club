@@ -22,7 +22,7 @@ export type YearOfStudyOptions = (typeof YEAR_OF_STUDY_OPTIONS)[number];
 export const ZProfile = z.object({
     // TODO: switch to uuid in the future
     id: z.string(),
-    userId: z.string(),
+    userId: z.string().nullable().optional(),
     firstName: z.string().min(1, { message: "Field is required" }),
     lastName: z.string().min(1, { message: "Field is required" }),
     email: z.string().email(),

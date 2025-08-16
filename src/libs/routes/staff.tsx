@@ -83,6 +83,16 @@ export const staffNavigation: NavigationGrouping[] = [
         ],
     },
     {
+        label: "Admin Only",
+        links: [
+            {
+                name: "Member CSV upload",
+                href: "/staff/memberCSVUpload",
+                icon: <FileText size={20} />,
+            },
+        ],
+    },
+    {
         label: "Profile",
         links: [
             {

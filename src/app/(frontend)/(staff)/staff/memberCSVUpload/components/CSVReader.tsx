@@ -6,6 +6,7 @@ import { ProfileDTO } from "@libs/types/profile.type";
 import Papa from "papaparse";
 
 import { Button } from "@/components/button/Button";
+import { Table } from "@/components/table";
 import { validateProfile } from "@/services/profile/validateProfile";
 
 import { generateMemberProfile } from "../services/tempGenerateMemberProfile";
@@ -55,7 +56,10 @@ export const CSVReader = () => {
                 }
 
                 if (valid.success) {
-                    tempMemberData.push({ profile: newProfile, membership: Newmembership });
+                    tempMemberData.push({
+                        profile: newProfile,
+                        membership: Newmembership,
+                    });
                 }
             }),
         );
@@ -76,7 +80,7 @@ export const CSVReader = () => {
     };
 
     return (
-        <div>
+        <div className="flex flex-col gap-6">
             <label
                 htmlFor="file-upload"
                 className="cursor-pointer rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
@@ -92,8 +96,8 @@ export const CSVReader = () => {
             />
 
             <h1>Malformed Rows</h1>
-            <table>
-                <tbody>
+            <Table.Root>
+                <Table.Heading>
                     <tr>
                         <th> First Names </th>
                         <th> Last Name </th>
@@ -105,7 +109,8 @@ export const CSVReader = () => {
                         <th> Ethnicity </th>
                         <th> Studying </th>
                     </tr>
-
+                </Table.Heading>
+                <Table.Body>
                     {malformedcsvData.map((member, index) => {
                         return (
                             <tr key={index}>
@@ -121,12 +126,12 @@ export const CSVReader = () => {
                             </tr>
                         );
                     })}
-                </tbody>
-            </table>
+                </Table.Body>
+            </Table.Root>
 
             <h1>CORRECT ROWS</h1>
-            <table>
-                <tbody>
+            <Table.Root>
+                <Table.Heading>
                     <tr>
                         <th> First Names </th>
                         <th> Last Name </th>
@@ -138,7 +143,8 @@ export const CSVReader = () => {
                         <th> Ethnicity </th>
                         <th> Studying </th>
                     </tr>
-
+                </Table.Heading>
+                <Table.Body>
                     {csvData.map((member, index) => {
                         return (
                             <tr key={index}>
@@ -154,8 +160,8 @@ export const CSVReader = () => {
                             </tr>
                         );
                     })}
-                </tbody>
-            </table>
+                </Table.Body>
+            </Table.Root>
 
             <Button onClick={submitMembers}>Populate Database</Button>
         </div>
