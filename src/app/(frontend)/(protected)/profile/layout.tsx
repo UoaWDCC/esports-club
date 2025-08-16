@@ -3,8 +3,9 @@ import { redirect } from "next/navigation";
 import { getSession } from "@libs/auth/auth";
 import { isBypassingRouteProtection } from "@libs/bypass";
 import { DEFAULT_LOGIN_REDIRECT, DEFAULT_PROFILE_CREATION_REDIRECT } from "@libs/routes";
+import { profileNavigation } from "@libs/routes/profile";
 
-import { ProfileDashboardLayout } from "@/components/layout/ProfileDashboardLayout";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { validateUserProfile } from "@/services/profile/validateUserProfile";
 
 import { ProfileProvider } from "./components/ProfileProvider";
@@ -35,8 +36,8 @@ export default async function ProfileLayout({
     }
 
     return (
-        <ProfileDashboardLayout>
-            <ProfileProvider profile={profile.data}>{children}</ProfileProvider>
-        </ProfileDashboardLayout>
+        <ProfileProvider profile={profile.data}>
+            <DashboardLayout navigationGrouping={profileNavigation}>{children}</DashboardLayout>
+        </ProfileProvider>
     );
 }

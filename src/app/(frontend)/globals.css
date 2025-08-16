@@ -13,6 +13,16 @@
     --color-gray: #1e1e1e;
     --color-pink: #ff4b99;
 
+    --color-cta: #978ffe;
+    --color-muted: #afafaf;
+    --color-foreground: #ffffff;
+    --color-border: #616161;
+    --color-btn-hover: #3a3a40;
+    --color-cta-foreground: #020019;
+    --color-background: #111111;
+    --color-muted-background: #1f1f1f;
+    --color-navigation: #262531;
+
     --font-tomorrow: "tomorrow", sans-serif;
     --font-satoshi: "satoshi", sans-serif;
 }

@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 import {
     AUTH_ROUTES,
     PROTECTED_ROUTES,
@@ -21,3 +23,17 @@ export const ROUTE_SYSTEM = [
     STAFF_ROUTES,
     TEST_ROUTES,
 ];
+
+export type NavigationGrouping = {
+    label?: string;
+    links: {
+        name: string;
+        href: string;
+        icon?: JSX.Element;
+        notImplemented?: boolean;
+    }[];
+    config?: {
+        staffOnly?: boolean;
+        AdminOnly?: boolean;
+    };
+};
