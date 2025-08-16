@@ -9,10 +9,17 @@ import { MemberResponse, ZMemberResponse } from "./type";
 /**
  * @description Get all profile with active membership
  */
-export const GET = staffRouteWrapper<MemberResponse[]>(async () => {
-    const members = await getAllMembers();
+export const GET = staffRouteWrapper<MemberResponse>(async () => {
+    const { members, count } = await getAllMembers();
 
-    const parsedMembers = ZMemberResponse.array().safeParse(members);
+    const data = {
+        members,
+        pagination: {
+            totalItems: count,
+        },
+    };
+
+    const parsedMembers = ZMemberResponse.safeParse(data);
 
     if (!parsedMembers.success) {
         return response("bad_request", {

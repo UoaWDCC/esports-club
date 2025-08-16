@@ -1,10 +1,10 @@
 import { cn } from "@libs/utils/class";
 
-import { MembershipListRouteResponse } from "@/app/api/membership.list/type";
+import { MembershipListResponse } from "@/app/api/membership.list/type";
 import { Button } from "@/components/button/Button";
 
 interface MembershipCardProps {
-    membership: MembershipListRouteResponse;
+    membership: MembershipListResponse["memberships"][0];
 }
 
 function formatDate(date: Date): string {
@@ -29,7 +29,7 @@ export function MembershipCard({ membership }: MembershipCardProps) {
             <div className="flex items-end justify-between">
                 <div className="flex flex-col">
                     <p>MembershipId: {membership.id}</p>
-                    <p>Purchased: {formatDate(membership.createdAt)}</p>
+                    <p>Purchased: {formatDate(membership.startAt)}</p>
                     <p>Expiry: {formatDate(membership.endAt)}</p>
                 </div>
                 <div className="flex h-fit gap-2">

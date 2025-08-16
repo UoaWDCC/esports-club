@@ -19,7 +19,7 @@ const ZMembership = z.object({
     invoiceId: z.string(),
     membershipTypeId: z.string(),
     status: ZStatusOptions,
-    createdAt: z.date(),
+    createdAt: z.coerce.date(),
     notes: z.string(),
 });
 

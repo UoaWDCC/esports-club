@@ -8,8 +8,8 @@ export const ZMembershipAllRouteRequest = z.object({
 });
 
 export const ZMembershipAllRouteResponse = ZMembershipDTO.extend({
-    startAt: z.date(),
-    endAt: z.date(),
+    startAt: z.coerce.date(),
+    endAt: z.coerce.date(),
     status: ZStatus,
 });
 

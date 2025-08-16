@@ -12,7 +12,7 @@ import { db } from "..";
  */
 
 async function seedMembership() {
-    const existingProfileId = "304ab12a-c7cb-4b4c-b14a-3b0ab9c2da4a";
+    const existingProfileId = "a49ded08-1e97-4d39-bea1-445777019520";
     const existingMembershipTypeId = "84814ab3-5201-467d-becd-ed96f8162427";
 
     const newInvoice: InvoiceDTO = {
