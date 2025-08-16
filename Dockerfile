@@ -40,6 +40,9 @@ RUN --mount=type=secret,id=BETTER_AUTH_SECRET \
     --mount=type=secret,id=MAIL_PORT \
     --mount=type=secret,id=MAIL_USER \
     --mount=type=secret,id=MAIL_PASSWORD \
+    --mount=type=secret,id=NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY \
+    --mount=type=secret,id=STRIPE_SECRET_KEY \
+    --mount=type=secret,id=STRIPE_WEBHOOK_SECRET \
     BETTER_AUTH_SECRET="$(cat /run/secrets/BETTER_AUTH_SECRET)" \
     DRIZZLE_DATABASE_URL="$(cat /run/secrets/DRIZZLE_DATABASE_URL)" \
     AUTH_GOOGLE_ID="$(cat /run/secrets/AUTH_GOOGLE_ID)" \
@@ -48,6 +51,9 @@ RUN --mount=type=secret,id=BETTER_AUTH_SECRET \
     MAIL_PORT="$(cat /run/secrets/MAIL_PORT)" \
     MAIL_USER="$(cat /run/secrets/MAIL_USER)" \
     MAIL_PASSWORD="$(cat /run/secrets/MAIL_PASSWORD)" \
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="$(cat /run/secrets/NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)" \
+    STRIPE_SECRET_KEY="$(cat /run/secrets/STRIPE_SECRET_KEY)" \
+    STRIPE_WEBHOOK_SECRET="$(cat /run/secrets/STRIPE_WEBHOOK_SECRET)" \
     npx next build --experimental-build-mode compile
 
 # Remove development dependencies

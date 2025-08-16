@@ -25,6 +25,17 @@ const satoshi = localFont({
     variable: "--font-satoshi",
 });
 
+const switzer = localFont({
+    src: [
+        { path: "../../../public/fonts/switzer/Switzer-Variable.woff2", style: "normal" },
+        {
+            path: "../../../public/fonts/switzer/Switzer-VariableItalic.woff2",
+            style: "italic",
+        },
+    ],
+    variable: "--font-switzer",
+});
+
 const tomorrow = Tomorrow({
     subsets: ["latin"],
     weight: "400",
@@ -38,7 +49,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
+            <body
+                className={`${satoshi.className} ${tomorrow.style} ${switzer.variable} text-lg antialiased`}
+            >
                 <RoutingDevTools />
                 <TanstackClientProvider>{children}</TanstackClientProvider>
             </body>
