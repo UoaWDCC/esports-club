@@ -7,7 +7,7 @@ export const useMembershipTypeListQuery = (includeInactive: boolean = false) => 
     const query = useQuery({
         queryKey: ["get-membership-type-list", includeInactive],
         queryFn: () => fetchMembershipTypeList(includeInactive),
-        staleTime: 5000 /*ms*/,
+        staleTime: 50000 /*ms*/,
     });
     return query;
 };

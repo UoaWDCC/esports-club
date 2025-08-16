@@ -53,8 +53,6 @@ function getAllMembershipTypes(includeInactive: boolean = false) {
  * }
  */
 export const POST = routeWrapper<MembershipType[]>(async (req) => {
-    console.log(req);
-
     const body = await req.json();
 
     const requested = ZMembershipTypeListRequest.safeParse(body);

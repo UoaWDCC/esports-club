@@ -23,8 +23,9 @@ export const useMembershipTypeDeleteMutation = () => {
             return response.json();
         },
         onSuccess: () => {
-            // Invalidate and refetch membership types list
-            queryClient.invalidateQueries({ queryKey: ["get-membership-type-list"] });
+            queryClient.invalidateQueries({ queryKey: ["get-membership-type-list"], exact: false });
+
+            queryClient.invalidateQueries({ queryKey: ["get-membership-type"] });
         },
     });
 };

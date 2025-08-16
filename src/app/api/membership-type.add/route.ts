@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { response } from "@libs/api/response";
 import { staffRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
@@ -35,12 +36,14 @@ export const POST = staffRouteWrapper(async (req) => {
             .values({
                 name: data.name,
                 description: data.description,
-                startAt: data.startAt, // Already a Date object from schema transformation
-                endAt: data.endAt, // Already a Date object from schema transformation
+                startAt: data.startAt,
+                endAt: data.endAt,
                 price: data.price,
                 isActive: data.isActive,
             })
             .returning();
+
+        revalidateTag("membershipTypes");
 
         return response("created", {
             message: "Membership type created successfully",

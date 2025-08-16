@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { response } from "@libs/api/response";
 import { staffRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
@@ -53,6 +54,8 @@ export const PUT = staffRouteWrapper(async (req) => {
                 message: "Membership type not found",
             });
         }
+
+        revalidateTag("membershipTypes");
 
         return response("ok", {
             message: "Membership type updated successfully",
