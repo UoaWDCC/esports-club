@@ -1,29 +1,29 @@
 "use client";
 
-import { ApiResponse } from "@libs/api/response";
+import { parseQuery, ServerResponse } from "@libs/api/response";
 import { useQuery } from "@tanstack/react-query";
 
-import { MembershipListResponse } from "./type";
+import { MembershipListResponse, ZMembershipListResponse } from "./type";
 
 export const useMembershipListQuery = () => {
-    const query = useQuery<
-        ApiResponse<MembershipListResponse>,
-        Error,
-        ApiResponse<MembershipListResponse>
-    >({
+    const query = useQuery<MembershipListResponse, Error, MembershipListResponse>({
         queryKey: ["get-my-memberships"],
         queryFn: fetchMyMemberships,
-        staleTime: 5000 /*ms*/,
+        staleTime: 30000, // 30 seconds
     });
 
-    return { ...query, data: (query.data?.data || []) as MembershipListResponse };
+    return query;
 };
 
-export const fetchMyMemberships = async (): Promise<ApiResponse<MembershipListResponse>> => {
+export const fetchMyMemberships = async () => {
     const res = await fetch("/api/membership.list", { cache: "no-cache" });
     if (!res.ok) {
         throw new Error("Failed to fetch memberships");
     }
 
-    return await res.json();
+    const responseData = await res.json();
+
+    const data = parseQuery(responseData, ZMembershipListResponse);
+
+    return responseData;
 };

@@ -1,4 +1,4 @@
-import { ApiResponse, isOk, response, serverResponse, toResponse } from "@libs/api/response";
+import { isOk, response, ServerResponse, serverResponse, toResponse } from "@libs/api/response";
 import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { StatusOption } from "@libs/types/membership.type";
@@ -58,7 +58,7 @@ export const POST = staffRouteWrapper<MembershipListResponse>(async (req) => {
 const getAllMembershipsByUserId = async (
     userId: string,
     status?: StatusOption,
-): Promise<ApiResponse<MembershipListResponse>> => {
+): Promise<ServerResponse<MembershipListResponse>> => {
     const profile = await db
         .select({ id: profiles.id })
         .from(profiles)
