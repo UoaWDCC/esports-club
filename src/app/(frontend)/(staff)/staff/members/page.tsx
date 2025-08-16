@@ -1,3 +1,4 @@
+import { MemberPagination } from "./components/MemberPagination";
 import { MemberTable } from "./components/MemberTable";
 
 export default function StaffMemberPage() {
@@ -8,6 +9,7 @@ export default function StaffMemberPage() {
                     <h1 className="text-4xl">Members</h1>
                     {/* something else here */}
                 </div>
+                <MemberPagination />
                 <MemberTable />
             </div>
         </div>

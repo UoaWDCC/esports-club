@@ -13,4 +13,9 @@ export const ZMemberListResponse = z.object({
         .optional(),
 });
 
+export const ZMemberListRequest = z.object({
+    page: z.number().int().default(1),
+    limit: z.number().int().default(50),
+});
+
 export type MemberList = z.infer<typeof ZMemberListResponse>;

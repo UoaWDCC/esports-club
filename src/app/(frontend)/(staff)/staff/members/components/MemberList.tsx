@@ -1,11 +1,15 @@
 "use client";
 
+import { parseAsInteger, useQueryState } from "nuqs";
+
 import { useMemberListQuery } from "@/app/api/member.all/query";
 
 import { MemberRow } from "./MemberRow";
 
 export const MemberList = () => {
-    const { data, error, isLoading, isError } = useMemberListQuery();
+    const [pageIndex] = useQueryState("page", parseAsInteger.withDefault(1));
+    const [limit] = useQueryState("limit", parseAsInteger.withDefault(50));
+    const { data, error, isLoading, isError } = useMemberListQuery(pageIndex, limit);
 
     if (isLoading) {
         return (

@@ -4,7 +4,11 @@ import { db } from "@libs/db";
 import { memberships, profiles } from "@libs/db/schema";
 import { eq } from "drizzle-orm";
 
-export const getAllMembers = async (limit?: number, page: number = 1) => {
+export const getAllMembers = async (
+    body: { limit?: number; page: number } = { limit: 50, page: 1 },
+) => {
+    const { page, limit } = body;
+
     if (page < 1) {
         throw new Error("Invalid page");
     }
