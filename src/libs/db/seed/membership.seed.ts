@@ -12,8 +12,8 @@ import { db } from "..";
  */
 
 async function seedMembership() {
-    const existingProfileId = "JB0BsSYAsblU4dcfWPpcwx36UbrHnJvL";
-    const existingMembershipTypeId = "9670729f-95e5-4145-99e1-d368378191f2";
+    const existingProfileId = "304ab12a-c7cb-4b4c-b14a-3b0ab9c2da4a";
+    const existingMembershipTypeId = "84814ab3-5201-467d-becd-ed96f8162427";
 
     const newInvoice: InvoiceDTO = {
         profileId: existingProfileId,
@@ -31,7 +31,7 @@ async function seedMembership() {
         profileId: existingProfileId,
         invoiceId: invoiceId,
         membershipTypeId: existingMembershipTypeId,
-        status: "pending",
+        status: "approved",
     };
 
     const result = await db.insert(memberships).values(newMembership).returning().execute();
