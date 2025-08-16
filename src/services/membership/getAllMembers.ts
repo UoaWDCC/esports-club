@@ -13,7 +13,7 @@ export const getAllMembers = async (
         throw new Error("Invalid page");
     }
 
-    let query = db
+    const query = db
         .select({
             profileId: memberships.profileId,
             profile: profiles,
@@ -23,7 +23,7 @@ export const getAllMembers = async (
         .where(eq(memberships.status, "approved"))
         .groupBy(memberships.profileId, profiles.id);
 
-    let memberQuery = query;
+    const memberQuery = query;
 
     // paginate
     if (limit && limit > 0) {

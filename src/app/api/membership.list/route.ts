@@ -25,6 +25,7 @@ export const GET = userRouteWrapper(async (_, session) => {
  */
 export const POST = staffRouteWrapper<MembershipListResponse>(async (req) => {
     const body = await req.json();
+    console.log(body);
 
     const { data, success, error } = ZMembershipListRequest.safeParse(body);
 
@@ -43,8 +44,7 @@ export const POST = staffRouteWrapper<MembershipListResponse>(async (req) => {
         return toResponse(memberships);
     }
 
-    let filteredMemberships: MembershipListResponse["memberships"] =
-        memberships.data?.memberships || [];
+    let filteredMemberships = memberships.data?.memberships || [];
 
     if (state) {
         filteredMemberships = filteredMemberships.filter((m) => m.state === state) || [];

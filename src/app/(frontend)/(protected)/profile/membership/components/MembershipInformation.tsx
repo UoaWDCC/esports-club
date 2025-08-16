@@ -24,7 +24,7 @@ export const MembershipInformation = () => {
         return <p>No data</p>;
     }
 
-    const { memberships } = data;
+    const memberships = data;
 
     return (
         <>
@@ -70,7 +70,7 @@ const MembershipStatuses = ({
                 />
                 <MembershipInfoRow
                     title="Expiry Date"
-                    info={active_membership?.endAt.toDateString() ?? "Non applicable"}
+                    info={active_membership?.endAt?.toDateString() ?? "Non applicable"}
                 />
             </div>
         </div>

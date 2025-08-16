@@ -10,7 +10,7 @@ export const MemberTableHeading = () => (
     </>
 );
 
-export function MemberRow({ member, index }: { member: MemberList["members"][0]; index: number }) {
+export function MemberRow({ member }: { member: MemberList["members"][0]; index: number }) {
     return (
         <tr className="*:truncate">
             <td>{member.firstName}</td>
