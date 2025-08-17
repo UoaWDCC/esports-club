@@ -12,9 +12,16 @@ interface UpcomingEventCardProps {
 }
 export function UpcomingEventCard({ game, title, date, numPeople, image }: UpcomingEventCardProps) {
     return (
-        <div className="flex flex-row">
-            <div className="h-[266px] w-[853px]">
-                <Image src={image.src} alt={image.alt} />
+        <div className="s flex w-[540px] flex-row overflow-hidden rounded-lg bg-neutral-800">
+            <div className="relative h-[177px] w-[55%]">
+                <Image src={image.src} alt={image.alt} fill />
+            </div>
+            <div className="flex w-[45%] flex-col justify-center pl-3">
+                <p className="text-sm">
+                    <span className="font-bold">{game}</span> {date}
+                </p>
+                <p className="text-xl font-medium">{title}</p>
+                <p className="text-sm">{numPeople} ATTENDING</p>
             </div>
         </div>
     );
