@@ -15,7 +15,7 @@ export default function IndiviudalEventCard({ event }: EventCardProps) {
                 <h1 className="text-5xl">Tentative Title</h1>
             </div>
             <div className="flex w-full flex-col items-center gap-10 md:flex-row">
-                <div className="w-1/2">
+                <div className="w-full md:w-1/2">
                     <Image
                         src="/assets/landing/placeholder3.png"
                         alt="an event in auec"
@@ -24,7 +24,7 @@ export default function IndiviudalEventCard({ event }: EventCardProps) {
                         className="h-auto w-full"
                     />
                 </div>
-                <div className="flex w-1/2 flex-col gap-5">
+                <div className="flex w-full flex-col gap-5 md:w-1/2">
                     <div className="flex flex-col gap-4">
                         <h2 className="text-5xl">Ipsum Lorem</h2>
                         <p className="text-md">
