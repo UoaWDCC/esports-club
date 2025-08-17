@@ -31,7 +31,7 @@
         "better-auth": "^1.2.10",
         "clsx": "^2.1.1",
         "dotenv": "^16.5.0",
-        "drizzle-orm": "^0.41.0",
+        "drizzle-orm": "^0.44.4",
         "graphql": "^16.11.0",
         "lucide-react": "^0.522.0",
         "motion": "^12.5.0",

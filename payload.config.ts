@@ -6,6 +6,8 @@ import { postgresAdapter } from "@payloadcms/db-postgres";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { buildConfig } from "payload";
 
+import * as schema from "@/libs/db/schema";
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -16,7 +18,7 @@ export default buildConfig({
             baseDir: path.resolve(dirname),
         },
     },
-    collections: [],
+    collections: [UsersCollection],
     globals: [],
 
     secret: env.PAYLOAD_SECRET,
@@ -24,10 +26,29 @@ export default buildConfig({
         outputFile: path.resolve(dirname, "src/payload/payload-types.ts"),
     },
     db: postgresAdapter({
+        beforeSchemaInit: [
+            ({ schema: payloadSchema }) => {
+                return {
+                    ...payloadSchema,
+                    tables: {
+                        ...payloadSchema.tables,
+                        account: schema.account as any,
+                        session: schema.session as any,
+                        user: schema.user as any,
+                        verification: schema.verification as any,
+                        profiles: schema.profiles as any,
+                        memberships: schema.memberships as any,
+                        membershipTypes: schema.membershipTypes as any,
+                        invoices: schema.invoices as any,
+                    },
+                };
+            },
+        ],
         pool: {
             connectionString: env.DRIZZLE_DATABASE_URL,
         },
-        migrationDir: "./src/migrations",
+        migrationDir: "./src/migrations/payload",
+        idType: "uuid",
     }),
     upload: {
         limits: {
