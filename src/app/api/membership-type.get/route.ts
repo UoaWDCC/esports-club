@@ -1,5 +1,5 @@
 import { unstable_cache } from "next/cache";
-import { ApiResponse, response, serverResponse, toResponse } from "@libs/api/response";
+import { response, ServerResponse, serverResponse, toResponse } from "@libs/api/response";
 import { routeWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { MembershipType, ZMembershipType } from "@libs/types/membershipType.type";
@@ -8,7 +8,7 @@ import { ZMembershipTypeRequest } from "./type";
 
 function getMembershipType(id: string) {
     return unstable_cache(
-        async (): Promise<ApiResponse<MembershipType>> => {
+        async (): Promise<ServerResponse<MembershipType>> => {
             const membershipType = await db.query.membershipTypes.findFirst({
                 where: (mt, { eq }) => eq(mt.id, id),
             });

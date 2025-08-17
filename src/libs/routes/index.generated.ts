@@ -1,6 +1,6 @@
 
 // automatically generated with generate-index.js, 
-// last generated: 29/07/2025
+// last generated: 17/08/2025
 
 export type RouteSection = {
     name: string;
@@ -15,6 +15,18 @@ export const PUBLIC_ROUTES: RouteSection = {
     {
       "url": "/",
       "name": "LandingPage"
+    },
+    {
+      "url": "/policies/",
+      "name": "page"
+    },
+    {
+      "url": "/policies/privacy-policy/",
+      "name": "page"
+    },
+    {
+      "url": "/policies/terms-and-services/",
+      "name": "page"
     },
     {
       "url": "/unauthorized/",
@@ -75,6 +87,14 @@ export const STAFF_ROUTES: RouteSection = {
       "name": "CSVUploadPage"
     },
     {
+      "url": "/staff/members/",
+      "name": "StaffMemberPage"
+    },
+    {
+      "url": "/staff/members copy/",
+      "name": "StaffMemberPage"
+    },
+    {
       "url": "/staff/",
       "name": "StaffPage"
     }
@@ -91,10 +111,6 @@ export const TEST_ROUTES: RouteSection = {
     {
       "url": "/test/email/verification/",
       "name": "EmailVerificationPage"
-    },
-    {
-      "url": "/test/memberApproval/",
-      "name": "memberApprovalPage"
     },
     {
       "url": "/test/",

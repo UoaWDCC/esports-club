@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const ZMembershipApproveRouteRequest = z.object({
     membershipId: z.string(),
-    paidDate: z.date().optional(),
+    paidDate: z.coerce.date().optional(),
     paymentMethod: z.enum(PAYMENT_METHODS).optional(),
 });
 

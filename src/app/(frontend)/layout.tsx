@@ -6,6 +6,9 @@ import { Tomorrow } from "next/font/google";
 import localFont from "next/font/local";
 import { RoutingDevTools } from "@providers/devtools/DevToolsProvider";
 import { TanstackClientProvider } from "@providers/query/TanstackClientProvider";
+import { ThemeBody } from "@providers/theme/ThemeLoader";
+import { ThemeProvider } from "@providers/theme/ThemeProvider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
     title: { default: "Esports club", template: "%s | Esports club" },
@@ -25,6 +28,17 @@ const satoshi = localFont({
     variable: "--font-satoshi",
 });
 
+const switzer = localFont({
+    src: [
+        { path: "../../../public/fonts/switzer/Switzer-Variable.woff2", style: "normal" },
+        {
+            path: "../../../public/fonts/switzer/Switzer-VariableItalic.woff2",
+            style: "italic",
+        },
+    ],
+    variable: "--font-switzer",
+});
+
 const tomorrow = Tomorrow({
     subsets: ["latin"],
     weight: "400",
@@ -38,10 +52,14 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
-                <RoutingDevTools />
-                <TanstackClientProvider>{children}</TanstackClientProvider>
-            </body>
+            <ThemeProvider>
+                <ThemeBody className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
+                    <RoutingDevTools />
+                    <TanstackClientProvider>
+                        <NuqsAdapter>{children}</NuqsAdapter>
+                    </TanstackClientProvider>
+                </ThemeBody>
+            </ThemeProvider>
         </html>
     );
 }

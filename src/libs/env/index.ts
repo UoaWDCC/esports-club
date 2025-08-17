@@ -17,7 +17,13 @@ export const env = createEnv({
         MAIL_USER: z.string().min(1),
         MAIL_PASSWORD: z.string().min(1),
         TEST_EMAIL: z.string().optional(),
-        ROUTE_PROTECTION_BYPASS: z.enum(["enabled", "disabled"]).default("disabled"),
+        STRIPE_SECRET_KEY: z.string().min(1),
+        STRIPE_WEBHOOK_SECRET: z.string().min(1),
+    },
+    client: {
+        //was getting linting error if everything wasn't prefixed with NEXT_PUBLIC for cient variables
+        NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS: z.enum(["enabled", "disabled"]).default("disabled"),
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
     },
     runtimeEnv: {
         APP_URL: process.env.APP_URL,
@@ -32,6 +38,9 @@ export const env = createEnv({
         MAIL_USER: process.env.MAIL_USER,
         MAIL_PASSWORD: process.env.MAIL_PASSWORD,
         TEST_EMAIL: process.env.TEST_EMAIL,
-        ROUTE_PROTECTION_BYPASS: process.env.ROUTE_PROTECTION_BYPASS,
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+        STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+        STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+        NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS: process.env.NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS,
     },
 });

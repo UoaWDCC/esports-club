@@ -3,10 +3,11 @@ import { response } from "@libs/api/response";
 import { userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { invoices } from "@libs/db/schema/invoices";
+import { ZInvoiceDTO } from "@libs/types/invoice.type";
 import { profiles } from "@schema";
 import { eq } from "drizzle-orm";
 
-import { InvoiceListResponse, ZInvoiceListResponse } from "./type";
+import { InvoiceListResponse } from "./type";
 
 export const GET = userRouteWrapper<InvoiceListResponse>(async (_, session) => {
     const { id: userId } = session.user;
@@ -27,7 +28,9 @@ export const GET = userRouteWrapper<InvoiceListResponse>(async (_, session) => {
         where: eq(invoices.profileId, profileId),
     }); // array of invoices raw form
 
-    const { data, success, error } = ZInvoiceListResponse.safeParse(allUserInvoices);
+    console.log(allUserInvoices);
+
+    const { data, success, error } = ZInvoiceDTO.array().safeParse(allUserInvoices);
 
     if (!success) {
         return response("internal_server_error", {
@@ -36,5 +39,5 @@ export const GET = userRouteWrapper<InvoiceListResponse>(async (_, session) => {
         });
     }
 
-    return response("ok", { data });
+    return response("ok", { data: { invoices: data } });
 });
