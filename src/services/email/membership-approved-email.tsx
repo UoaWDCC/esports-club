@@ -1,3 +1,4 @@
+import { env } from "@libs/env";
 import { transporter } from "@libs/smtp/transporter";
 import { render } from "@react-email/components";
 
@@ -13,6 +14,9 @@ type EmailApproval = {
 };
 
 export const sendApprovalEmail = async (body: EmailApproval) => {
+    // enable this to send mail
+    if (env.NEXT_PUBLIC_ENABLE_MAILING !== "enabled") return;
+
     const emailHtml = await render(
         <EsportsMembershipApprovedEmail name={body.name} invoiceID={body.invoiceID} />,
     );
@@ -22,6 +26,7 @@ export const sendApprovalEmail = async (body: EmailApproval) => {
         subject: body.subject,
         html: emailHtml,
     });
+
     return await transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log("Error:", error);

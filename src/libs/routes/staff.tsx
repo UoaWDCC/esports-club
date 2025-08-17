@@ -7,6 +7,7 @@ import {
     LayoutDashboard,
     List,
     Palette,
+    UserRoundCheck,
     UserSearch,
 } from "lucide-react";
 
@@ -40,6 +41,11 @@ export const staffNavigation: NavigationGrouping[] = [
     {
         label: "Membership",
         links: [
+            {
+                name: "Approve Membership",
+                href: "/staff/members-approval",
+                icon: <UserRoundCheck size={20} />,
+            },
             {
                 name: "Membership lookup",
                 href: "/staff/membership/lookup",

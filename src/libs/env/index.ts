@@ -24,6 +24,7 @@ export const env = createEnv({
         //was getting linting error if everything wasn't prefixed with NEXT_PUBLIC for cient variables
         NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS: z.enum(["enabled", "disabled"]).default("disabled"),
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
+        NEXT_PUBLIC_ENABLE_MAILING: z.enum(["enabled", "disabled"]).default("disabled"),
     },
     runtimeEnv: {
         APP_URL: process.env.APP_URL,
@@ -42,5 +43,6 @@ export const env = createEnv({
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
         NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS: process.env.NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS,
+        NEXT_PUBLIC_ENABLE_MAILING: process.env.NEXT_PUBLIC_ENABLE_MAILING,
     },
 });

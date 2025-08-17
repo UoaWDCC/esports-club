@@ -1,3 +1,4 @@
+import { env } from "@libs/env";
 import { transporter } from "@libs/smtp/transporter";
 import { render } from "@react-email/components";
 
@@ -13,6 +14,9 @@ type EmailRejection = {
 };
 
 export const sendRejectionEmail = async (body: EmailRejection) => {
+    // enable this to send mail
+    if (env.NEXT_PUBLIC_ENABLE_MAILING !== "enabled") return;
+
     const emailHtml = await render(
         <EsportsMembershipRejectedEmail name={body.name} reason={body.reason} />,
     );

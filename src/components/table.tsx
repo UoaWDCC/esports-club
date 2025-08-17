@@ -16,7 +16,7 @@ const Heading = ({ children }: { children: React.ReactNode }) => {
 
 const Body = ({ children }: { children: React.ReactNode }) => {
     return (
-        <tbody className="*:bg-background *:hover:bg-cta/5 *:*:px-4 *:*:py-2 *:transition">
+        <tbody className="*:bg-background *:hover:bg-cta/2 *:*:px-4 *:*:py-2 *:transition">
             {children}
         </tbody>
     );
