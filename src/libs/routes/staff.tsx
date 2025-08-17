@@ -23,7 +23,7 @@ export const staffNavigation: NavigationGrouping[] = [
             },
             {
                 name: "Themes",
-                href: "/profile/themes",
+                href: "/staff/themes",
                 icon: <Palette size={20} strokeWidth={2} />,
             },
         ],
@@ -64,10 +64,9 @@ export const staffNavigation: NavigationGrouping[] = [
         label: "Membership Control",
         links: [
             {
-                name: "Membership types",
-                href: "/staff/membership-types",
+                name: "Membership pricing",
+                href: "/staff/pricing",
                 icon: <FileText size={20} />,
-                notImplemented: true,
             },
         ],
     },

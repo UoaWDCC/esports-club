@@ -13,7 +13,7 @@ export const ApproveMemberTableHeading = () => (
         <th className="w-1/4">First name</th>
         <th className="w-1/4">Last name</th>
         <th className="w-1/3">Email</th>
-        <th className="w-1/6">Notes</th>
+        <th className="w-1/6">Reference</th>
         <th className="w-26">Actions</th>
     </>
 );
