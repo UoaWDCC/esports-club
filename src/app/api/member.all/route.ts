@@ -1,6 +1,6 @@
 // app/api/members/route.ts
 import { response } from "@libs/api/response";
-import { staffRouteWrapper } from "@libs/api/wrappers";
+import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 
 import { getAllMembers } from "@/services/membership/getAllMembers";
 
@@ -9,7 +9,7 @@ import { MemberList, MemberOrdering, ZMemberListRequest, ZMemberListResponse } f
 /**
  * @description Get all profile with active membership
  */
-export const POST = staffRouteWrapper<MemberList>(async (req) => {
+export const POST = userRouteWrapper<MemberList>(async (req) => {
     const { data: body, success } = ZMemberListRequest.safeParse(await req.json());
 
     const _default = {
@@ -21,6 +21,7 @@ export const POST = staffRouteWrapper<MemberList>(async (req) => {
         } as MemberOrdering,
     };
 
+    console.log(body);
     const { members, count } = await getAllMembers(success ? body : _default);
 
     const data = {
@@ -32,7 +33,7 @@ export const POST = staffRouteWrapper<MemberList>(async (req) => {
             limit: success ? body.limit : _default.limit,
         },
     };
-    console.log(data);
+
     const parsedMembers = ZMemberListResponse.safeParse(data);
 
     if (!parsedMembers.success) {

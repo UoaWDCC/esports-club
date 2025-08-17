@@ -1,6 +1,6 @@
 // app/api/members/route.ts
 import { response } from "@libs/api/response";
-import { staffRouteWrapper } from "@libs/api/wrappers";
+import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { memberships, profiles } from "@schema";
 import { count, eq } from "drizzle-orm";
@@ -10,7 +10,7 @@ import { MemberCount, ZMemberCountResponse } from "./type";
 /**
  * @description Get all profile with active membership
  */
-export const GET = staffRouteWrapper<MemberCount>(async () => {
+export const GET = userRouteWrapper<MemberCount>(async () => {
     // Count distinct profiles that have approved memberships
     const result = await db
         .select({

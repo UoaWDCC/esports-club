@@ -17,7 +17,7 @@ export const getAllMembers = async (
     },
 ) => {
     const { page, limit, ordering } = body;
-
+    console.log(ordering);
     if (page < 1) {
         throw new Error("Invalid page");
     }

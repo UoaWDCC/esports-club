@@ -1,14 +1,66 @@
-import { MemberList } from "@/app/api/member.all/type";
+"use client";
 
-export const MemberTableHeading = () => (
-    <>
-        {/* <th className="w-4"></th> */}
-        <th className="w-1/3">First name</th>
-        <th className="w-1/3">Last name</th>
-        <th className="w-full">Email</th>
-        <th className="w-1/5">Id</th>
-    </>
-);
+import { parseAsBoolean, parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
+
+import { MemberList, ProfileColumns, ZProfileColumns } from "@/app/api/member.all/type";
+
+export const MemberTableHeading = () => {
+    const [orderColumn, setOrderColumn] = useQueryState(
+        "orderColumn",
+        ZProfileColumns.default("firstName"),
+    );
+    const [descending, setDescending] = useQueryState(
+        "columnDirecton",
+        parseAsBoolean.withDefault(true),
+    );
+
+    const setOrdering = (columnName: string) => {
+        if (orderColumn == columnName) {
+            setDescending(!descending);
+            return;
+        }
+
+        setOrderColumn(columnName as ProfileColumns);
+        setDescending(true);
+    };
+    return (
+        <>
+            <th
+                className="w-1/3"
+                onClick={() => {
+                    setOrdering("firstName");
+                }}
+            >
+                First name
+            </th>
+
+            <th
+                className="w-1/3"
+                onClick={() => {
+                    setOrdering("lastName");
+                }}
+            >
+                Last name
+            </th>
+            <th
+                className="w-full"
+                onClick={() => {
+                    setOrdering("email");
+                }}
+            >
+                Email
+            </th>
+            <th
+                className="w-1/5"
+                onClick={() => {
+                    setOrdering("id");
+                }}
+            >
+                Id
+            </th>
+        </>
+    );
+};
 
 export function MemberRow({ member }: { member: MemberList["members"][0]; index: number }) {
     return (

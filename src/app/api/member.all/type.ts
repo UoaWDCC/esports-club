@@ -1,7 +1,7 @@
 import { ZProfile } from "@libs/types/profile.type";
 import { z } from "zod";
 
-export const ProfileColumns = ZProfile.keyof();
+export const ZProfileColumns = ZProfile.keyof();
 export const ZMemberOrdering = z.object({
     column: ZProfile.keyof(),
     descending: z.boolean().default(true),
@@ -30,3 +30,4 @@ export const ZMemberListRequest = z.object({
 
 export type MemberList = z.infer<typeof ZMemberListResponse>;
 export type MemberOrdering = z.infer<typeof ZMemberOrdering>;
+export type ProfileColumns = z.infer<typeof ZProfileColumns>;

@@ -2,7 +2,7 @@ import { ZProfile } from "@libs/types/profile.type";
 import { z, ZodEnum } from "zod";
 
 export const ProfileColumns = ZProfile.keyof();
-export const ProfileOrdering = z.object({
+export const ZProfileOrdering = z.object({
     column: ZProfile.keyof(),
     descending: z.boolean().default(true),
 });
@@ -13,7 +13,7 @@ export const ZProfileListRequest = z.object({
     last_name: z.string().optional(),
     university: z.string().optional(),
     email: z.string().optional(),
-    ordering: ProfileOrdering.optional(),
+    ordering: ZProfileOrdering.optional(),
 });
 
 export const ZProfileListResponse = z.object({
