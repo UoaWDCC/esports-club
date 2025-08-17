@@ -4,7 +4,7 @@ import { staffRouteWrapper } from "@libs/api/wrappers";
 
 import { getAllMembers } from "@/services/membership/getAllMembers";
 
-import { MemberList, ZMemberListRequest, ZMemberListResponse } from "./type";
+import { MemberList, MemberOrdering, ZMemberListRequest, ZMemberListResponse } from "./type";
 
 /**
  * @description Get all profile with active membership
@@ -12,7 +12,14 @@ import { MemberList, ZMemberListRequest, ZMemberListResponse } from "./type";
 export const POST = staffRouteWrapper<MemberList>(async (req) => {
     const { data: body, success } = ZMemberListRequest.safeParse(await req.json());
 
-    const _default = { page: 1, limit: 50 };
+    const _default = {
+        page: 1,
+        limit: 50,
+        ordering: {
+            column: "firstName",
+            descending: true,
+        } as MemberOrdering,
+    };
 
     const { members, count } = await getAllMembers(success ? body : _default);
 
@@ -25,7 +32,7 @@ export const POST = staffRouteWrapper<MemberList>(async (req) => {
             limit: success ? body.limit : _default.limit,
         },
     };
-
+    console.log(data);
     const parsedMembers = ZMemberListResponse.safeParse(data);
 
     if (!parsedMembers.success) {
