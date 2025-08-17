@@ -22,7 +22,8 @@
             "@schema": ["./src/libs/db/schema/index.ts"],
             "@providers/*": ["./src/components/providers/*"],
             "@libs/*": ["./src/libs/*"],
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"],
+            "@payload-config": ["./payload.config.ts"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

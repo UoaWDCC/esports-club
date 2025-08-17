@@ -19,6 +19,11 @@ export const env = createEnv({
         TEST_EMAIL: z.string().optional(),
         STRIPE_SECRET_KEY: z.string().min(1),
         STRIPE_WEBHOOK_SECRET: z.string().min(1),
+        PAYLOAD_SECRET: z.string().min(1),
+        S3_ACCESS_KEY_ID: z.string().min(1),
+        S3_SECRET_ACCESS_KEY: z.string().min(1),
+        S3_BUCKET: z.string().min(1),
+        S3_REGION: z.string().min(1),
     },
     client: {
         //was getting linting error if everything wasn't prefixed with NEXT_PUBLIC for cient variables
@@ -42,5 +47,10 @@ export const env = createEnv({
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
         NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS: process.env.NEXT_PUBLIC_ROUTE_PROTECTION_BYPASS,
+        PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
+        S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID,
+        S3_SECRET_ACCESS_KEY: process.env.S3_SECRET_ACCESS_KEY,
+        S3_BUCKET: process.env.S3_BUCKET,
+        S3_REGION: process.env.S3_REGION,
     },
 });
