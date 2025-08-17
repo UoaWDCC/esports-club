@@ -2,7 +2,7 @@
 
 import { profileNavigation } from "@libs/routes/profile";
 
-import BlockNavigation from "@/components/BlockNavigation";
+import { BlockNavigation } from "@/components/BlockNavigation";
 
 // requires user to be logged in
 // requires user to have a profile
