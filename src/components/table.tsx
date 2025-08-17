@@ -9,7 +9,9 @@ const Root = ({ children }: { children: React.ReactNode }) => {
 const Heading = ({ children }: { children: React.ReactNode }) => {
     return (
         <thead className="bg-opacity-50">
-            <tr className="bg-muted-background whitespace-nowrap *:px-4 *:py-2">{children}</tr>
+            <tr className="bg-muted-background whitespace-nowrap *:px-4 *:py-2 *:select-none">
+                {children}
+            </tr>
         </thead>
     );
 };
