@@ -1,6 +1,6 @@
 import { staffNavigation } from "@libs/routes/staff";
 
-import BlockNavigation from "@/components/BlockNavigation";
+import { BlockNavigation } from "@/components/BlockNavigation";
 
 export default async function StaffPage() {
     const allLinks = staffNavigation

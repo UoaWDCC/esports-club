@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { profileNavigation } from "@libs/routes/profile";
 
-import BlockNavigation from "@/components/BlockNavigation";
+import { BlockNavigation } from "@/components/BlockNavigation";
 
 import { useProfile } from "./components/ProfileProvider";
 

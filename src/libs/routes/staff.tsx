@@ -6,7 +6,7 @@ import {
     FileText,
     LayoutDashboard,
     List,
-    User,
+    Palette,
     UserSearch,
 } from "lucide-react";
 
@@ -19,6 +19,11 @@ export const staffNavigation: NavigationGrouping[] = [
                 name: "Dashboard",
                 href: "/staff",
                 icon: <LayoutDashboard size={20} />,
+            },
+            {
+                name: "Themes",
+                href: "/profile/themes",
+                icon: <Palette size={20} strokeWidth={2} />,
             },
         ],
     },
