@@ -9,7 +9,7 @@ import { MemberList, MemberOrdering, ZMemberListRequest, ZMemberListResponse } f
 /**
  * @description Get all profile with active membership
  */
-export const POST = userRouteWrapper<MemberList>(async (req) => {
+export const POST = staffRouteWrapper<MemberList>(async (req) => {
     const { data: body, success } = ZMemberListRequest.safeParse(await req.json());
 
     const _default = {

@@ -10,7 +10,7 @@ import { MemberCount, ZMemberCountResponse } from "./type";
 /**
  * @description Get all profile with active membership
  */
-export const GET = userRouteWrapper<MemberCount>(async () => {
+export const GET = staffRouteWrapper<MemberCount>(async () => {
     // Count distinct profiles that have approved memberships
     const result = await db
         .select({
