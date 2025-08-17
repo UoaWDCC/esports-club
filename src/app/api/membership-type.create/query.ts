@@ -1,19 +1,19 @@
 "use client";
 
 import { ApiResponse } from "@libs/api/response";
-import { MembershipType, MembershipTypeDTO } from "@libs/types/membershipType.type";
+import { MembershipTypeDTO } from "@libs/types/membershipType.type";
 import { useQuery } from "@tanstack/react-query";
 
 export const useMembershipTypeCreateQuery = (MembershipToAdd: MembershipTypeDTO) => {
     const query = useQuery<ApiResponse, Error>({
-        queryKey: ["get-my-memberships"],
-        queryFn: () => fetchMyMemberships(MembershipToAdd),
+        queryKey: ["membership-type-create"],
+        queryFn: () => membershipTypeCreate(MembershipToAdd),
         staleTime: 5000 /*ms*/,
     });
     return query;
 };
 
-export const fetchMyMemberships = async (
+export const membershipTypeCreate = async (
     MembershipToAdd: MembershipTypeDTO,
 ): Promise<ApiResponse> => {
     // free api

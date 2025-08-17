@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { Button } from "@/components/button/Button";
 
-import { useProfile } from "../components/ProfileProvider";
 import { InvoiceRow } from "./components/InvoiceRow";
 import { TestInvoices } from "./data/TestInvoices";
 
@@ -12,8 +11,6 @@ import { TestInvoices } from "./data/TestInvoices";
 // requires user to have a profile
 // see (protected)/profile/layout.tsx
 export default function InvoicePage() {
-    const profile = useProfile();
-
     return (
         <div className="flex items-center justify-center">
             <div className="flex w-full flex-col gap-6">

@@ -6,6 +6,8 @@ info:
 tags:
   - name: Teapot
     description: Teapot-related endpoints for tea suggestions and commentary.
+  - name: Memberships
+    description: Membership related endpoints
 
 paths:
   /api/teapot:
@@ -39,6 +41,52 @@ paths:
                 $ref: '#/components/schemas/TeaPotCommentResponseWrapper'
         '400':
           description: Invalid tea input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+
+  
+  /api/membership.list:
+    get:
+      tags:
+        - Membership
+      description: 'get all memeberships associated with current user (required to be logged in)'
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/MembershipListSuccessResponse'
+        '403':
+          description: forbidden - not logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenResponse'
+    post:
+      tags:
+        - Membership
+      description: 'get memberships for selected user and filter'
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/MembershipListSuccessResponse'
+        '403':
+          description: forbidden - not logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenResponse'
+
+        '400':
+          description: Invalid userID or filters
           content:
             application/json:
               schema:
@@ -97,6 +145,60 @@ components:
         data:
           $ref: '#/components/schemas/TeaPotCommentResponse'
 
+    MembershipListRouteResponse:
+      type: object
+      properties:
+        id: 
+          type: string
+          example: ad5c0a8b-791f-4880-b864-badc3834e087
+        profileId:
+          type: string 
+          example: 304ab12a-c7cb-4b4c-b14a-3b0ab9c2da4a
+        invoiceId: 
+          type: string
+          example: 09d4ee4b-e341-4f3a-bff4-3cbfdc32dd0d,
+        membershipTypeId: 
+          type: string
+          example: 5c452183-1615-4082-875d-5a2b62a5f68c
+        status: 
+          type: string
+          enum: [active,expired]
+          example: expired
+        createdAt:
+          type: string
+          example: "2025-06-30T05:25:09.767Z"
+        notes: 
+          type: string
+          example: Was rude to staff,
+        description: 
+          type: string
+          example: "Access to all esports club activities for one semester"
+        startAt:
+          type: string 
+          example: 2025-01-01T00:36:38.000Z
+        endAt:
+          type: string 
+          example: 2025-01-01T00:36:38.000Z
+        price:
+          type: number
+          example: 1000
+        title:
+          type: string 
+          example: 1 Semester Plan
+
+    
+    MembershipListSuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ok]
+        data:
+          $ref: '#/components/schemas/MembershipListRouteResponse'
+        message:
+          type: string
+          example: The request was successful.
+      
     BadRequestResponse:
       type: object
       properties:
@@ -105,7 +207,6 @@ components:
           enum: [bad_request]
         message:
           type: string
-          example: teapot does not understand your tea, try Qimen Hongcha
         error:
           type: array
           items:
@@ -115,3 +216,12 @@ components:
                 type: string
               message:
                 type: string
+
+    ForbiddenResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [forbidden]
+        message:
+          type: string

@@ -1,13 +1,11 @@
 import { ApiResponse, serverResponse, toResponse } from "@libs/api/response";
 import { userRouteWrapper } from "@libs/api/wrappers";
-import { db } from "@libs/db";
 import { MembershipType, ZMembershipType } from "@libs/types/membershipType.type";
-import { membershipTypes } from "@schema";
 
 /**
  * @description Get all membershipTypes
  */
-export const GET = userRouteWrapper(async (_, session) => {
+export const GET = userRouteWrapper(async () => {
     return toResponse(await getAllMembershipTypes());
 });
 
