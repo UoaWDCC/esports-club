@@ -28,6 +28,17 @@ const satoshi = localFont({
     variable: "--font-satoshi",
 });
 
+const switzer = localFont({
+    src: [
+        { path: "../../../public/fonts/switzer/Switzer-Variable.woff2", style: "normal" },
+        {
+            path: "../../../public/fonts/switzer/Switzer-VariableItalic.woff2",
+            style: "italic",
+        },
+    ],
+    variable: "--font-switzer",
+});
+
 const tomorrow = Tomorrow({
     subsets: ["latin"],
     weight: "400",

@@ -10,6 +10,8 @@ export const membershipTypes = pgTable("membership_type", {
     endAt: timestamp("end_at").notNull(),
     price: integer("price").notNull(),
     isActive: boolean("is_active").default(false).notNull(),
+    stripeProductId: text("stripe_product_id"), // Stripe product ID
+    stripePriceId: text("stripe_price_id"), // Stripe price ID
     updateAt: timestamp("updated_at").defaultNow().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
 });

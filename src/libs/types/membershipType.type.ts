@@ -9,13 +9,15 @@ const ZMembershipType = z.object({
     // TODO: switch id to uuid in the future
     id: z.string(),
     name: z.string().min(1),
-    description: z.string().optional(),
-    startAt: z.coerce.date(),
-    endAt: z.coerce.date(),
-    price: z.number(),
+    description: z.string().optional().nullable(),
+    startAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
+    endAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
+    price: z.coerce.number(),
     isActive: z.boolean(),
-    updateAt: z.coerce.date(),
-    createdAt: z.coerce.date(),
+    stripeProductId: z.string().optional().nullable(),
+    stripePriceId: z.string().optional().nullable(),
+    updateAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
+    createdAt: z.union([z.date(), z.string()]).transform((val) => new Date(val)),
 });
 
 const ZMembershipTypeDTO = ZMembershipType.omit({

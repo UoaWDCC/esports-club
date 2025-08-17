@@ -1,11 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { profileNavigation } from "@libs/routes/profile";
 
 import { BlockNavigation } from "@/components/BlockNavigation";
-
-import { useProfile } from "./components/ProfileProvider";
 
 // requires user to be logged in
 // requires user to have a profile
