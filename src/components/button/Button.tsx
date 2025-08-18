@@ -35,7 +35,7 @@ const button = tv({
     base: "relative flex cursor-pointer items-center justify-center gap-2 rounded-md px-6 py-2 whitespace-nowrap brightness-100 transition duration-200 select-none disabled:cursor-default disabled:bg-neutral-900 disabled:text-white/50",
     variants: {
         style: {
-            cta: "bg-violet-600 hover:bg-violet-800",
+            cta: "bg-cta text-cta-foreground hover:brightness-110",
             google: "bg-white text-black hover:bg-neutral-300",
             solid: "bg-neutral-800 text-white hover:bg-neutral-700",
             secondary: "bg-pink-500 text-white hover:bg-pink-700",

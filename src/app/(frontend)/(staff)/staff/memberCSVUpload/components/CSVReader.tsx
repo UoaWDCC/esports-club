@@ -98,17 +98,15 @@ export const CSVReader = () => {
             <h1>Malformed Rows</h1>
             <Table.Root>
                 <Table.Heading>
-                    <tr>
-                        <th> First Names </th>
-                        <th> Last Name </th>
-                        <th> Email </th>
-                        <th> Member Last Year </th>
-                        <th> Student ID </th>
-                        <th> Year Of Study </th>
-                        <th> Gender </th>
-                        <th> Ethnicity </th>
-                        <th> Studying </th>
-                    </tr>
+                    <th> First Names </th>
+                    <th> Last Name </th>
+                    <th> Email </th>
+                    <th> Member Last Year </th>
+                    <th> Student ID </th>
+                    <th> Year Of Study </th>
+                    <th> Gender </th>
+                    <th> Ethnicity </th>
+                    <th> Studying </th>
                 </Table.Heading>
                 <Table.Body>
                     {malformedcsvData.map((member, index) => {
@@ -132,17 +130,15 @@ export const CSVReader = () => {
             <h1>CORRECT ROWS</h1>
             <Table.Root>
                 <Table.Heading>
-                    <tr>
-                        <th> First Names </th>
-                        <th> Last Name </th>
-                        <th> Email </th>
-                        <th> Member Last Year </th>
-                        <th> Student ID </th>
-                        <th> Year Of Study </th>
-                        <th> Gender </th>
-                        <th> Ethnicity </th>
-                        <th> Studying </th>
-                    </tr>
+                    <th> First Names </th>
+                    <th> Last Name </th>
+                    <th> Email </th>
+                    <th> Member Last Year </th>
+                    <th> Student ID </th>
+                    <th> Year Of Study </th>
+                    <th> Gender </th>
+                    <th> Ethnicity </th>
+                    <th> Studying </th>
                 </Table.Heading>
                 <Table.Body>
                     {csvData.map((member, index) => {

@@ -64,15 +64,15 @@ export const themes: Record<string, ThemeColors> = {
         mutedBackground: "#e6ddd4", // soft muted background
         navigation: "#d2bca3", // warm navigation bar
     },
-    highContrast: {
+    "black out": {
         cta: "#ffffff", // white call-to-action
         muted: "#bfbfbf", // light gray for muted text
         foreground: "#ffffff", // primary text in white
         border: "#ffffff", // white borders
-        btnHover: "#e0e0e0", // slightly darker hover
+        btnHover: "#444444", // slightly darker hover
         ctaForeground: "#000000", // black text on white CTA
         background: "#000000", // pure black background
-        mutedBackground: "#1a1a1a", // very dark gray for muted areas
+        mutedBackground: "#000000", // very dark gray for muted areas
         navigation: "#ffffff", // white nav
     },
 };
