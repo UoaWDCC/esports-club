@@ -1,6 +1,7 @@
 import React from "react";
 
-import { sponsors } from "../../_data/sponsors";
+import { sponsors } from "@/app/(frontend)/events/_data/sponsors";
+
 import { SponsorCard } from "./SponsorCard";
 
 export function SponsorSection() {

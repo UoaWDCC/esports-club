@@ -1,6 +1,7 @@
 import React from "react";
 
-import { events } from "../../_data/events";
+import { events } from "@/app/(frontend)/events/_data/events";
+
 import { UpcomingEventCard } from "./UpcomingEventCard";
 
 export function UpcomingEventSection() {
