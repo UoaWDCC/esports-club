@@ -1,6 +1,6 @@
 // app/api/members/route.ts
 import { response } from "@libs/api/response";
-import { staffRouteWrapper } from "@libs/api/wrappers";
+import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { memberships, profiles } from "@schema";
 import { count, eq } from "drizzle-orm";
