@@ -11,7 +11,13 @@ export const Footer = () => {
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col justify-between gap-6 md:flex-row">
                     <div className="flex flex-col justify-between gap-5">
-                        <Image src={AUECLogo} width={200} height={200} alt={"AUEC logo"} />
+                        <Image
+                            src={AUECLogo}
+                            width={200}
+                            height={200}
+                            alt={"AUEC logo"}
+                            className="rounded-lg bg-[#111111] px-4"
+                        />
                         {/* hardcoded for milestone gaf */}
                         <ul className="flex justify-between">
                             <li className="text-foreground">

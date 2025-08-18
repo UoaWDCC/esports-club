@@ -3,12 +3,14 @@ import Image from "next/image";
 
 import { AUECLogo } from "@/components/assets/image";
 import { PageLayout } from "@/components/layout/PageLayout";
+import { Navbar } from "@/components/navbar/Navbar";
 
 import { PolicyButton } from "./_components/PolicyButton";
 
 export default function page() {
     return (
         <PageLayout>
+            <Navbar />
             <div className="font-satoshi flex flex-col items-center gap-12">
                 <div className="flex flex-col items-center gap-24">
                     <div className="flex flex-col items-center gap-6">

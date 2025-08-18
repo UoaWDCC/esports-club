@@ -103,6 +103,10 @@ export const STAFF_ROUTES: RouteSection = {
       "name": "StaffMemberPage"
     },
     {
+      "url": "/staff/membership-lookup/",
+      "name": "StaffMemberPage"
+    },
+    {
       "url": "/staff/",
       "name": "StaffPage"
     },

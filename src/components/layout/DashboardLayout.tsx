@@ -35,7 +35,7 @@ export function DashboardLayout({
                                 <p>{email}</p>
                                 <p>{name}</p>
                                 {role === "staff" && (
-                                    <p className="text-cta w-min rounded-sm bg-[#282548] px-3">
+                                    <p className="text-cta bg-cta/50 w-min rounded-sm px-3">
                                         Staff
                                     </p>
                                 )}
