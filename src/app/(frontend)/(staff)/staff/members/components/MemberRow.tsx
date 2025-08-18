@@ -1,6 +1,7 @@
 "use client";
 
 import { HTMLAttributes } from "react";
+import { cn } from "@libs/utils/class";
 import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { z } from "zod";
@@ -80,6 +81,7 @@ export const SortableTableHeading = ({
     return (
         <th
             {...props}
+            className={cn("cursor-pointer hover:bg-white/5", props.className)}
             onClick={() => {
                 setOrdering(label);
             }}
