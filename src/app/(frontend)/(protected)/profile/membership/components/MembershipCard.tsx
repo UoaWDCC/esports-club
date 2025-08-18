@@ -20,7 +20,7 @@ export function MembershipCard({ membership }: MembershipCardProps) {
         <div
             className={cn(
                 "flex w-full flex-col gap-6 rounded-sm p-6",
-                isActive ? "border border-[#978FFE] bg-[#978FFE]/20" : "bg-gray",
+                isActive ? "border-cta bg-muted-background border" : "bg-muted-background",
             )}
         >
             <div>
@@ -30,7 +30,7 @@ export function MembershipCard({ membership }: MembershipCardProps) {
                     <div className="rounded-xs">Reference: {membership.id.slice(0, 8)}</div>
                 </div>
             </div>
-            <p className="text-gray-400">{membership?.description && "No description"}</p>
+            <p className="text-muted">{membership?.description && "No description"}</p>
         </div>
     );
 }
