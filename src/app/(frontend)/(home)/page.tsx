@@ -2,7 +2,9 @@ import Image from "next/image";
 
 import { LandingImage } from "@/components/assets/image";
 import { Button } from "@/components/button/Button";
+import Footer from "@/components/footer/Footer";
 import { PageLayout } from "@/components/layout/PageLayout";
+import Navbar from "@/components/navbar/Navbar";
 
 import { HeroSection } from "./components";
 import { InformationPanel, InformationPanelProps } from "./components/InformationPanel";
@@ -24,6 +26,7 @@ const membership: InformationPanelProps = {
 export default function LandingPage() {
     return (
         <PageLayout>
+            <Navbar />
             <div className="font-tomorrow flex flex-col items-center gap-24">
                 <HeroSection />
                 <div className="flex justify-between gap-24">
@@ -44,6 +47,7 @@ export default function LandingPage() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </PageLayout>
     );
 }
