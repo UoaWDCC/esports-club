@@ -1,49 +1,43 @@
+import React from "react";
 import Image from "next/image";
 
-import { LandingImage } from "@/components/assets/image";
-import { Button } from "@/components/button/Button";
 import { PageLayout } from "@/components/layout/PageLayout";
+import { Navbar } from "@/components/navbar/Navbar";
 
-import { HeroSection } from "./components";
-import { InformationPanel, InformationPanelProps } from "./components/InformationPanel";
+import { Hero } from "./_components/Hero/Hero";
+import { HeroDivider } from "./_components/HeroDivider";
+import { SponsorSection } from "./_components/Sponsors/SponsorSection";
+import { WantToSponsor } from "./_components/Sponsors/WantToSponsor";
+import IndiviudalEventCard from "./_components/UpcomingEvents/IndiviudalEventCard";
+import { UpcomingEventSection } from "./_components/UpcomingEvents/UpcomingEventSection";
 
-const about: InformationPanelProps = {
-    title: "About Us",
-    subtitle: "We run the university Esports Arena",
-    description:
-        "Level up your university experience at our Esports Arena - where passion meets play, and champions are born.",
-};
-
-const membership: InformationPanelProps = {
-    title: "Membership",
-    subtitle: "Participate in social events or tournaments with Prizes",
-    description:
-        "We run tournament through out the year, by becoming a member you participate in our events for free!",
-};
-
-export default function LandingPage() {
+export default function page() {
     return (
-        <PageLayout>
-            <div className="font-tomorrow flex flex-col items-center gap-24">
-                <HeroSection />
-                <div className="flex justify-between gap-24">
-                    <div className="flex flex-col gap-12">
-                        <InformationPanel {...about} />
-                        <InformationPanel {...membership} variant={{ headerColour: "pink" }} />
-                        <div className="flex gap-3">
-                            <Button href="/auth/sign-in" variant={{ style: "secondary" }}>
-                                Become a member!
-                            </Button>
-                            <Button href="/events" variant={{ style: "cta" }}>
-                                See upcoming events
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="relative size-full">
-                        <Image src={LandingImage} alt="landing image" />
-                    </div>
+        <>
+            <div className="absolute inset-0 h-dvh w-dvw">
+                <Image
+                    className="object-cover"
+                    src="/assets/landing/landing-image.png"
+                    alt="Hero Background"
+                    fill
+                />
+            </div>
+            <div className="content-container relative h-dvh">
+                <div className="flex flex-col gap-y-8 py-12">
+                    <Navbar />
+                    <Hero />
                 </div>
             </div>
-        </PageLayout>
+            <PageLayout className="bg-background">
+                <UpcomingEventSection />
+                <HeroDivider />
+                <section className="flex flex-col">
+                    <IndiviudalEventCard />
+                </section>
+                <HeroDivider />
+                <SponsorSection />
+                <WantToSponsor />
+            </PageLayout>
+        </>
     );
 }

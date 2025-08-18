@@ -30,6 +30,11 @@
     }
 }
 
+@utility responsive-fullwidth {
+    /* Escape hatch to allow full-width 'breaking out' of the responsive-body grid layout */
+    @apply col-start-1 col-end-3;
+}
+
 body {
     background: var(--color-background);
     color: var(--color-foreground);
