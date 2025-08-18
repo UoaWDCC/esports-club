@@ -36,13 +36,19 @@ export const useDialog = () => {
     return context;
 };
 
-interface DialogTriggerProps {
+interface DialogTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
     asChild?: boolean;
 }
 
-export const DialogTrigger = ({ children, asChild = false }: DialogTriggerProps) => {
+export const DialogTrigger = ({ children, asChild = false, ...props }: DialogTriggerProps) => {
     const { open } = useDialog();
+
+    const handleClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        open();
+    };
 
     if (asChild && React.isValidElement(children)) {
         return React.cloneElement(children, {
@@ -54,7 +60,7 @@ export const DialogTrigger = ({ children, asChild = false }: DialogTriggerProps)
     }
 
     return (
-        <button onClick={open} className="cursor-pointer">
+        <button onClick={open} className={cn("cursor-pointer", props.className)}>
             {children}
         </button>
     );

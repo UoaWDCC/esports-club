@@ -48,9 +48,8 @@ export const staffNavigation: NavigationGrouping[] = [
             },
             {
                 name: "Membership lookup",
-                href: "/staff/membership/lookup",
+                href: "/staff/membership-lookup",
                 icon: <List size={20} />,
-                notImplemented: true,
             },
             {
                 name: "Invoice lookup",

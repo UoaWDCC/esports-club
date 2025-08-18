@@ -18,14 +18,10 @@ export const POST = staffRouteWrapper<MembershipAll>(async (req) => {
 
     const bodyReq = ZMembershipAllRouteRequest.safeParse(body);
 
-    if (!bodyReq.success) {
-        return response("bad_request", {
-            message: "Data is missing or malformed",
-            error: bodyReq.error.issues,
-        });
-    }
-
-    const { state, status } = bodyReq.data;
+    // default if invalid params
+    const { state, status } = bodyReq.success
+        ? bodyReq.data
+        : { state: undefined, status: undefined };
 
     // get all active memberships
     const allMemberships = await db
