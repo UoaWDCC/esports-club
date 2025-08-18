@@ -59,7 +59,7 @@ export const POST = staffRouteWrapper(async (req) => {
             to: profileData.email,
             subject: "UOA Esports Club Membership Not Approved",
             name: profileData.name,
-            reason: reason,
+            reason: reason || "",
         });
 
         return response("ok", {

@@ -28,7 +28,7 @@ export function DashboardLayout({
         <div className="text-foreground flex flex-col">
             <div className="flex gap-6">
                 <nav className="bg-muted-background sticky top-0 flex h-dvh min-w-[400px] flex-col overflow-y-auto [scrollbar-gutter:stable_both-edges]">
-                    <div className="flex h-full flex-col gap-6 p-6">
+                    <div className="flex flex-col gap-6 p-6 pb-24">
                         {/* nav heading */}
                         <div className="flex justify-between">
                             <div className="flex flex-col gap-1">
@@ -58,7 +58,7 @@ export function DashboardLayout({
                             />
                         ))}
                     </div>
-                    <div className="pb-48" />
+
                     {/* <footer className="bg-muted-background sticky bottom-0 left-0 w-full px-6">
                         <div className="border-border flex justify-end gap-3 border-t py-6">
                             <DialogProvider>

@@ -1,6 +1,6 @@
 
 // automatically generated with generate-index.js, 
-// last generated: 17/08/2025
+// last generated: 18/08/2025
 
 export type RouteSection = {
     name: string;
@@ -14,7 +14,7 @@ export const PUBLIC_ROUTES: RouteSection = {
   "routes": [
     {
       "url": "/",
-      "name": "LandingPage"
+      "name": "page"
     },
     {
       "url": "/policies/",
@@ -27,6 +27,10 @@ export const PUBLIC_ROUTES: RouteSection = {
     {
       "url": "/policies/terms-and-services/",
       "name": "page"
+    },
+    {
+      "url": "/pricing/",
+      "name": "PricingPage"
     },
     {
       "url": "/unauthorized/",
@@ -75,6 +79,10 @@ export const PROTECTED_ROUTES: RouteSection = {
     {
       "url": "/profile/",
       "name": "ProfilePage"
+    },
+    {
+      "url": "/profile/themes/",
+      "name": "ThemePage"
     }
   ]
 };
@@ -91,12 +99,20 @@ export const STAFF_ROUTES: RouteSection = {
       "name": "StaffMemberPage"
     },
     {
-      "url": "/staff/members copy/",
+      "url": "/staff/members-approval/",
       "name": "StaffMemberPage"
     },
     {
       "url": "/staff/",
       "name": "StaffPage"
+    },
+    {
+      "url": "/staff/pricing/",
+      "name": "PricingPage"
+    },
+    {
+      "url": "/staff/themes/",
+      "name": "ThemePage"
     }
   ]
 };

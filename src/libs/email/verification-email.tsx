@@ -1,3 +1,4 @@
+import { env } from "@libs/env";
 import { transporter } from "@libs/smtp/transporter";
 import { render } from "@react-email/components";
 
@@ -12,6 +13,9 @@ type EmailVerification = {
 };
 
 export const sendVerificationEmail = async (body: EmailVerification) => {
+    // enable this to send mail
+    if (env.NEXT_PUBLIC_ENABLE_MAILING !== "enabled") return;
+
     // email ui
     const emailHtml = await render(<EsportsLinkVerification url={body.url} />);
 

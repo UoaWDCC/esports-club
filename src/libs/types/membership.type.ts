@@ -29,8 +29,12 @@ const ZMembershipDTO = ZMembership.omit({
     notes: true,
 });
 
+const ZMembershipStaffDTO = ZMembership.omit({
+    createdAt: true,
+});
+
 type Membership = z.infer<typeof ZMembership>;
 type MembershipDTO = z.infer<typeof ZMembershipDTO>;
 
-export { ZMembership, ZMembershipDTO };
+export { ZMembership, ZMembershipDTO, ZMembershipStaffDTO };
 export type { Membership, MembershipDTO };
