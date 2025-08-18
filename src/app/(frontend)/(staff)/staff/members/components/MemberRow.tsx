@@ -1,14 +1,23 @@
-import { MemberList } from "@/app/api/member.all/type";
+"use client";
 
-export const MemberTableHeading = () => (
-    <>
-        {/* <th className="w-4"></th> */}
-        <th className="w-1/3">First name</th>
-        <th className="w-1/3">Last name</th>
-        <th className="w-full">Email</th>
-        <th className="w-1/5">Id</th>
-    </>
-);
+import { HTMLAttributes } from "react";
+import { cn } from "@libs/utils/class";
+import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
+import { parseAsBoolean, useQueryState } from "nuqs";
+import { z } from "zod";
+
+import { MemberList, ProfileColumns, ZProfileColumns } from "@/app/api/member.all/type";
+
+export const MemberTableHeading = () => {
+    return (
+        <>
+            <SortableTableHeading className="w-1/3" label="firstName" />
+            <SortableTableHeading className="w-1/3" label="lastName" />
+            <SortableTableHeading className="w-full" label="email" />
+            <SortableTableHeading className="w-1/5" label="id" />
+        </>
+    );
+};
 
 export function MemberRow({ member }: { member: MemberList["members"][0]; index: number }) {
     return (
@@ -20,9 +29,10 @@ export function MemberRow({ member }: { member: MemberList["members"][0]; index:
         </tr>
     );
 }
+
 export function MemberSkeleton() {
-    return (
-        <tr>
+    return Array.from({ length: 10 }).map((_, i) => (
+        <tr key={i}>
             <td className="flex">
                 <SkeletonPill />
                 {/* make skeleton row size the same as one with text */}
@@ -38,9 +48,52 @@ export function MemberSkeleton() {
                 <SkeletonPill />
             </td>
         </tr>
-    );
+    ));
 }
 
 export const SkeletonPill = () => {
     return <div className="skeleton-gradient my-auto h-4 w-1/4 min-w-[50px] rounded-full" />;
+};
+
+export const SortableTableHeading = ({
+    label,
+    ...props
+}: { label: z.infer<typeof ZProfileColumns> } & HTMLAttributes<HTMLTableCellElement>) => {
+    const [orderColumn, setOrderColumn] = useQueryState(
+        "orderColumn",
+        ZProfileColumns.default(label),
+    );
+    const [descending, setDescending] = useQueryState(
+        "columnDirecton",
+        parseAsBoolean.withDefault(true),
+    );
+
+    const setOrdering = (columnName: string) => {
+        if (orderColumn == columnName) {
+            setDescending(!descending);
+            return;
+        }
+
+        setOrderColumn(columnName as ProfileColumns);
+        setDescending(true);
+    };
+
+    return (
+        <th
+            {...props}
+            className={cn("cursor-pointer hover:bg-white/5", props.className)}
+            onClick={() => {
+                setOrdering(label);
+            }}
+        >
+            <div className="flex items-center justify-between">
+                <p>{label}</p>
+                {orderColumn === label && (
+                    <div className="bg-background aspect-square rounded p-1">
+                        {descending ? <ArrowDownAZ size={16} /> : <ArrowUpZA size={16} />}
+                    </div>
+                )}
+            </div>
+        </th>
+    );
 };

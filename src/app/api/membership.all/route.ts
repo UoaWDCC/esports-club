@@ -1,5 +1,5 @@
 import { response } from "@libs/api/response";
-import { staffRouteWrapper } from "@libs/api/wrappers";
+import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 import { db } from "@libs/db";
 import { memberships, membershipTypes } from "@schema";
 import { eq } from "drizzle-orm";
@@ -17,7 +17,7 @@ import {
  *   "status": "active"  // or "expired" or empty
  * }
  */
-export const POST = staffRouteWrapper<MembershipAllRouteResponse[]>(async (req) => {
+export const POST = userRouteWrapper<MembershipAllRouteResponse[]>(async (req) => {
     const body = await req.json();
 
     const bodyReq = ZMembershipAllRouteRequest.safeParse(body);

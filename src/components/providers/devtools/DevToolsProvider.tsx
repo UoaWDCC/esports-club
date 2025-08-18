@@ -62,7 +62,7 @@ export function RoutingDevTools() {
             {/* toggle button */}
             <button
                 onClick={() => setOpen(!open)}
-                className="fixed bottom-16 left-5 z-999 flex cursor-pointer items-center justify-center gap-2 rounded-full border border-neutral-600 bg-black/80 p-1 px-4 font-[Geist] text-white outline outline-black transition-colors select-none hover:bg-black/60"
+                className="fixed bottom-16 left-5 z-999 flex cursor-pointer items-center justify-center gap-2 rounded-full border border-neutral-600 bg-black/80 p-1 px-4 text-white outline outline-black transition-colors select-none hover:bg-black/60"
             >
                 <GitBranch size={16} />
                 <p>Routes</p>
@@ -93,7 +93,7 @@ const RouteSheet = () => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 1, ease: easeOutExpo }}
-            className="fixed top-0 left-0 z-50 flex h-dvh w-[450px] flex-col border-r border-neutral-900 bg-black font-[Geist] font-light text-white"
+            className="fixed top-0 left-0 z-50 flex h-dvh w-[450px] flex-col border-r border-neutral-900 bg-black font-light text-white"
         >
             <DevRouteSetting />
             <div className="flex h-full flex-col overflow-y-auto">
