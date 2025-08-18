@@ -22,19 +22,19 @@ export default function AccountPage() {
                 <InputField placeholder="e.g. XxJohnDoexX (C9)" label="Profile Name" disabled />
                 <div className="flex gap-6">
                     <InputField
-                        value={profile.firstName}
+                        defaultValue={profile.firstName}
                         placeholder="e.g. John"
                         label="First Name"
                         disabled
                     />
                     <InputField
-                        value={profile.lastName}
+                        defaultValue={profile.lastName}
                         placeholder="e.g. Doe"
                         label="Last Name"
                         disabled
                     />
                 </div>
-                <InputField value={profile.email} label="Account Email" disabled />
+                <InputField defaultValue={profile.email} label="Account Email" disabled />
             </Container>
             <Container>
                 <div className="flex justify-between">
@@ -55,24 +55,28 @@ export default function AccountPage() {
                     <button className="border-border rounded border px-6 py-3">Edit</button>
                 </div>
                 <InputField
-                    value={profile?.currentDegree || ""}
+                    defaultValue={profile?.currentDegree || ""}
                     placeholder="e.g. Bachelor of Science"
                     label="Degree"
                 />
                 <InputField
-                    value={profile?.currentStudy || ""}
+                    defaultValue={profile?.currentStudy || ""}
                     placeholder="e.g. Computer Science"
                     label="Current Study"
                 />
                 <InputField
-                    value={profile?.yearOfStudy || ""}
+                    defaultValue={profile?.yearOfStudy || ""}
                     placeholder="e.g. Third year"
                     label="Year of Study"
                 />
                 <div className="flex gap-6">
-                    <InputField value={profile?.gender || ""} placeholder="Male" label="Gender" />
                     <InputField
-                        value={profile?.ethnicity || ""}
+                        defaultValue={profile?.gender || ""}
+                        placeholder="Male"
+                        label="Gender"
+                    />
+                    <InputField
+                        defaultValue={profile?.ethnicity || ""}
                         placeholder="Chinese"
                         label="Ethnicity"
                     />
