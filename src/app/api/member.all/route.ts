@@ -1,10 +1,10 @@
 // app/api/members/route.ts
 import { response } from "@libs/api/response";
-import { staffRouteWrapper } from "@libs/api/wrappers";
+import { staffRouteWrapper, userRouteWrapper } from "@libs/api/wrappers";
 
 import { getAllMembers } from "@/services/membership/getAllMembers";
 
-import { MemberList, ZMemberListRequest, ZMemberListResponse } from "./type";
+import { MemberList, MemberOrdering, ZMemberListRequest, ZMemberListResponse } from "./type";
 
 /**
  * @description Get all profile with active membership
@@ -12,8 +12,16 @@ import { MemberList, ZMemberListRequest, ZMemberListResponse } from "./type";
 export const POST = staffRouteWrapper<MemberList>(async (req) => {
     const { data: body, success } = ZMemberListRequest.safeParse(await req.json());
 
-    const _default = { page: 1, limit: 50 };
+    const _default = {
+        page: 1,
+        limit: 50,
+        ordering: {
+            column: "firstName",
+            descending: true,
+        } as MemberOrdering,
+    };
 
+    console.log(body);
     const { members, count } = await getAllMembers(success ? body : _default);
 
     const data = {

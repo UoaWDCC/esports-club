@@ -1,6 +1,15 @@
 // profile navigation for `/profile` dashboard
 
-import { FileText, LayoutDashboard, List, ShieldQuestion, Trophy, User, Users } from "lucide-react";
+import {
+    FileText,
+    LayoutDashboard,
+    List,
+    Palette,
+    ShieldQuestion,
+    Trophy,
+    User,
+    Users,
+} from "lucide-react";
 
 import { NavigationGrouping } from ".";
 
@@ -11,6 +20,11 @@ export const profileNavigation: NavigationGrouping[] = [
                 name: "Dashboard",
                 href: "/profile",
                 icon: <LayoutDashboard size={20} strokeWidth={2} />,
+            },
+            {
+                name: "Themes",
+                href: "/profile/themes",
+                icon: <Palette size={20} strokeWidth={2} />,
             },
         ],
     },

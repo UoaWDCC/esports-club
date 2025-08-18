@@ -6,6 +6,8 @@ import { Tomorrow } from "next/font/google";
 import localFont from "next/font/local";
 import { RoutingDevTools } from "@providers/devtools/DevToolsProvider";
 import { TanstackClientProvider } from "@providers/query/TanstackClientProvider";
+import { ThemeBody } from "@providers/theme/ThemeLoader";
+import { ThemeProvider } from "@providers/theme/ThemeProvider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
@@ -50,14 +52,14 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${satoshi.className} ${tomorrow.style} ${switzer.variable} text-lg antialiased`}
-            >
-                <RoutingDevTools />
-                <TanstackClientProvider>
-                    <NuqsAdapter>{children}</NuqsAdapter>
-                </TanstackClientProvider>
-            </body>
+            <ThemeProvider>
+                <ThemeBody className={`${satoshi.className} ${tomorrow.style} text-lg antialiased`}>
+                    <RoutingDevTools />
+                    <TanstackClientProvider>
+                        <NuqsAdapter>{children}</NuqsAdapter>
+                    </TanstackClientProvider>
+                </ThemeBody>
+            </ThemeProvider>
         </html>
     );
 }

@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-@layer utilities {
-    :root {
-        --background: #0d0d0d;
-        --foreground: #ffffff;
-    }
-}
-
 @theme {
     --color-purple: #7650ff;
     --color-purple: #4b63ff;
@@ -37,9 +30,14 @@
     }
 }
 
+@utility responsive-fullwidth {
+    /* Escape hatch to allow full-width 'breaking out' of the responsive-body grid layout */
+    @apply col-start-1 col-end-3;
+}
+
 body {
-    background: var(--background);
-    color: var(--foreground);
+    background: var(--color-background);
+    color: var(--color-foreground);
 }
 
 h1,

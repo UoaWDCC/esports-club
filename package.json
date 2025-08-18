@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^5.1.1",
+        "@icons-pack/react-simple-icons": "^13.7.0",
         "@neondatabase/serverless": "^1.0.0",
         "@payloadcms/db-postgres": "^3.52.0",
         "@payloadcms/next": "^3.52.0",

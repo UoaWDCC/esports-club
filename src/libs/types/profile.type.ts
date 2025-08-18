@@ -26,7 +26,7 @@ export const ZProfile = z.object({
     firstName: z.string().min(1, { message: "Field is required" }),
     lastName: z.string().min(1, { message: "Field is required" }),
     email: z.string().email(),
-    university: z.string(),
+    university: z.string().nullable(),
     universityId: z.string().nullable().optional(),
     previousMember: z.boolean().default(false),
     tournamentPasses: z.number().int().default(0),

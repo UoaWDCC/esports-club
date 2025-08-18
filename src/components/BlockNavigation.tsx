@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 import Link from "next/link";
 import { cn } from "@libs/utils/class";
 
@@ -7,12 +8,17 @@ interface BlockNavigationProps {
     className?: string;
 }
 
-const BlockNavigation = ({ href, children, className = "" }: BlockNavigationProps) => {
+interface BlockProps extends HTMLAttributes<HTMLDivElement> {
+    children: React.ReactNode;
+    className?: string;
+}
+
+export const BlockNavigation = ({ href, children, className = "" }: BlockNavigationProps) => {
     return (
         <Link
             href={href}
             className={cn(
-                "h-24 w-full rounded bg-neutral-800 p-4 text-xl hover:bg-neutral-700",
+                "bg-muted-background h-24 w-full rounded p-4 text-xl hover:brightness-50",
                 className,
             )}
         >
@@ -21,4 +27,16 @@ const BlockNavigation = ({ href, children, className = "" }: BlockNavigationProp
     );
 };
 
-export default BlockNavigation;
+export const BlockContent = ({ children, className = "", ...props }: BlockProps) => {
+    return (
+        <div
+            {...props}
+            className={cn(
+                "bg-muted-background h-24 w-full rounded p-4 text-xl hover:brightness-90",
+                className,
+            )}
+        >
+            {children}
+        </div>
+    );
+};
