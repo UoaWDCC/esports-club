@@ -12,6 +12,8 @@ export const ZMembershipAllRouteResponse = z.object({
     memberships: ZMembershipStaffDTO.extend({
         firstName: z.string(),
         lastName: z.string(),
+        type: z.string(),
+        price: z.number(),
         email: z.string(),
         startAt: z.coerce.date(),
         endAt: z.coerce.date(),

@@ -13,6 +13,8 @@ export const ApproveMemberTableHeading = () => (
         <th className="w-1/4">First name</th>
         <th className="w-1/4">Last name</th>
         <th className="w-1/3">Email</th>
+        <th className="w-1/5">type</th>
+        <th className="w-1/5">amount</th>
         <th className="w-1/6">Reference</th>
         <th className="w-26">Actions</th>
     </>
@@ -32,6 +34,8 @@ export function ApproveMemberRow({
             <td>{membership.firstName}</td>
             <td>{membership.lastName}</td>
             <td>{membership.email}</td>
+            <td>{membership.type}</td>
+            <td>${(membership.price / 100).toFixed(2)}</td>
             <td>{membership.notes}</td>
             <td className="flex gap-3">
                 <TableButton
@@ -61,6 +65,12 @@ export function ApproveMemberSkeleton() {
                 <SkeletonPill />
                 {/* make skeleton row size the same as one with text */}
                 <p className="pointer-events-none invisible w-0">|</p>
+            </td>
+            <td>
+                <SkeletonPill />
+            </td>
+            <td>
+                <SkeletonPill />
             </td>
             <td>
                 <SkeletonPill />

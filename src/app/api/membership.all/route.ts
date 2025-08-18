@@ -42,11 +42,21 @@ export const POST = staffRouteWrapper<MembershipAll>(async (req) => {
     // check if membership is active or expired
     const now = new Date();
     const membershipsWithStatus = allMemberships.map((m) => {
-        const { startAt, endAt } = m.membershipType;
+        const { startAt, endAt, name, price } = m.membershipType;
         const { firstName, lastName, email } = m.profile;
 
         if (startAt <= now && now <= endAt)
-            return { ...m.membership, startAt, endAt, state: "active", firstName, lastName, email };
+            return {
+                ...m.membership,
+                startAt,
+                endAt,
+                state: "active",
+                firstName,
+                lastName,
+                email,
+                type: name,
+                price,
+            };
         else
             return {
                 ...m.membership,
@@ -56,6 +66,8 @@ export const POST = staffRouteWrapper<MembershipAll>(async (req) => {
                 firstName,
                 lastName,
                 email,
+                type: name,
+                price,
             };
     });
 
