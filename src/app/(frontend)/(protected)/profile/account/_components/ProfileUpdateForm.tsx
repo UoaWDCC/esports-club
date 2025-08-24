@@ -1,20 +1,14 @@
-"use client";
+import { InputField } from '@/components/form/InputField'
+import { profile } from 'console'
+import { Container } from './Container'
+import { ContentHeading } from './ContentHeading'
+import React from 'react'
 
-import { HTMLAttributes, InputHTMLAttributes } from "react";
-import { cn } from "@libs/utils/class";
 
-import { useProfile } from "../components/ProfileProvider";
-
-// requires user to be logged in
-// requires user to have a profile
-// see (protected)/profile/layout.tsx
-export default function AccountPage() {
-    const profile = useProfile();
-
-    return (
-        <div className="flex h-[2000px] flex-col gap-12">
-            <h1 className="text-3xl">My Account</h1>
-            <Container>
+export function ProfileUpdateForm() {
+  return (
+    <div>
+        <Container>
                 <div className="flex justify-between">
                     <ContentHeading title="Profile details" description="Your account details" />
                     <button className="border-border rounded border px-6 py-3">Edit</button>
@@ -82,54 +76,6 @@ export default function AccountPage() {
                     />
                 </div>
             </Container>
-        </div>
-    );
+    </div>
+  )
 }
-
-
-
-
-
-interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-    label: string;
-}
-
-const InputField = ({ label, ...props }: InputFieldProps) => {
-    return (
-        <div className="flex w-full flex-col gap-1">
-            <label>{label}</label>
-            <input
-                {...props}
-                className={cn(
-                    "border-border gap-3 rounded-md border py-3 pr-2 pl-6",
-                    props.className,
-                )}
-            />
-        </div>
-    );
-};
-
-const TagsField = () => {
-    return (
-        <div className="flex w-full flex-col gap-1">
-            <label>Tags</label>
-            <div className="border-border flex gap-3 rounded-md border p-3">
-                <Tags label="Tournament" className="border-[#E771FF] bg-[#773184] text-[#E771FF]" />
-                <Tags label="Social" className="border-[#A071FF] bg-[#343184] text-[#A071FF]" />
-                <Tags label="Valorant" className="border-[#FF7184] bg-[#84313C] text-[#FF7184]" />
-            </div>
-        </div>
-    );
-};
-
-interface TagProps extends HTMLAttributes<HTMLDivElement> {
-    label?: string;
-}
-
-const Tags = ({ label = "Tag", className, ...props }: TagProps) => {
-    return (
-        <div {...props} className={cn("border-border rounded-full border px-3", className)}>
-            {label}
-        </div>
-    );
-};
