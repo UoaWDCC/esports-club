@@ -1,11 +1,17 @@
-import { InputField } from '@/components/form/InputField'
-import { profile } from 'console'
+
+
+import { ProfileDTO } from '@libs/types/profile.type'
 import { Container } from './Container'
 import { ContentHeading } from './ContentHeading'
+import { InputField } from './InputField'
+import { TagsField } from './TagsField'
 import React from 'react'
 
+interface ProfileUpdateProps {
+    profile: ProfileDTO;
+}
 
-export function ProfileUpdateForm() {
+export function ProfileUpdateForm({profile} : ProfileUpdateProps) {
   return (
     <div>
         <Container>
