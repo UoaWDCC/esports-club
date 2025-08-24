@@ -1,40 +1,37 @@
+import React from "react";
+import { ProfileDTO } from "@libs/types/profile.type";
 
-
-import { ProfileDTO } from '@libs/types/profile.type'
-import { Container } from './Container'
-import { ContentHeading } from './ContentHeading'
-import { InputField } from './InputField'
-import { TagsField } from './TagsField'
-import React from 'react'
+import { Container } from "./Container";
+import { ContentHeading } from "./ContentHeading";
+import { InputField } from "./InputField";
+import { TagsField } from "./TagsField";
 
 interface ProfileUpdateProps {
     profile: ProfileDTO;
 }
 
-export function ProfileUpdateForm({profile} : ProfileUpdateProps) {
-  return (
-    <div>
-        <Container>
+export function ProfileUpdateForm({ profile }: ProfileUpdateProps) {
+    return (
+        <div>
+            <Container>
                 <div className="flex justify-between">
                     <ContentHeading title="Profile details" description="Your account details" />
                     <button className="border-border rounded border px-6 py-3">Edit</button>
                 </div>
-                <InputField placeholder="e.g. XxJohnDoexX (C9)" label="Profile Name" disabled />
+                <InputField placeholder="e.g. XxJohnDoexX (C9)" label="Profile Name" />
                 <div className="flex gap-6">
                     <InputField
                         defaultValue={profile.firstName}
                         placeholder="e.g. John"
                         label="First Name"
-                        disabled
                     />
                     <InputField
                         defaultValue={profile.lastName}
                         placeholder="e.g. Doe"
                         label="Last Name"
-                        disabled
                     />
                 </div>
-                <InputField defaultValue={profile.email} label="Account Email" disabled />
+                <InputField defaultValue={profile.email} label="Account Email" />
             </Container>
             <Container>
                 <div className="flex justify-between">
@@ -82,6 +79,6 @@ export function ProfileUpdateForm({profile} : ProfileUpdateProps) {
                     />
                 </div>
             </Container>
-    </div>
-  )
+        </div>
+    );
 }
