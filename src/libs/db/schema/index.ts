@@ -4,3 +4,4 @@ export * from "./memberships";
 export * from "./profiles";
 export * from "./invoices";
 export * from "./auth-schema";
+export * from "./tags";
