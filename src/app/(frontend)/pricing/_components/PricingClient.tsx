@@ -11,12 +11,15 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { MembershipType } from "@libs/types/membershipType.type";
-import { AlertCircle, Check, CheckCircle, Clock, Loader2, XCircle } from "lucide-react";
+import { AlertCircle, Check, Loader2 } from "lucide-react";
 
 import { useMembershipTypeListQuery } from "@/app/api/membership-type.list/query";
 import { useMembershipListQueryWithFilters } from "@/app/api/membership.list/query";
 import { Button } from "@/components/button/Button";
 import { PageLayout } from "@/components/layout/PageLayout";
+
+import { MembershipCard } from "./MembershipCard";
+import { StatusMessage } from "./StatusMessage";
 
 interface Session {
     user?: {
@@ -73,16 +76,13 @@ export function PricingClient({ session }: PricingClientProps) {
     const hasActiveMembership = activeMemberships.length > 0;
     const activeMembership = hasActiveMembership ? activeMemberships[0] : null;
     const membershipTypes: MembershipType[] = membershipTypesData?.data || [];
-
     // Loading state
     if (isLoadingMemberships || isLoadingMembershipTypes) {
         return (
             <PageLayout>
-                <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-center py-12">
-                        <Loader2 className="mr-3 h-8 w-8 animate-spin text-gray-600" />
-                        <p className="text-lg text-gray-600">Loading membership information...</p>
-                    </div>
+                <div className="flex min-h-[40vh] items-center justify-center">
+                    <Loader2 className="mr-3 h-8 w-8 animate-spin text-gray-600" />
+                    <p className="text-lg text-gray-600">Loading membership information...</p>
                 </div>
             </PageLayout>
         );
@@ -92,19 +92,14 @@ export function PricingClient({ session }: PricingClientProps) {
     if (membershipError || membershipTypesError) {
         return (
             <PageLayout>
-                <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-center py-12">
-                        <AlertCircle className="mr-3 h-8 w-8 text-red-600" />
-                        <div className="text-center">
-                            <p className="mb-2 text-lg font-semibold text-red-600">
-                                Failed to load membership information
-                            </p>
-                            <p className="text-gray-600">
-                                Please try refreshing the page or contact support if the problem
-                                persists.
-                            </p>
-                        </div>
-                    </div>
+                <div className="flex min-h-[40vh] flex-col items-center justify-center text-center">
+                    <AlertCircle className="mb-2 h-10 w-10 text-red-600" />
+                    <p className="mb-1 text-lg font-semibold text-red-600">
+                        Failed to load membership information
+                    </p>
+                    <p className="text-gray-600">
+                        Please refresh the page or contact support if the problem persists.
+                    </p>
                 </div>
             </PageLayout>
         );
@@ -112,9 +107,7 @@ export function PricingClient({ session }: PricingClientProps) {
 
     const handlePurchase = async (membershipTypeId: string, stripePriceId: string) => {
         if (!stripePriceId) {
-            alert(
-                "This membership type is not available for purchase yet. Please contact support.",
-            );
+            alert("This membership type is not available yet. Please contact support.");
             return;
         }
 
@@ -126,13 +119,8 @@ export function PricingClient({ session }: PricingClientProps) {
             console.log("📡 Sending checkout request...");
             const response = await fetch("/api/stripe/checkout", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    priceId: stripePriceId,
-                    membershipTypeId: membershipTypeId,
-                }),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ priceId: stripePriceId, membershipTypeId }),
             });
 
             const data = await response.json();
@@ -146,7 +134,6 @@ export function PricingClient({ session }: PricingClientProps) {
             // Redirect to Stripe Checkout
             window.location.href = data.url;
         } catch (error) {
-            console.error("❌ Checkout error:", error);
             alert(error instanceof Error ? error.message : "Failed to start checkout process");
         } finally {
             setIsLoading(false);
@@ -154,95 +141,62 @@ export function PricingClient({ session }: PricingClientProps) {
         }
     };
 
-    const formatPrice = (priceInCents: number) => {
-        return `$${(priceInCents / 100).toFixed(2)}`;
-    };
+    // Helpers
+    const formatPrice = (priceInCents: number) => `$${(priceInCents / 100).toFixed(2)}`;
 
-    const formatDate = (date: Date) => {
-        return new Date(date).toLocaleDateString("en-NZ", {
+    const formatDate = (date: Date) =>
+        new Date(date).toLocaleDateString("en-NZ", {
             year: "numeric",
             month: "long",
             day: "numeric",
         });
-    };
 
+    // If user already has a membership
     if (hasActiveMembership && activeMembership) {
         return (
             <PageLayout>
-                <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                    <div className="text-center">
-                        <h1 className="mb-4 text-4xl font-bold text-gray-900">
-                            You Already Have an Active Membership!
-                        </h1>
-                        <p className="mx-auto mb-6 max-w-2xl text-xl text-gray-600">
-                            You currently have an active {activeMembership.title} membership.
-                        </p>
+                <div className="mx-auto max-w-3xl py-12">
+                    <h1 className="mb-4 text-center text-4xl font-bold text-gray-900">
+                        You Already Have an Active Membership
+                    </h1>
+                    <p className="mb-8 text-center text-gray-600">
+                        You currently have an active{" "}
+                        <span className="font-semibold">{activeMembership.title}</span> membership.
+                    </p>
+
+                    <div className="rounded-xl border border-green-200 bg-green-50 p-6 shadow-sm">
+                        <div className="mb-4 flex items-center">
+                            <Check className="mr-2 h-6 w-6 text-green-600" />
+                            <h2 className="text-xl font-semibold text-green-900">
+                                Active Membership
+                            </h2>
+                        </div>
+                        <dl className="grid grid-cols-2 gap-x-6 gap-y-4">
+                            <InfoItem label="Type" value={activeMembership.title} />
+                            <InfoItem
+                                label="Price Paid"
+                                value={formatPrice(activeMembership.price)}
+                            />
+                            <InfoItem
+                                label="Valid From"
+                                value={formatDate(activeMembership.startAt)}
+                            />
+                            <InfoItem
+                                label="Valid Until"
+                                value={formatDate(activeMembership.endAt)}
+                            />
+                        </dl>
                     </div>
 
-                    <div className="mx-auto max-w-md">
-                        <div className="rounded-lg border border-green-200 bg-green-50 p-6">
-                            <div className="mb-4 flex items-center">
-                                <Check className="mr-2 h-6 w-6 text-green-600" />
-                                <h2 className="text-xl font-semibold text-green-900">
-                                    Active Membership
-                                </h2>
-                            </div>
-
-                            <div className="space-y-3">
-                                <div>
-                                    <p className="text-sm font-medium text-green-800">
-                                        Membership Type
-                                    </p>
-                                    <p className="text-lg text-green-900">
-                                        {activeMembership.title}
-                                    </p>
-                                </div>
-
-                                {activeMembership.description && (
-                                    <div>
-                                        <p className="text-sm font-medium text-green-800">
-                                            Description
-                                        </p>
-                                        <p className="text-green-900">
-                                            {activeMembership.description}
-                                        </p>
-                                    </div>
-                                )}
-
-                                <div>
-                                    <p className="text-sm font-medium text-green-800">Price Paid</p>
-                                    <p className="text-lg font-semibold text-green-900">
-                                        {formatPrice(activeMembership.price)}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p className="text-sm font-medium text-green-800">Valid From</p>
-                                    <p className="text-green-900">
-                                        {formatDate(activeMembership.startAt)}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p className="text-sm font-medium text-green-800">
-                                        Valid Until
-                                    </p>
-                                    <p className="text-green-900">
-                                        {formatDate(activeMembership.endAt)}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 text-center">
-                            <Button href="/profile">View Profile</Button>
-                        </div>
+                    <div className="mt-8 text-center">
+                        <Button href="/profile">View Profile</Button>
                     </div>
                 </div>
             </PageLayout>
         );
     }
 
+    // Membership selection page
     return (
         <PageLayout>
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -258,104 +212,39 @@ export function PricingClient({ session }: PricingClientProps) {
 
                 {/* Status Messages */}
                 {isSuccess && (
-                    <div className="mx-auto mb-8 max-w-md rounded-lg border border-green-200 bg-green-50 p-4">
-                        <div className="flex items-center">
-                            <CheckCircle className="mr-3 h-5 w-5 text-green-600" />
-                            <div>
-                                <h3 className="text-sm font-medium text-green-800">
-                                    Payment Successful!
-                                </h3>
-                                <p className="text-sm text-green-700">
-                                    Your membership is being processed. Please refresh the page in a
-                                    few moments.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <StatusMessage
+                        type="success"
+                        title="Payment Successful!"
+                        message="Your membership is being processed. Please refresh the page shortly."
+                    />
                 )}
-
                 {isCancelled && (
-                    <div className="mx-auto mb-8 max-w-md rounded-lg border border-yellow-200 bg-yellow-50 p-4">
-                        <div className="flex items-center">
-                            <XCircle className="mr-3 h-5 w-5 text-yellow-600" />
-                            <div>
-                                <h3 className="text-sm font-medium text-yellow-800">
-                                    Payment Cancelled
-                                </h3>
-                                <p className="text-sm text-yellow-700">
-                                    Your payment was cancelled. You can try again below.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <StatusMessage
+                        type="warning"
+                        title="Payment Cancelled"
+                        message="Your payment was cancelled. You can try again below."
+                    />
                 )}
 
+                {/* Membership cards */}
                 {membershipTypes.length === 0 ? (
-                    <div className="py-12 text-center">
-                        <Clock className="mx-auto mb-4 h-12 w-12 text-gray-400" />
-                        <h3 className="mb-2 text-lg font-medium text-gray-900">
-                            No Memberships Available
-                        </h3>
-                        <p className="text-gray-600">
-                            We&apos;re currently updating our membership options. Please check back
-                            soon!
-                        </p>
-                    </div>
+                    <StatusMessage
+                        type="info"
+                        title="No Memberships Available"
+                        message="We’re currently updating our membership options. Please check back soon!"
+                    />
                 ) : (
-                    <div className="grid gap-8 lg:grid-cols-3 lg:gap-x-8">
-                        {membershipTypes.map((membershipType) => (
-                            <div
-                                key={membershipType.id}
-                                className="relative rounded-lg border border-gray-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md"
-                            >
-                                <div className="text-center">
-                                    <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                                        {membershipType.name}
-                                    </h3>
-
-                                    {membershipType.description && (
-                                        <p className="mb-4 text-gray-600">
-                                            {membershipType.description}
-                                        </p>
-                                    )}
-
-                                    <div className="mb-6">
-                                        <span className="text-4xl font-bold text-gray-900">
-                                            {formatPrice(membershipType.price)}
-                                        </span>
-                                    </div>
-
-                                    <div className="mb-6 space-y-2">
-                                        <div className="text-sm text-gray-600">
-                                            <p>Valid from: {formatDate(membershipType.startAt)}</p>
-                                            <p>Valid until: {formatDate(membershipType.endAt)}</p>
-                                        </div>
-                                    </div>
-
-                                    <Button
-                                        onClick={() =>
-                                            handlePurchase(
-                                                membershipType.id,
-                                                membershipType.stripePriceId || "",
-                                            )
-                                        }
-                                        disabled={isLoading || !membershipType.stripePriceId}
-                                        className="w-full"
-                                    >
-                                        {loadingMembershipId === membershipType.id
-                                            ? "Processing..."
-                                            : !membershipType.stripePriceId
-                                              ? "Coming Soon"
-                                              : "Purchase Membership"}
-                                    </Button>
-
-                                    {!membershipType.stripePriceId && (
-                                        <p className="mt-2 text-xs text-gray-500">
-                                            Payment setup in progress
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
+                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                        {membershipTypes.map((m) => (
+                            <MembershipCard
+                                key={m.id}
+                                membership={m}
+                                formatPrice={formatPrice}
+                                formatDate={formatDate}
+                                isLoading={isLoading}
+                                loadingMembershipId={loadingMembershipId}
+                                onPurchase={handlePurchase}
+                            />
                         ))}
                     </div>
                 )}
