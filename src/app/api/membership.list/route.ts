@@ -66,7 +66,7 @@ const getAllMembershipsByUserId = async (
         .from(profiles)
         .where(eq(profiles.userId, userId));
 
-    if (!profile[0]) return serverResponse("bad_request", { message: "cannot find profile" });
+    if (!profile[0]) return serverResponse("bad_request", { message: "  nnot find profile" });
 
     // get all approved memberships
     const membershipsList = await db
