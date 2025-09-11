@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { PencilLine, Trash2 } from "lucide-react";
 
 import { useMembershipTypeAddMutation } from "@/app/api/membership-type.add/query";
 import { MembershipTypeAddRequest } from "@/app/api/membership-type.add/type";
@@ -132,7 +133,7 @@ export function MembershipTypeCRUD() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold">Membership Types</h1>
+                <h1 className="text-3xl font-bold">Membership Types</h1>
                 <div className="flex gap-3">
                     <Button
                         onClick={handleSyncStripe}
@@ -158,33 +159,33 @@ export function MembershipTypeCRUD() {
                 </div>
             )}
 
-            <div className="overflow-hidden rounded-lg bg-white shadow">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
+            <div className="overflow-hidden rounded-md shadow outline-1 outline-neutral-500">
+                <table className="divide-muted-background min-w-full divide-y">
+                    <thead className="bg-muted-background">
                         <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                                Name
+                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-white uppercase">
+                                <strong>Name</strong>
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                                Description
+                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-white uppercase">
+                                <strong>Description</strong>
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                                Price
+                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-white uppercase">
+                                <strong>Price</strong>
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                                Period
+                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-white uppercase">
+                                <strong>Period</strong>
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                                Status
+                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-white uppercase">
+                                <strong>Status</strong>
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                                Actions
+                            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-white uppercase">
+                                <strong>Actions</strong>
                             </th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-200 bg-white">
+                    <tbody className="divide-y divide-neutral-500/30 bg-neutral-900/40">
                         {membershipTypes.map((membershipType: MembershipType) => (
-                            <tr key={membershipType.id} className="hover:bg-gray-50">
+                            <tr key={membershipType.id} className="hover:bg-zinc-700/40">
                                 {editingId === membershipType.id ? (
                                     // Inline edit row - span all columns
                                     <td colSpan={6} className="px-6 py-4">
@@ -198,16 +199,16 @@ export function MembershipTypeCRUD() {
                                 ) : (
                                     // Normal display row
                                     <>
-                                        <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+                                        <td className="text-white-900 px-6 py-4 text-sm font-medium text-white">
                                             {membershipType.name}
                                         </td>
-                                        <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                                        <td className="px-6 py-4 text-sm whitespace-nowrap text-white">
                                             {membershipType.description || "No description"}
                                         </td>
-                                        <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
+                                        <td className="px-6 py-4 text-sm whitespace-nowrap text-white">
                                             ${(membershipType.price / 100).toFixed(2)}
                                         </td>
-                                        <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                                        <td className="px-6 py-4 text-sm whitespace-nowrap text-white">
                                             {new Date(membershipType.startAt).toLocaleDateString()}{" "}
                                             - {new Date(membershipType.endAt).toLocaleDateString()}
                                         </td>
@@ -222,21 +223,23 @@ export function MembershipTypeCRUD() {
                                                 {membershipType.isActive ? "Active" : "Inactive"}
                                             </span>
                                         </td>
-                                        <td className="space-x-2 px-6 py-4 text-sm font-medium whitespace-nowrap">
-                                            <Button
-                                                variant={{ style: "secondary" }}
-                                                onClick={() => handleEdit(membershipType.id)}
-                                                disabled={showForm}
-                                            >
-                                                Edit
-                                            </Button>
-                                            <Button
-                                                variant={{ style: "secondary" }}
-                                                onClick={() => handleDelete(membershipType.id)}
-                                                disabled={showForm || deleteMutation.isPending}
-                                            >
-                                                Delete
-                                            </Button>
+                                        <td className="space-x-2 px-4 py-2 text-xl font-medium whitespace-nowrap">
+                                            <div className="grid grid-cols-2">
+                                                <button
+                                                    onClick={() => handleEdit(membershipType.id)}
+                                                    disabled={showForm}
+                                                    className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-700 hover:bg-neutral-400/50"
+                                                >
+                                                    <PencilLine className="h-5 w-5 *:stroke-neutral-300" />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(membershipType.id)}
+                                                    disabled={showForm || deleteMutation.isPending}
+                                                    className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-700 hover:border-red-400/70 hover:bg-red-400/50"
+                                                >
+                                                    <Trash2 className="h-5 w-5 *:stroke-neutral-300 hover:*:stroke-red-500" />
+                                                </button>
+                                            </div>
                                         </td>
                                     </>
                                 )}
