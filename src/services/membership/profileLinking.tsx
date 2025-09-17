@@ -7,16 +7,16 @@ import { YEAR_OF_STUDY_OPTIONS } from "@libs/types/profile.type";
 export const yearOfStudyEnum = pgEnum("year_of_study", YEAR_OF_STUDY_OPTIONS);
 
 
-export async function linkUserToProfile(newUser: { userId: string; email: string; firstName: string; lastName: string; yearOfStudy: typeof YEAR_OF_STUDY_OPTIONS[number] }) {
+export async function linkUserToProfile(newUser: any) {
     try {
-        console.log(`Attempting to link user ${newUser.email} (ID: ${newUser.userId})`);
+        console.log(`Attempting to link user ${newUser.email} (ID: ${newUser.id})`);
 
         const existingLinkedProfile = await db.query.profiles.findFirst({
-            where: eq(profiles.userId, newUser.userId),
+            where: eq(profiles.id, newUser.id),
         });
         
         if (existingLinkedProfile) {
-            console.log(`User ${newUser.userId} already has a linked profile`);
+            console.log(`User ${newUser.id} already has a linked profile`);
             return existingLinkedProfile;
         }
         
@@ -25,26 +25,38 @@ export async function linkUserToProfile(newUser: { userId: string; email: string
         if (staffCreatedProfile) {
             const linkedProfile = await db.update(profiles)
                 .set({
-                    userId: newUser.userId,
+                    userId: newUser.id,
                     updatedAt: new Date(),
                 })
                 .where(eq(profiles.id, staffCreatedProfile.id))
                 .returning();
 
-            console.log(`Successfully linked user ${newUser.userId} to existing profile ${staffCreatedProfile.id}`);
+            console.log(`Successfully linked user ${newUser.id} to existing profile ${staffCreatedProfile.id}`);
             return linkedProfile[0];
         } else {
+            // const nameParts = newUser.name.trim().split(' ');
+            // const firstName = nameParts[0] || '';
+            // const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+            
             const newProfile = await db.insert(profiles)
                 .values({
-                    userId: newUser.userId,
+                    userId: newUser.id,
+                    firstName: firstName,
+                    lastName: lastName,
                     email: newUser.email,
-                    firstName: newUser.firstName,
-                    lastName: newUser.lastName,
-                    yearOfStudy: newUser.yearOfStudy,
+                    yearOfStudy: 'other',
+                    previousMember: false,
+                    tournamentPasses: 0,
+                    gender: 'other',
+                    ethnicity: 'NA',
+                    currentStudy: 'NA',
+                    currentDegree: 'NA',
+                    university: null,
+                    universityId: null,
                 })
                 .returning();
 
-            console.log(`Created new profile for user ${newUser.userId}`);
+            console.log(`Created new profile for user ${newUser.id}`);
             return newProfile[0];
         }
     } catch (error) {
@@ -58,7 +70,7 @@ export async function findUnlinkedProfileByEmail(email: string) {
         const profile = await db.query.profiles.findFirst({
             where: and(
                 eq(profiles.email, email),
-                isNull(profiles.userId) 
+                isNull(profiles.id) 
             ),
         });
         

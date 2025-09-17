@@ -3,9 +3,10 @@ import { db } from "@libs/db";
 import { env } from "@libs/env";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin as adminPlugin, openAPI } from "better-auth/plugins";
+import { admin as adminPlugin, openAPI, createAuthMiddleware } from "better-auth/plugins";
 
 import { sendVerificationEmail as sendEmail } from "@/services/email/verification-email";
+import { linkUserToProfile } from "@/services/membership/profileLinking"; 
 
 import { ac, admin, staff, user } from "./permission";
 
@@ -24,6 +25,17 @@ export const auth = betterAuth({
         requireEmailVerification: true,
         minPasswordLength: 8,
         maxPasswordLength: 128,
+    },
+    hooks: {
+        after: createAuthMiddleware(async (ctx) => {
+            if (ctx.path.startsWith("/sign-up")) {
+                const newSession = ctx.context.newSession;
+                if (newSession) {
+                    await linkUserToProfile(newSession.user);
+                }
+                
+            }
+        }),
     },
     plugins: [
         openAPI(), // http://localhost:3000/api/auth/reference
