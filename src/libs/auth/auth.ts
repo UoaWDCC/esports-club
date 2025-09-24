@@ -6,7 +6,8 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin as adminPlugin, openAPI, createAuthMiddleware } from "better-auth/plugins";
 
 import { sendVerificationEmail as sendEmail } from "@/services/email/verification-email";
-import { linkUserToProfile } from "@/services/membership/profileLinking"; 
+import { linkProfileByUser } from "@/services/membership/profileLinking"; 
+import { User } from "better-auth";
 
 import { ac, admin, staff, user } from "./permission";
 
@@ -28,12 +29,13 @@ export const auth = betterAuth({
     },
     hooks: {
         after: createAuthMiddleware(async (ctx) => {
-            if (ctx.path.startsWith("/sign-up")) {
-                const newSession = ctx.context.newSession;
-                if (newSession) {
-                    await linkUserToProfile(newSession.user);
+            // slight hack, might break on future better-auth updates if they fixed it
+            if (ctx.path.startsWith("/get-session")) {
+                const user = (ctx.context.returned as unknown as { user: User }).user;
+
+                if (user) {
+                    await linkProfileByUser(user);
                 }
-                
             }
         }),
     },
