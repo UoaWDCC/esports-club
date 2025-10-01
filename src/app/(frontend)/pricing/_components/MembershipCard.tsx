@@ -1,4 +1,5 @@
 import { MembershipType } from "@libs/types/membershipType.type";
+import { Calendar, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/button/Button";
 
@@ -19,44 +20,57 @@ export function MembershipCard({
     loadingMembershipId,
     onPurchase,
 }: MembershipCardProps) {
+    const isLoadingCard = loadingMembershipId === membership.id;
+    const isAvailable = !!membership.stripePriceId;
+
     return (
-        <div className="flex flex-col rounded-xl border border-gray-200 bg-white p-8 shadow-sm transition hover:shadow-lg">
-            <div className="text-center">
-                {/* Title */}
-                <h3 className="mb-2 text-xl font-semibold text-gray-900">{membership.name}</h3>
-
-                {/* Description */}
+        <div className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+            <div className="p-6 text-center">
+                <h3 className="text-muted mb-2 text-xl font-semibold">{membership.name}</h3>
                 {membership.description && (
-                    <p className="mb-4 text-gray-600">{membership.description}</p>
+                    <p className="text-sm text-gray-600">{membership.description}</p>
                 )}
+            </div>
 
-                {/* Price */}
-                <div className="mb-6 text-4xl font-bold text-gray-900">
+            <div className="px-6 text-center">
+                <p className="mb-4 text-3xl font-bold text-gray-900">
                     {formatPrice(membership.price)}
-                </div>
+                </p>
 
-                {/* Dates */}
-                <div className="mb-6 space-y-1 text-sm text-gray-600">
-                    <p>Valid from: {formatDate(membership.startAt)}</p>
-                    <p>Valid until: {formatDate(membership.endAt)}</p>
+                <div className="space-y-2 text-sm text-gray-600">
+                    <div className="flex items-center justify-center">
+                        <Calendar className="mr-2 h-4 w-4 text-gray-400" />
+                        <span>Valid from {formatDate(membership.startAt)}</span>
+                    </div>
+                    <div className="flex items-center justify-center">
+                        <Calendar className="mr-2 h-4 w-4 text-gray-400" />
+                        <span>Until {formatDate(membership.endAt)}</span>
+                    </div>
                 </div>
+            </div>
 
-                {/* Purchase button */}
+            <div className="mt-auto p-6">
                 <Button
                     onClick={() => onPurchase(membership.id, membership.stripePriceId || "")}
-                    disabled={isLoading || !membership.stripePriceId}
-                    className="mt-auto w-full"
+                    disabled={isLoading || !isAvailable}
+                    className="w-full"
                 >
-                    {loadingMembershipId === membership.id
-                        ? "Processing..."
-                        : !membership.stripePriceId
-                          ? "Coming Soon"
-                          : "Purchase Membership"}
+                    {isLoadingCard ? (
+                        <div className="flex items-center justify-center">
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Processing...
+                        </div>
+                    ) : !isAvailable ? (
+                        "Coming Soon"
+                    ) : (
+                        "Purchase Membership"
+                    )}
                 </Button>
 
-                {/* Helper note if not ready */}
-                {!membership.stripePriceId && (
-                    <p className="mt-2 text-xs text-gray-500">Payment setup in progress</p>
+                {!isAvailable && (
+                    <p className="mt-2 text-center text-xs text-gray-500">
+                        Payment setup in progress
+                    </p>
                 )}
             </div>
         </div>

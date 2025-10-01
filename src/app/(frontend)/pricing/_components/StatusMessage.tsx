@@ -10,7 +10,6 @@ export function StatusMessage({
     message: string;
 }) {
     const Icon = type === "success" ? CheckCircle : type === "warning" ? XCircle : Clock;
-
     const colors =
         type === "success"
             ? "border-green-200 bg-green-50 text-green-700"
@@ -19,11 +18,11 @@ export function StatusMessage({
               : "border-gray-200 bg-gray-50 text-gray-700";
 
     return (
-        <div className={`mx-auto mb-8 max-w-md rounded-lg border p-4 ${colors}`}>
+        <div className={`mx-auto mb-6 max-w-md rounded-lg border p-4 ${colors}`}>
             <div className="flex items-center">
                 <Icon className="mr-3 h-5 w-5" />
                 <div>
-                    <h3 className="text-sm font-medium">{title}</h3>
+                    <h3 className="text-sm font-semibold">{title}</h3>
                     <p className="text-sm">{message}</p>
                 </div>
             </div>
