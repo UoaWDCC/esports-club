@@ -8,9 +8,9 @@ import { titleToSlug } from "@/libs/utils/slug";
 import { events } from "../_data/events";
 
 interface EventPageProps {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 // Function to find event by slug
@@ -18,8 +18,9 @@ function findEventBySlug(slug: string) {
     return events.find((event) => titleToSlug(event.title) === slug);
 }
 
-export default function EventPage({ params }: EventPageProps) {
-    const event = findEventBySlug(params.slug);
+export default async function EventPage({ params }: EventPageProps) {
+    const { slug } = await params;
+    const event = findEventBySlug(slug);
 
     if (!event) {
         notFound();
